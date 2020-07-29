@@ -1,0 +1,12 @@
+{
+  "name": "ganyratorNative",
+  "displayName": "ganyratorNative",
+  "expo": {
+    "name": "ganyratorNative",
+    "slug": "ganyratorNative",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
