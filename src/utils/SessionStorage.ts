@@ -1,16 +1,15 @@
-import {AsyncStorage} from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+
 
 export interface ISession {
     // tables: Table[];
     // actions: Action[];
     text: string;
-    loaded: boolean;
 }
 
-export function Session(text: string = "", loaded: boolean = false) : ISession {
+export function Session(text: string = "") : ISession {
     return {
-        text: text,
-        loaded: loaded
+        text: text
     }
 }
 
@@ -22,9 +21,7 @@ class SessionStorage {
             throw new Error("No session to load");
         }
 
-        const session = JSON.parse(data) as ISession;
-        session.loaded = true;
-        return session;
+        return JSON.parse(data) as ISession;
     };
 
     async Save(session: ISession) {
