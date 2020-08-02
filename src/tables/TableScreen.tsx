@@ -1,16 +1,36 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import AppContext from "../utils/AppContext";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {Text} from "react-native";
+import {Text, View} from "react-native";
+import {Table} from "../utils/TableUtils";
+import ListEntry from "../utils/list/ListEntry";
+import {FlatList} from "react-native-gesture-handler";
+import {createStackNavigator} from "@react-navigation/stack";
 
-export default function () {
+function TableList() {
     const context = useContext(AppContext);
+    const [count, setCount] = useState(0);
 
     return (
-        <SafeAreaView style={context.styles.container}>
-            <Text>
-                Stuff
-            </Text>
-        </SafeAreaView>
+        <View style={context.styles.container}>
+            <FlatList<Table> data={context.tables}
+                             renderItem={({item}) =>
+                                 <ListEntry title={item.name}
+                                            subTitle={item.desc}
+                                            onPress={() => setCount((c) => c+1)}
+                                 />
+                             }
+            />
+            <Text>{count}</Text>
+        </View>
+    )
+}
+
+export default function () {
+    const Stack = createStackNavigator();
+
+    return (
+        <Stack.Navigator initialRouteName={"List"}>
+            <Stack.Screen name={"List"} component={TableList} options={{title: "Edit Tables"}}/>
+        </Stack.Navigator>
     )
 }

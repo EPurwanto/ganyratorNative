@@ -6,17 +6,21 @@ import {NavigationContainer} from "@react-navigation/native";
 import HomeScreen from "./src/home/HomeScreen";
 import AppStyles from "./src/utils/AppStyles";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
-import {backgroundColor} from "react-native-tab-view/lib/typescript/example/src/CoverflowExample";
 import TableScreen from "./src/tables/TableScreen";
 import ActionScreen from "./src/actions/ActionScreen";
+// @ts-ignore
+import {nanoid} from "nanoid/async/index.native.js";
+import {createTable, createTableContent, Table} from "./src/utils/TableUtils";
 
 export default function App() {
     const [text, setText] = useState("");
+    const [id, setId] = useState("");
+    const [tables, setTables] = useState([] as Table[]);
     const [loaded, setLoaded] = useState(false);
 
+    // Load Session from storage
     useEffect(() => {
         SessionStorage.Load()
             // .then((loadSesh) => {    // Load delaying debug stuff
@@ -32,14 +36,24 @@ export default function App() {
             .catch((e)=> {
                 console.log(e);
                 setText("Load Error: " + e);
-                setLoaded(true);
-            });
-    }, []);
 
+                Promise.all(
+                    [sampleTables()
+                            .then(ts => setTables(ts)),
+                        nanoid()
+                            .then((id: string) => setId(id))
+                    ]
+                ).then(() => setLoaded(true))
+            });
+    }, [id]);
+
+    // Save Session every change
     useEffect(() => {
         if (loaded) {
             SessionStorage.Save({
-                text: text
+                text: text,
+                id: id,
+                tables: tables,
             }).then(() => {
                 console.log("Saved: " + text);
             }).catch((e) => {
@@ -61,8 +75,11 @@ export default function App() {
     return (
         <AppContext.Provider value={
             {
+                tables: tables,
+                updateTables: (add, remove) => {},
                 text: text,
                 setText: setText,
+                id: id,
                 styles: AppStyles,
             }
         }>
@@ -82,4 +99,33 @@ export default function App() {
             </SafeAreaProvider>
         </AppContext.Provider>
     );
+}
+
+async function sampleTables(): Promise<Table[]> {
+    return [
+        await createTable([], "Test 1", "first test table", [
+            await createTableContent([], "Hello"),
+            await createTableContent([], "Hi"),
+            await createTableContent([], "Howdy"),
+            await createTableContent([], "G'day"),
+        ]),
+        await createTable([], "Test 2", "second test table", [
+            await createTableContent([], "Hello"),
+            await createTableContent([], "Hi"),
+            await createTableContent([], "Howdy"),
+            await createTableContent([], "G'day"),
+        ]),
+        await createTable([], "Test 3", "third test table", [
+            await createTableContent([], "Hello"),
+            await createTableContent([], "Hi"),
+            await createTableContent([], "Howdy"),
+            await createTableContent([], "G'day"),
+        ]),
+        await createTable([], "Test 4", "fourth test table", [
+            await createTableContent([], "Hello"),
+            await createTableContent([], "Hi"),
+            await createTableContent([], "Howdy"),
+            await createTableContent([], "G'day"),
+        ]),
+    ]
 }

@@ -6,6 +6,7 @@ import React, {useContext, useState} from "react";
 import App from "../../App";
 import styles from "../utils/AppStyles";
 import {SafeAreaView} from "react-native-safe-area-context";
+import SessionStorage from "../utils/SessionStorage";
 
 
 export default function () {
@@ -25,7 +26,7 @@ export default function () {
                                 onValueChange={(value, index) => setSelected(value)}>
                             <Picker.Item label={"Nothing"} value={""}/>
                             {
-                                Array.from({ length: 30 }, (_, i) => i).map((i) => <Picker.Item key={i} label={i.toString()} value={i}/>)
+                                Array.from({ length: 30 }, (_, i) => <Picker.Item key={i} label={i.toString()} value={i}/>)
                             }
                         </Picker>
                     </View>
@@ -41,6 +42,10 @@ export default function () {
                 <View style={context.styles.btn}>
                     <Button title={"G'Day"}
                             onPress={() => {context.setText("G'Day")}}/>
+                </View>
+                <View style={context.styles.btn}>
+                    <Button title={"Clear Session"}
+                            onPress={() => {SessionStorage.Clear().then()}}/>
                 </View>
             </View>
         </SafeAreaView>

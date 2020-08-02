@@ -1,16 +1,13 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import {Table} from "./TableUtils";
 
 
 export interface ISession {
     // tables: Table[];
     // actions: Action[];
     text: string;
-}
-
-export function Session(text: string = "") : ISession {
-    return {
-        text: text
-    }
+    id: string;
+    tables: Table[];
 }
 
 class SessionStorage {
@@ -28,6 +25,10 @@ class SessionStorage {
         const data = JSON.stringify(session);
         await AsyncStorage.setItem("session", data);
     };
+
+    async Clear() {
+        await AsyncStorage.removeItem("session")
+    }
 }
 
 export default new SessionStorage();
