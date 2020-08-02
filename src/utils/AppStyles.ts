@@ -15,17 +15,19 @@ const styles = StyleSheet.create<IAppStyles>({
     container: {
         flex: 1,
         paddingHorizontal: 15,
+        backgroundColor: "#FFFFFF"
     },
     rollArea: {
         flexGrow: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "#F0F0F0"
     },
     rollPickerBtn: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        // backgroundColor: "grey",
+        backgroundColor: "#E0E0E0"
     },
     rollPicker: {
         flexGrow: 1
@@ -33,6 +35,7 @@ const styles = StyleSheet.create<IAppStyles>({
     rollBtn: {
     },
     btnArea: {
+        backgroundColor: "#D0D0D0"
     },
     btn: {
         marginVertical: 5

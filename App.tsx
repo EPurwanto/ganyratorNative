@@ -2,10 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
-import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
 import HomeScreen from "./src/home/HomeScreen";
 import AppStyles from "./src/utils/AppStyles";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import {StatusBar} from "expo-status-bar";
+import {backgroundColor} from "react-native-tab-view/lib/typescript/example/src/CoverflowExample";
+import TableScreen from "./src/tables/TableScreen";
+import ActionScreen from "./src/actions/ActionScreen";
 
 export default function App() {
     const [text, setText] = useState("");
@@ -50,7 +56,7 @@ export default function App() {
         )
     }
 
-    const Stack = createStackNavigator();
+    const Tab = createMaterialTopTabNavigator();
 
     return (
         <AppContext.Provider value={
@@ -60,11 +66,20 @@ export default function App() {
                 styles: AppStyles,
             }
         }>
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen name={"Home"} component={HomeScreen} options={{ title: 'gANYrator' }}/>
-                </Stack.Navigator>
-            </NavigationContainer>
+            <SafeAreaProvider>
+                <NavigationContainer>
+                    <StatusBar style="auto" />
+                    <Tab.Navigator initialRouteName={"Home"}
+                                   style={{backgroundColor: "#000000"}}
+                                   swipeEnabled={true}
+                                   tabBarPosition={"bottom"}
+                                   backBehavior={"initialRoute"}>
+                        <Tab.Screen name={"Tables"} component={TableScreen} options={{ title: 'Tables' }}/>
+                        <Tab.Screen name={"Home"} component={HomeScreen} options={{ title: 'Roll' }}/>
+                        <Tab.Screen name={"Actions"} component={ActionScreen} options={{ title: 'Actions' }}/>
+                    </Tab.Navigator>
+                </NavigationContainer>
+            </SafeAreaProvider>
         </AppContext.Provider>
     );
 }
