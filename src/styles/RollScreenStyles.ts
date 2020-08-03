@@ -16,19 +16,19 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
         flexGrow: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#F0F0F0"
+        // backgroundColor: "#F0F0F0"
     },
     controlArea: {
-        backgroundColor: "#D0D0D0"
+        // backgroundColor: "#D0D0D0"
     },
     picker: {
-        flexGrow: 1
+        // flexGrow: 1
     },
     pickerBtn: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#E0E0E0"
+        // backgroundColor: "#E0E0E0"
     },
     rollBtn: {
     },

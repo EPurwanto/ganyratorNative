@@ -12,12 +12,12 @@ export interface IFieldStyles {
 export const FieldStyles = StyleSheet.create<IFieldStyles>( {
     base: {
         marginBottom: 5,
-        alignItems: "stretch",
     },
     btn: {
         alignItems: "stretch",
-        flexGrow: 1,
-        justifyContent: "center"
+        // flexGrow: 1,
+        justifyContent: "center",
+        borderWidth: 0,
     },
     group: {
         borderWidth: 1,

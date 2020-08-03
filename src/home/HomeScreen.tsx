@@ -1,13 +1,9 @@
-import {NavigationContainer} from "@react-navigation/native";
-import {Button, Picker, StyleProp, Text, View, ViewStyle} from "react-native";
-import {StatusBar} from "expo-status-bar";
-import AppContext from "../utils/AppContext";
 import React, {useContext, useState} from "react";
-import App from "../../App";
-import styles from "../styles/AppStyles";
 import {SafeAreaView} from "react-native-safe-area-context";
-import SessionStorage from "../utils/SessionStorage";
+import {Picker, Text, TouchableHighlight, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
+import AppContext from "../utils/AppContext";
+import SessionStorage from "../utils/SessionStorage";
 
 
 export default function () {
@@ -15,40 +11,47 @@ export default function () {
     const styles = useContext(AppStyles);
     const [selected, setSelected] = useState<string>("");
 
+
     return (
         <SafeAreaView style={styles.util.container}>
             <View style={styles.roll.resultArea}>
                 <Text>Session: {context.text}</Text>
             </View>
             <View style={styles.roll.controlArea}>
-                <View style={styles.roll.pickerBtn}>
-                    <View style={styles.roll.picker}>
-                        <Picker selectedValue={selected}
+                <View style={[styles.field.base, styles.util.row]}>
+                    <View style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}>
+                        <Picker selectedValue={"3"}
                                 prompt={"Pick a number"}
-                                onValueChange={(value, index) => setSelected(value)}>
+                            // onValueChange={(value, index) => setSelected(value)}
+                                style={[styles.util.picker, styles.util.grow1]}
+                                itemStyle={[styles.util.pickerItem, styles.util.grow1]}
+                        >
                             <Picker.Item label={"Nothing"} value={""}/>
                             {
                                 Array.from({ length: 30 }, (_, i) => <Picker.Item key={i} label={i.toString()} value={i}/>)
                             }
                         </Picker>
                     </View>
-                    <View style={styles.roll.rollBtn}>
-                        <Button title={"Set"}
-                                onPress={() => {context.setText(selected)}}/>
-                    </View>
+                    <TouchableHighlight style={[styles.util.btn, styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn]}
+                        // onPress={() => {context.setText(selected)}}
+                    >
+                        <View>
+                            <Text style={styles.util.txtPrimary}>Set</Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
-                <View style={styles.field.base}>
-                    <Button title={"Goodbye"}
-                            onPress={() => {context.setText("Goodbye")}}/>
-                </View>
-                <View style={styles.field.base}>
-                    <Button title={"G'Day"}
-                            onPress={() => {context.setText("G'Day")}}/>
-                </View>
-                <View style={styles.field.base}>
-                    <Button title={"Clear Session"}
-                            onPress={() => {SessionStorage.Clear().then()}}/>
-                </View>
+
+                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnPrimary]}>
+                    <Text style={styles.util.txtPrimary}>Goodbye</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnSuccess]}>
+                    <Text style={styles.util.txtSuccess}>G'Day</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnDanger]}
+                                    onPress={() => SessionStorage.Clear()}
+                >
+                    <Text style={styles.util.txtDanger}>Clear Session</Text>
+                </TouchableHighlight>
             </View>
         </SafeAreaView>
     )
