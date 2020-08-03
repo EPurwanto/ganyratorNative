@@ -13,6 +13,8 @@ export const fontSize = {
     large: 25,
 };
 
+export const highlightUnderlay = "#DDDDDD";
+
 export const UtilStyles = StyleSheet.create<IUtilStyles>({
     container: {
         flex: 1,
