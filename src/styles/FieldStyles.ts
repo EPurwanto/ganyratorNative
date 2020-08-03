@@ -1,7 +1,8 @@
-import {StyleSheet, ViewStyle} from "react-native";
+import {StyleSheet, TextStyle, ViewStyle} from "react-native";
 
 export interface IFieldStyles {
     base: ViewStyle,
+    label: TextStyle,
     btn: ViewStyle,
     group: ViewStyle,
     groupStart: ViewStyle,
@@ -12,6 +13,9 @@ export interface IFieldStyles {
 export const FieldStyles = StyleSheet.create<IFieldStyles>( {
     base: {
         marginBottom: 5,
+    },
+    label: {
+        fontWeight: "bold",
     },
     btn: {
         alignItems: "stretch",

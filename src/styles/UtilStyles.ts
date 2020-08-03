@@ -7,11 +7,13 @@ export interface IUtilStyles {
     p0: ViewStyle,
     pv0: ViewStyle,
     m0: ViewStyle,
+    w55: ViewStyle,
     btn: ViewStyle,
     btnPrimary: ViewStyle,
     btnSuccess: ViewStyle,
     btnDanger: ViewStyle,
-    txtNum: TextStyle,
+    txtCenter: TextStyle,
+    txtRight: TextStyle,
     txtPrimary: ViewStyle,
     txtSuccess: ViewStyle,
     txtDanger: ViewStyle,
@@ -55,6 +57,9 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
     m0: {
         margin: 0,
     },
+    w55: {
+        width: 55,
+    },
     btn: {
         padding: 8,
         borderRadius: 8,
@@ -70,17 +75,23 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
         backgroundColor: colours.danger,
         color: "white",
     },
-    txtNum: {
+    txtCenter: {
+        textAlign: "center",
+    },
+    txtRight: {
         textAlign: "right"
     },
     txtPrimary: {
         color: "white",
+        textAlign: "center"
     },
     txtSuccess: {
         color: "white",
+        textAlign: "center"
     },
     txtDanger: {
         color: "white",
+        textAlign: "center"
     },
     picker: {
         height: 21,

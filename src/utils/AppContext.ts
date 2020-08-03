@@ -7,15 +7,11 @@ export interface IContext extends ISession {
     // actions: Action[],
     // updateActions: (add?: Action, remove?: Action) => void;
     updateTables: (update?: Table | Table[], add?: Table | Table[], remove?: Table | Table[]) => void;
-
-    setText: Dispatch<SetStateAction<string>>;
 }
 
 const AppContext = React.createContext<IContext>({
     id: "",
-    setText: ()=>{},
     tables: [],
-    text: "",
     updateTables: () => {},
 });
 

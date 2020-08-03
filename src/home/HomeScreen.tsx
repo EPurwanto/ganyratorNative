@@ -32,7 +32,7 @@ export default function () {
                             }
                         </Picker>
                     </View>
-                    <TouchableHighlight style={[styles.util.btn, styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn]}
+                    <TouchableHighlight style={[styles.util.btn, styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
                         // onPress={() => {context.setText(selected)}}
                     >
                         <View>

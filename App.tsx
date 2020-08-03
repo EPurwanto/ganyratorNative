@@ -17,7 +17,6 @@ import {handleUpdate} from "./src/utils/Utils";
 import {UtilStyles} from "./src/styles/UtilStyles";
 
 export default function App() {
-    const [text, setText] = useState("");
     const [id, setId] = useState("");
     const [tables, setTables] = useState([] as Table[]);
     const [loaded, setLoaded] = useState(false);
@@ -31,14 +30,11 @@ export default function App() {
             //     })
             // })
             .then(loadSesh => {
-                setText(loadSesh.text);
                 setTables(loadSesh.tables);
                 setLoaded(true);
             })
             .catch((e)=> {
                 console.log(e);
-                setText("Load Error: " + e);
-
                 Promise.all(
                     [sampleTables()
                             .then(ts => setTables(ts)),
@@ -53,7 +49,6 @@ export default function App() {
     useEffect(() => {
         if (loaded) {
             SessionStorage.Save({
-                text: text,
                 id: id,
                 tables: tables,
             }).catch((e) => {
@@ -76,8 +71,6 @@ export default function App() {
         <AppContext.Provider value={{
             tables: tables,
             updateTables: ((update, add, remove) => setTables(handleUpdate(tables, update, add, remove))),
-            text: text,
-            setText: setText,
             id: id,
         }}>
             <AppStyles.Provider value={DefaultStyles}>

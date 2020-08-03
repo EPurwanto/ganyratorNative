@@ -11,7 +11,7 @@ export const Field : FunctionComponent<IProps> = (props) => {
     const styles = useContext(AppStyles);
     return (
         <View style={styles.field.base}>
-            <Text>{props.label}</Text>
+            <Text style={styles.field.label}>{props.label}</Text>
             {props.children}
         </View>
     )

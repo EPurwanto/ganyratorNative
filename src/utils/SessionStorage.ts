@@ -3,7 +3,6 @@ import {Table} from "./TableUtils";
 
 
 export interface ISession {
-    text: string;
     id: string;
     tables: Table[];
 }
@@ -18,14 +17,14 @@ class SessionStorage {
 
         const session = JSON.parse(data) as ISession;
 
-        console.log("Loaded: " + session.text);
+        console.log("Loaded: " + session.id);
         return session;
     };
 
     async Save(session: ISession) {
         const data = JSON.stringify(session);
         await AsyncStorage.setItem("session", data);
-        console.log("Saved: " + session.text);
+        console.log("Saved: " + session.id);
     };
 
     async Clear() {
