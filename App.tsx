@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
 import {NavigationContainer} from "@react-navigation/native";
-import HomeScreen from "./src/home/HomeScreen";
+import HomeScreen from "./src/roll/RollScreen";
 import AppStyles, {DefaultStyles} from "./src/styles/AppStyles";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {SafeAreaProvider} from "react-native-safe-area-context";
@@ -77,13 +77,13 @@ export default function App() {
                 <SafeAreaProvider>
                     <NavigationContainer>
                         <StatusBar style="auto" />
-                        <Tab.Navigator initialRouteName={"Home"}
+                        <Tab.Navigator initialRouteName={"Roll"}
                                        style={{backgroundColor: "#000000"}}
                                        swipeEnabled={true}
                                        tabBarPosition={"bottom"}
                                        backBehavior={"initialRoute"}>
                             <Tab.Screen name={"Tables"} component={TableScreen} options={{ title: 'Tables' }}/>
-                            <Tab.Screen name={"Home"} component={HomeScreen} options={{ title: 'Roll' }}/>
+                            <Tab.Screen name={"Roll"} component={HomeScreen} options={{ title: 'Roll' }}/>
                             <Tab.Screen name={"Actions"} component={ActionScreen} options={{ title: 'Actions' }}/>
                         </Tab.Navigator>
                     </NavigationContainer>
