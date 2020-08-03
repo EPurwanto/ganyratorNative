@@ -14,17 +14,35 @@ export function fetchFromJson(url: string, successCallback: (response:any)=> voi
         });
 }
 
-export function handleUpdate<T>(list: T[], add?: T, remove?: T | T[]) {
+export function handleUpdate<T extends Unique>(originalList: T[], update?: T | T[], add?: T | T[], remove?: T | T[]) {
+    const list = originalList.slice();
+
+    if (update) {
+        if (Array.isArray(update)) {
+            update.forEach(item => {
+                const index = findIndex(list, item);
+                if (index >= 0) {
+                    list[index] = item;
+                }
+            })
+        } else {
+            const index = findIndex(list, update);
+            if (index >= 0) {
+                list[index] = update;
+            }
+        }
+    }
+
     if (remove) {
         if (Array.isArray(remove)) {
             remove.forEach(item => {
-                const index = list.indexOf(item);
+                const index = findIndex(list, item);
                 if (index >= 0) {
                     list.splice(index, 1);
                 }
             })
         } else {
-            const index = list.indexOf(remove);
+            const index = findIndex(list, remove);
             if (index >= 0) {
                 list.splice(index, 1);
             }
@@ -57,4 +75,12 @@ export async function getUniqueId(peers: Unique[]) {
 
 export function isUnique(key: string, peers: Unique[]) {
     return peers.filter((p) => p.key == key).length == 0;
+}
+
+export function findIndex(list: Unique[], item: Unique) {
+    return list.findIndex((val) => val.key == item.key);
+}
+
+export function find<T extends Unique>(list: T[], key: string) {
+    return list.find((val) => val.key == key)
 }

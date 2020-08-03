@@ -23,6 +23,17 @@ export async function createTable(peers: Table[], name="New", desc="", contents:
     };
 }
 
+export function getDummyTable(name="This is a dummy table", desc="You shouldn't be seeing this", contents: TableContent[] = []) {
+    return {
+        name: name,
+        desc: desc,
+        group: "",
+        totalWeight: getTotalWeight(contents),
+        contents: contents,
+        key:  "NOT A REAL KEY",
+    }
+}
+
 export async function createTableContent(peers: TableContent[], element?: string, weight?: number, action?: string | Action): Promise<TableContent> {
     return {
         weight: weight || 1,
