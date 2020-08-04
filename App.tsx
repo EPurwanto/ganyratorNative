@@ -70,6 +70,7 @@ export default function App() {
     return (
         <AppContext.Provider value={{
             tables: tables,
+            actions: [],
             updateTables: ((update, add, remove) => setTables(handleUpdate(tables, update, add, remove))),
             id: id,
         }}>

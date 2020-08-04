@@ -1,56 +1,72 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Picker, Text, TouchableHighlight, View} from "react-native";
+import {FlatList, Picker, ScrollView, Text, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import SessionStorage from "../utils/SessionStorage";
 import {TouchButton} from "../utils/TouchButton";
+import {ActionResults, performAction} from "../utils/ActionUtils";
+import RollResults from "./RollResults";
+import {find, getUniqueId} from "../utils/Utils";
 
 
 export default function () {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
-    const [selected, setSelected] = useState<string>("");
-
+    const [selected, setSelected] = useState(context.tables.length > 0 ? context.tables[0].key : "");
+    const [results, setResults] = useState([] as ActionResults[])
 
     return (
         <SafeAreaView style={styles.util.container}>
             <View style={styles.roll.resultArea}>
-                <Text>Session: {context.text}</Text>
+                <FlatList inverted={true}
+                          contentContainerStyle={styles.roll.resultList}
+                          data={results}
+                          renderItem={({item}) =>
+                              <RollResults label={item.root} values={item.values} key={item.key}/>
+                          }
+                          ListEmptyComponent={
+                              <Text key={"empty"} style={styles.roll.helpText}>Press Roll below to start creating</Text>
+                          }/>
+                <TouchButton style={[styles.util.btnDanger, styles.roll.clearButton]}
+                             label={"Clear"}
+                             labelStyle={styles.util.txtDanger}
+                             onPress={() => setResults([])}/>
             </View>
+
             <View style={styles.roll.controlArea}>
                 <View style={[styles.field.base, styles.util.row]}>
                     <View style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}>
-                        <Picker selectedValue={"3"}
-                                prompt={"Pick a number"}
-                            // onValueChange={(value, index) => setSelected(value)}
+                        <Picker selectedValue={selected}
+                                prompt={"TODO Pick a better prompt"}
+                                onValueChange={(value) => setSelected(value)}
                                 style={[styles.util.picker, styles.util.grow1]}
-                                itemStyle={[styles.util.pickerItem, styles.util.grow1]}
-                        >
-                            <Picker.Item label={"Nothing"} value={""}/>
+                                itemStyle={[styles.util.pickerItem, styles.util.grow1]}>
                             {
-                                Array.from({ length: 30 }, (_, i) => <Picker.Item key={i} label={i.toString()} value={i}/>)
+                                context.tables.length > 0 ?
+                                    context.tables.map((table) =>
+                                        <Picker.Item label={table.name} value={table.key} key={table.key}/>
+                                    ):
+                                    <Picker.Item label={"Nothing"} value={""}/>
                             }
                         </Picker>
                     </View>
                     <TouchButton style={[styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
-                                 label={"Set"}
+                                 label={"Roll"}
                                  labelStyle={styles.util.txtPrimary}
-                    />
+                                 onPress={() => {
+                                     const outcome = performAction(find(context.tables, selected)!.name, [{field: "result", table: selected, key: ""}], context.tables, context.actions);
+                                     getUniqueId(results).then((id) => {
+                                         outcome.key = id;
+                                         setResults([outcome, ...results])
+                                     })
+                                 }}/>
                 </View>
 
-                <TouchButton style={[styles.field.base, styles.util.btnPrimary]}
-                             label={"Goodbye"}
-                             labelStyle={styles.util.txtPrimary}
-                />
-                <TouchButton style={[styles.field.base, styles.util.btnSuccess]}
-                             label={"G'Day"}
-                             labelStyle={styles.util.txtPrimary}
-                />
                 <TouchButton style={[styles.field.base, styles.util.btnDanger]}
                              label={"Clear Session"}
                              labelStyle={styles.util.txtDanger}
-                />
+                             onPress={() => SessionStorage.Clear()}/>
             </View>
         </SafeAreaView>
     )

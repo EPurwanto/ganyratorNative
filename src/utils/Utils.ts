@@ -1,8 +1,16 @@
-import {Unique} from "./ActionUtils";
 // @ts-ignore
 import {nanoid} from "nanoid/async/index.native.js";
 
-export type FormControlElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+export interface Element {
+    name: string;
+    desc: string;
+    group: string;
+}
+
+export interface Unique {
+    key: string;
+}
+
 
 export function fetchFromJson(url: string, successCallback: (response:any)=> void, errorCallback: (error:any)=> void) {
     fetch(url)

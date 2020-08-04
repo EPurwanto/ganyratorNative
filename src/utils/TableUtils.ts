@@ -1,10 +1,10 @@
-import {Action, Element, Unique} from "./ActionUtils";
-import {getUniqueId} from "./Utils";
+import {Action, ActionContent} from "./ActionUtils";
+import {getUniqueId, Element, Unique} from "./Utils";
 
 export interface TableContent extends Unique{
     weight: number;
     element: string;
-    action?: string | Action;
+    action?: string | ActionContent[];
 }
 
 export interface Table extends Element, Unique {
@@ -34,7 +34,7 @@ export function getDummyTable(name="This is a dummy table", desc="You shouldn't 
     }
 }
 
-export async function createTableContent(peers: TableContent[], element?: string, weight?: number, action?: string | Action): Promise<TableContent> {
+export async function createTableContent(peers: TableContent[], element?: string, weight?: number, action?: string | ActionContent[]): Promise<TableContent> {
     return {
         weight: weight || 1,
         element: element || "Element",
@@ -49,4 +49,22 @@ function getTotalWeight(contents: TableContent[]) {
         w += r.weight;
     });
     return w;
+}
+
+export function rollOn(table: Table) {
+    if (!table.totalWeight) {
+        return;
+    }
+
+    const roll = Math.floor(Math.random() * table.totalWeight);
+
+    let counter = 0;
+    for (let i = 0; i < table.contents.length; i++) {
+        const row = table.contents[i];
+        counter += row.weight;
+        if (counter > roll) {
+
+            return row;
+        }
+    }
 }

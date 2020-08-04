@@ -1,5 +1,5 @@
 import {StyleSheet, TextStyle, ViewStyle} from "react-native";
-import {fontSize} from "./UtilStyles";
+import {colours, fontSize} from "./UtilStyles";
 
 export interface IListStyles {
     section: ViewStyle,
@@ -24,7 +24,7 @@ export const ListStyles = StyleSheet.create<IListStyles>({
     item: {
         paddingVertical: 5,
         borderBottomWidth: 1,
-        borderBottomColor: "#000000",
+        borderBottomColor: colours.border,
         flexDirection: "row"
     },
     itemTextContainer: {

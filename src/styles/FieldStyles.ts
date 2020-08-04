@@ -1,4 +1,5 @@
 import {StyleSheet, TextStyle, ViewStyle} from "react-native";
+import {colours} from "./UtilStyles";
 
 export interface IFieldStyles {
     base: ViewStyle,
@@ -26,7 +27,7 @@ export const FieldStyles = StyleSheet.create<IFieldStyles>( {
     group: {
         borderWidth: 1,
         borderRadius: 8,
-        borderColor: "#000000",
+        borderBottomColor: colours.border,
         padding: 8,
     },
     groupStart: {

@@ -32,6 +32,8 @@ export const colours = {
     primary: "#3d82ff",
     success: "#28d200",
     danger: "#cb2005",
+    border: "#000000",
+    highlightUnderlay: "#DDDDDD",
 };
 
 export const highlightUnderlay = "#DDDDDD";

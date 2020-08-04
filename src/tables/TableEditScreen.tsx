@@ -1,13 +1,12 @@
 import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
-import {FlatList, ScrollView, Text, TextInput, TouchableHighlight, View} from "react-native";
-import {Table, TableContent} from "../utils/TableUtils";
+import {ScrollView, Text, TextInput, View} from "react-native";
+import {Table} from "../utils/TableUtils";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {TablesParamList} from "./TableContextScreen";
 import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import {Field} from "../utils/Field";
 import AppStyles from "../styles/AppStyles";
-import {highlightUnderlay} from "../styles/UtilStyles";
 import {handleUpdate} from "../utils/Utils";
 import {TouchButton} from "../utils/TouchButton";
 
