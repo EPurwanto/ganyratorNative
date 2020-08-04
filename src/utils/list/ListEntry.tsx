@@ -3,6 +3,7 @@ import {RectButton} from "react-native-gesture-handler"
 import React, {useContext} from "react";
 import AppStyles from "../../styles/AppStyles";
 import {highlightUnderlay} from "../../styles/UtilStyles";
+import {TouchButton} from "../TouchButton";
 
 interface IProps {
     title: string;
@@ -12,7 +13,6 @@ interface IProps {
 
 export default function (props: IProps) {
     const styles = useContext(AppStyles);
-
 
     return (
         <RectButton underlayColor={highlightUnderlay}

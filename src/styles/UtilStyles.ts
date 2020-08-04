@@ -7,6 +7,7 @@ export interface IUtilStyles {
     p0: ViewStyle,
     pv0: ViewStyle,
     m0: ViewStyle,
+    mr15: ViewStyle,
     w55: ViewStyle,
     btn: ViewStyle,
     btnPrimary: ViewStyle,
@@ -38,7 +39,7 @@ export const highlightUnderlay = "#DDDDDD";
 export const UtilStyles = StyleSheet.create<IUtilStyles>({
     container: {
         flex: 1,
-        paddingHorizontal: 15,
+        marginHorizontal: 15,
         backgroundColor: "#FFFFFF",
         fontSize: fontSize.medium,
     },
@@ -56,6 +57,9 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
     },
     m0: {
         margin: 0,
+    },
+    mr15: {
+        marginRight: 15,
     },
     w55: {
         width: 55,

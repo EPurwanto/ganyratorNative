@@ -4,6 +4,7 @@ import {Picker, Text, TouchableHighlight, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import SessionStorage from "../utils/SessionStorage";
+import {TouchButton} from "../utils/TouchButton";
 
 
 export default function () {
@@ -32,26 +33,24 @@ export default function () {
                             }
                         </Picker>
                     </View>
-                    <TouchableHighlight style={[styles.util.btn, styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
-                        // onPress={() => {context.setText(selected)}}
-                    >
-                        <View>
-                            <Text style={styles.util.txtPrimary}>Set</Text>
-                        </View>
-                    </TouchableHighlight>
+                    <TouchButton style={[styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
+                                 label={"Set"}
+                                 labelStyle={styles.util.txtPrimary}
+                    />
                 </View>
 
-                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnPrimary]}>
-                    <Text style={styles.util.txtPrimary}>Goodbye</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnSuccess]}>
-                    <Text style={styles.util.txtSuccess}>G'Day</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[styles.field.base, styles.util.btn, styles.util.btnDanger]}
-                                    onPress={() => SessionStorage.Clear()}
-                >
-                    <Text style={styles.util.txtDanger}>Clear Session</Text>
-                </TouchableHighlight>
+                <TouchButton style={[styles.field.base, styles.util.btnPrimary]}
+                             label={"Goodbye"}
+                             labelStyle={styles.util.txtPrimary}
+                />
+                <TouchButton style={[styles.field.base, styles.util.btnSuccess]}
+                             label={"G'Day"}
+                             labelStyle={styles.util.txtPrimary}
+                />
+                <TouchButton style={[styles.field.base, styles.util.btnDanger]}
+                             label={"Clear Session"}
+                             labelStyle={styles.util.txtDanger}
+                />
             </View>
         </SafeAreaView>
     )
