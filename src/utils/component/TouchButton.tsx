@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useContext} from "react";
 import {Text, TextStyle, TouchableHighlight, TouchableWithoutFeedbackProps, View} from "react-native";
-import {colours} from "../styles/UtilStyles";
-import AppStyles from "../styles/AppStyles";
+import {colours} from "../../styles/UtilStyles";
+import AppStyles from "../../styles/AppStyles";
 
 interface IProps extends TouchableWithoutFeedbackProps {
     label?: string;
@@ -13,8 +13,7 @@ export const TouchButton : FunctionComponent<IProps> = ({children, style, label,
     return (
         <TouchableHighlight underlayColor={colours.highlightUnderlay}
                             style={[styles.util.btn, style]}
-                            {...others}
-        >
+                            {...others}>
             <View>
                 {
                     children ? children : <Text style={labelStyle}>{label}</Text>

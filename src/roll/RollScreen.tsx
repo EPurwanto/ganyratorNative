@@ -4,7 +4,7 @@ import {FlatList, Picker, ScrollView, Text, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import SessionStorage from "../utils/SessionStorage";
-import {TouchButton} from "../utils/TouchButton";
+import {TouchButton} from "../utils/component/TouchButton";
 import {ActionResults, performAction} from "../utils/ActionUtils";
 import RollResults from "./RollResults";
 import {find, getUniqueId} from "../utils/Utils";
@@ -18,6 +18,7 @@ export default function () {
 
     return (
         <SafeAreaView style={styles.util.container}>
+            <Text style={styles.roll.heading}>gANYrator</Text>
             <View style={styles.roll.resultArea}>
                 <FlatList inverted={true}
                           contentContainerStyle={styles.roll.resultList}
@@ -26,7 +27,7 @@ export default function () {
                               <RollResults label={item.root} values={item.values} key={item.key}/>
                           }
                           ListEmptyComponent={
-                              <Text key={"empty"} style={styles.roll.helpText}>Press Roll below to start creating</Text>
+                              <Text style={styles.roll.helpText}>Press Roll below to start creating</Text>
                           }/>
                 <TouchButton style={[styles.util.btnDanger, styles.roll.clearButton]}
                              label={"Clear"}

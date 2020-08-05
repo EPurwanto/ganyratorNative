@@ -26,6 +26,7 @@ export const fontSize = {
     small: 14,
     medium: 20,
     large: 25,
+    title: 30,
 };
 
 export const colours = {
@@ -44,6 +45,7 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
         marginHorizontal: 15,
         backgroundColor: "#FFFFFF",
         fontSize: fontSize.medium,
+        fontFamily: "Lato_400Regular",
     },
     row: {
         flexDirection: "row"

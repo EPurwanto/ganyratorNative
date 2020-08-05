@@ -5,10 +5,10 @@ import {Table} from "../utils/TableUtils";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {TablesParamList} from "./TableContextScreen";
 import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
-import {Field} from "../utils/Field";
+import {Field} from "../utils/component/Field";
 import AppStyles from "../styles/AppStyles";
 import {handleUpdate} from "../utils/Utils";
-import {TouchButton} from "../utils/TouchButton";
+import {TouchButton} from "../utils/component/TouchButton";
 
 type TableEditNavigationProp = StackNavigationProp<TablesParamList, "Edit">;
 type TableEditRouteProp = RouteProp<TablesParamList, "Edit">;

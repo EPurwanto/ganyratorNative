@@ -3,23 +3,26 @@ import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
 import {NavigationContainer} from "@react-navigation/native";
-import HomeScreen from "./src/roll/RollScreen";
+import RollScreen from "./src/roll/RollScreen";
 import AppStyles, {DefaultStyles} from "./src/styles/AppStyles";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
-import TableScreen from "./src/tables/TableContextScreen";
-import ActionScreen from "./src/actions/ActionScreen";
+import TableContextScreen from "./src/tables/TableContextScreen";
 // @ts-ignore
 import {nanoid} from "nanoid/async/index.native.js";
 import {createTable, createTableContent, Table} from "./src/utils/TableUtils";
 import {handleUpdate} from "./src/utils/Utils";
 import {UtilStyles} from "./src/styles/UtilStyles";
+import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
+import ActionContextScreen from "./src/actions/ActionContextScreen";
 
 export default function App() {
     const [id, setId] = useState("");
     const [tables, setTables] = useState([] as Table[]);
     const [loaded, setLoaded] = useState(false);
+
+    const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
 
     // Load Session from storage
     useEffect(() => {
@@ -57,7 +60,7 @@ export default function App() {
         }
     });
 
-    if (!loaded) {
+    if (!loaded || !fontLoaded) {
         return (
             <View style={UtilStyles.container}>
                 <Text>Loading Session</Text>
@@ -83,9 +86,9 @@ export default function App() {
                                        swipeEnabled={true}
                                        tabBarPosition={"bottom"}
                                        backBehavior={"initialRoute"}>
-                            <Tab.Screen name={"Tables"} component={TableScreen} options={{ title: 'Tables' }}/>
-                            <Tab.Screen name={"Roll"} component={HomeScreen} options={{ title: 'Roll' }}/>
-                            <Tab.Screen name={"Actions"} component={ActionScreen} options={{ title: 'Actions' }}/>
+                            <Tab.Screen name={"Tables"} component={TableContextScreen} options={{ title: 'Tables' }}/>
+                            <Tab.Screen name={"Roll"} component={RollScreen} options={{ title: 'Roll' }}/>
+                            <Tab.Screen name={"Actions"} component={ActionContextScreen} options={{ title: 'Actions' }}/>
                         </Tab.Navigator>
                     </NavigationContainer>
                 </SafeAreaProvider>

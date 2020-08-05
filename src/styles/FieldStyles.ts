@@ -16,7 +16,7 @@ export const FieldStyles = StyleSheet.create<IFieldStyles>( {
         marginBottom: 5,
     },
     label: {
-        fontWeight: "bold",
+        fontFamily: "Lato_700Bold",
     },
     btn: {
         alignItems: "stretch",

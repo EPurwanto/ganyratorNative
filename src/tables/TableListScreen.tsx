@@ -3,7 +3,7 @@ import AppContext from "../utils/AppContext";
 import {View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 import {Table} from "../utils/TableUtils";
-import ListEntry from "../utils/list/ListEntry";
+import ListEntry from "../utils/component/ListEntry";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {TablesParamList} from "./TableContextScreen";

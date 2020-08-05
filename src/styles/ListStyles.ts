@@ -15,11 +15,10 @@ export interface IListStyles {
 export const ListStyles = StyleSheet.create<IListStyles>({
     // ListView Styles
     section: {
-
     },
     sectionTitle: {
         fontSize: fontSize.large,
-        fontWeight: "bold",
+        fontFamily: "Lato_700Bold",
     },
     item: {
         paddingVertical: 5,
@@ -32,7 +31,7 @@ export const ListStyles = StyleSheet.create<IListStyles>({
     },
     itemTitle: {
         fontSize: fontSize.medium,
-        fontWeight: "bold",
+        fontFamily: "Lato_700Bold",
     },
     itemSubtitle: {
         fontSize: fontSize.small,

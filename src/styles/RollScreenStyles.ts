@@ -14,6 +14,7 @@ export interface IRollScreenStyles {
     picker: ViewStyle,
     pickerBtn: ViewStyle,
     rollBtn: ViewStyle,
+    heading: TextStyle,
     helpText: TextStyle,
 }
 
@@ -35,11 +36,11 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
     },
     resultTitle: {
         fontSize: fontSize.large,
-        fontWeight: "bold"
+        fontFamily: "Lato_700Bold",
     },
     resultLabel: {
         fontSize: fontSize.medium,
-        fontWeight: "bold"
+        fontFamily: "Lato_700Bold",
     },
     resultValue: {
         fontSize: fontSize.medium,
@@ -47,7 +48,7 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
     clearButton: {
         position: "absolute",
         right: 0,
-        top: 0,
+        bottom: 0,
     },
     controlArea: {
         // backgroundColor: "#D0D0D0"
@@ -62,6 +63,15 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
         // backgroundColor: "#E0E0E0"
     },
     rollBtn: {
+    },
+    heading: {
+        fontSize: fontSize.title,
+        fontFamily:"Lato_700Bold",
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderColor: colours.border,
+        borderBottomWidth: 2,
+        padding: 3
     },
     helpText: {
         flexGrow: 1,

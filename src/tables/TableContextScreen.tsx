@@ -3,7 +3,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import TableListScreen from "./TableListScreen";
 import TableEditScreen, {IProps as EditScreenProps} from "./TableEditScreen";
 import {createTable, createTableContent, getDummyTable} from "../utils/TableUtils";
-import {TouchButton} from "../utils/TouchButton";
+import {TouchButton} from "../utils/component/TouchButton";
 import AppStyles from "../styles/AppStyles";
 import {handleUpdate} from "../utils/Utils";
 import AppContext from "../utils/AppContext";

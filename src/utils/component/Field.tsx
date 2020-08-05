@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useContext} from "react";
 import {Text, View} from "react-native";
-import AppContext from "./AppContext";
-import AppStyles from "../styles/AppStyles";
+import AppContext from "../AppContext";
+import AppStyles from "../../styles/AppStyles";
 
 interface IProps {
     label: string
