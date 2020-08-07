@@ -32,7 +32,8 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
     },
     resultEntry: {
         borderTopWidth: 1,
-        borderColor: colours.border
+        borderColor: colours.border,
+        paddingVertical: 5,
     },
     resultTitle: {
         fontSize: fontSize.large,
@@ -43,7 +44,6 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
         fontFamily: "Lato_700Bold",
     },
     resultValue: {
-        fontSize: fontSize.medium,
     },
     clearButton: {
         position: "absolute",

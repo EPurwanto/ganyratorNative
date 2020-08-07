@@ -1,16 +1,16 @@
-import {StackNavigationProp} from "@react-navigation/stack";
-import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
+import {RouteProp, useRoute} from "@react-navigation/native";
 import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
 import {ScrollView, Text, TextInput, View} from "react-native";
 import {Field} from "../utils/component/Field";
 import {handleUpdate} from "../utils/Utils";
-import {TouchButton} from "../utils/component/TouchButton";
 import {ActionParamsList} from "./ActionContextScreen";
 import {Action} from "../utils/ActionUtils";
+import {Picker} from "@react-native-community/picker";
+import StyledText from "../utils/component/StyledText";
 
-type ActionEditNavigationProp = StackNavigationProp<ActionParamsList, "Edit">;
+// type ActionEditNavigationProp = StackNavigationProp<ActionParamsList, "Edit">;
 type ActionEditRouteProp = RouteProp<ActionParamsList, "Edit">;
 
 export interface IProps {
@@ -21,7 +21,6 @@ export default function () {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
     const route = useRoute<ActionEditRouteProp>();
-    const navigation = useNavigation<ActionEditNavigationProp>();
 
     const action = route.params.action;
 
@@ -59,15 +58,12 @@ export default function () {
                 />
             </Field>
             <View style={styles.util.row}>
-                <Text style={styles.field.label}>
-                    Weight
-                </Text>
-                <Text style={[styles.field.label, styles.util.txtCenter, styles.util.grow1]}>
-                    Element
-                </Text>
-                <Text style={styles.field.label}>
-                    Action
-                </Text>
+                <StyledText style={[styles.field.label, styles.util.grow1]}>
+                    Field Name
+                </StyledText>
+                <StyledText style={[styles.field.label]}>
+                    Table
+                </StyledText>
             </View>
             {
                 action.contents.map((item) =>
@@ -80,14 +76,22 @@ export default function () {
                                        context.updateActions(action);
                                    }}
                         />
-                        <TextInput value={item.table}
-                                   style={[styles.field.group, styles.util.grow1, styles.field.groupEnd]}
-                                   onChange={(e) => {
-                                       item.table = e.nativeEvent.text;
-                                       action.contents = handleUpdate(action.contents, item);
-                                       context.updateActions(action);
-                                   }}
-                        />
+                        <View style={[styles.field.group, styles.field.groupEnd, styles.util.grow1]}>
+                            <Picker selectedValue={item.table}
+                                    style={[styles.util.picker, styles.util.grow1]}
+                                    itemStyle={[styles.util.pickerItem, styles.util.grow1]}
+                                    onValueChange={(value) => {
+                                        item.table = value as string;
+                                        action.contents = handleUpdate(action.contents, item);
+                                        context.updateActions(action);
+                                    }}>
+                                {
+                                    context.tables.map((t) =>
+                                        <Picker.Item value={t.key} label={t.name} key={t.key}/>
+                                    )
+                                }
+                            </Picker>
+                        </View>
                     </View>
                 )
             }

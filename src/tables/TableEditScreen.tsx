@@ -9,6 +9,7 @@ import {Field} from "../utils/component/Field";
 import AppStyles from "../styles/AppStyles";
 import {handleUpdate} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
+import StyledText from "../utils/component/StyledText";
 
 type TableEditNavigationProp = StackNavigationProp<TablesParamList, "Edit">;
 type TableEditRouteProp = RouteProp<TablesParamList, "Edit">;
@@ -60,15 +61,15 @@ export default function () {
                 />
             </Field>
             <View style={styles.util.row}>
-                <Text style={styles.field.label}>
+                <StyledText style={[styles.field.label]}>
                     Weight
-                </Text>
-                <Text style={[styles.field.label, styles.util.txtCenter, styles.util.grow1]}>
+                </StyledText>
+                <StyledText style={[styles.field.label, styles.util.txtCenter, styles.util.grow1]}>
                     Element
-                </Text>
-                <Text style={styles.field.label}>
+                </StyledText>
+                <StyledText style={[styles.field.label]}>
                     Action
-                </Text>
+                </StyledText>
             </View>
             {
                 table.contents.map((item) =>

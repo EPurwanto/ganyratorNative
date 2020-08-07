@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import {AppState, Text, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
+import StyledText from "../utils/component/StyledText";
 
 interface IProps {
     label: string;
@@ -12,12 +13,12 @@ export default function(props: IProps) {
 
     return (
         <View style={styles.roll.resultEntry}>
-            <Text style={styles.roll.resultTitle}>{props.label}</Text>
+            <StyledText style={[styles.roll.resultTitle]}>{props.label}</StyledText>
             {
                 Array.from(props.values).map(([key, value]) =>
                     <View style={styles.util.row} key={key}>
-                        <Text style={styles.roll.resultLabel}>{key}:</Text>
-                        <Text style={styles.roll.resultValue}>{value}</Text>
+                        <StyledText style={[styles.roll.resultLabel]}>{key}:</StyledText>
+                        <StyledText style={[styles.roll.resultValue]}>{value}</StyledText>
                     </View>
                 )
             }

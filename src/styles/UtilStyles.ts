@@ -13,6 +13,7 @@ export interface IUtilStyles {
     btnPrimary: ViewStyle,
     btnSuccess: ViewStyle,
     btnDanger: ViewStyle,
+    txt: TextStyle,
     txtCenter: TextStyle,
     txtRight: TextStyle,
     txtPrimary: ViewStyle,
@@ -82,6 +83,10 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
     btnDanger: {
         backgroundColor: colours.danger,
         color: "white",
+    },
+    txt: {
+        fontSize: fontSize.medium,
+        fontFamily: "Lato_400Regular",
     },
     txtCenter: {
         textAlign: "center",

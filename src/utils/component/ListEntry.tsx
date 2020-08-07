@@ -3,6 +3,7 @@ import {RectButton} from "react-native-gesture-handler"
 import React, {useContext} from "react";
 import AppStyles from "../../styles/AppStyles";
 import {colours} from "../../styles/UtilStyles";
+import StyledText from "./StyledText";
 
 interface IProps {
     title: string;
@@ -18,8 +19,8 @@ export default function (props: IProps) {
                     onPress={() => props.onPress && props.onPress(props.title)}>
             <View style={styles.list.item}>
                 <View style={styles.list.itemTextContainer}>
-                    <Text style={styles.list.itemTitle}>{props.title}</Text>
-                    <Text style={styles.list.itemSubtitle}>{props.subTitle}</Text>
+                    <StyledText style={[styles.list.itemTitle]}>{props.title}</StyledText>
+                    <StyledText style={[styles.list.itemSubtitle]}>{props.subTitle}</StyledText>
                 </View>
             </View>
         </RectButton>

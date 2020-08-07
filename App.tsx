@@ -11,9 +11,8 @@ import {StatusBar} from "expo-status-bar";
 import TableContextScreen from "./src/tables/TableContextScreen";
 // @ts-ignore
 import {nanoid} from "nanoid/async/index.native.js";
-import {Table} from "./src/utils/TableUtils";
+import {handleUpdateTables, Table} from "./src/utils/TableUtils";
 import {handleUpdate} from "./src/utils/Utils";
-import {UtilStyles} from "./src/styles/UtilStyles";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import ActionContextScreen from "./src/actions/ActionContextScreen";
 import {Action} from "./src/utils/ActionUtils";
@@ -58,9 +57,11 @@ export default function App() {
         }
     });
 
+    const styles = DefaultStyles;
+
     if (!loaded || !fontLoaded) {
         return (
-            <View style={UtilStyles.container}>
+            <View style={styles.util.container}>
                 <Text>Loading Session</Text>
             </View>
         )
@@ -73,10 +74,10 @@ export default function App() {
             actions: actions,
             tables: tables,
             updateActions: ((update, add, remove) => setActions(handleUpdate(actions, update, add, remove))),
-            updateTables: ((update, add, remove) => setTables(handleUpdate(tables, update, add, remove))),
+            updateTables: ((update, add, remove) => setTables(handleUpdateTables(tables, update, add, remove))),
             id: id,
         }}>
-            <AppStyles.Provider value={DefaultStyles}>
+            <AppStyles.Provider value={styles}>
                 <SafeAreaProvider>
                     <NavigationContainer>
                         <StatusBar style="auto" />

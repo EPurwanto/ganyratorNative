@@ -43,6 +43,19 @@ export function getDummyAction(name?: string, desc?: string, contents?: ActionCo
     }
 }
 
+export function groupActions(actions: Action[]) {
+    const actionMap = new Map<string, Action[]>();
+
+    actions.forEach(act => {
+        if (!actionMap.has(act.group)) {
+            actionMap.set(act.group, []);
+        }
+        actionMap.get(act.group)?.push(act);
+    });
+
+    return actionMap;
+}
+
 export function performAction(call: string, action: ActionContent[], tables: Table[], actions: Action[]) {
     let results : ActionResults = {
         root: call,
@@ -50,8 +63,12 @@ export function performAction(call: string, action: ActionContent[], tables: Tab
         key: ""
     };
 
+    console.log("Rolling: ");
+    console.log(action);
+
     action.forEach((act) => {
         if (!act.table) {
+            console.log("Bailing because table was invalid")
             return;
         }
 
@@ -61,13 +78,16 @@ export function performAction(call: string, action: ActionContent[], tables: Tab
             const row = rollOn(table);
 
             if (!row) {
+                console.log("Bailing because result was invalid")
                 return;
             }
 
             if (act.field) {
                 results.values.set(act.field, row.element);
+                console.log("Rolled: " + act.field + ", " + row.element)
             } else {
                 results.values.set(table.name, row.element);
+                console.log("Rolled: " + table.name + ", " + row.element)
             }
 
             let childAct: ActionContent[] | undefined;

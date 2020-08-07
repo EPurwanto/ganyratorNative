@@ -1,5 +1,5 @@
 import {ActionContent} from "./ActionUtils";
-import {Element, getUniqueId, Unique} from "./Utils";
+import {Element, getUniqueId, handleUpdate, Unique} from "./Utils";
 
 export interface TableContent extends Unique{
     weight: number;
@@ -53,6 +53,7 @@ function getTotalWeight(contents: TableContent[]) {
 
 export function rollOn(table: Table) {
     if (!table.totalWeight) {
+        console.log("Bailing because total weight was not calculated")
         return;
     }
 
@@ -62,9 +63,19 @@ export function rollOn(table: Table) {
     for (let i = 0; i < table.contents.length; i++) {
         const row = table.contents[i];
         counter += row.weight;
-        if (counter > roll) {
 
+        if (counter > roll) {
             return row;
         }
     }
+}
+
+export function handleUpdateTables(originalList: Table[], update?: Table | Table[], add?: Table | Table[], remove?: Table | Table[]) {
+    if (update) {
+        const toUpdate = Array.isArray(update) ? update : [update];
+
+        toUpdate.forEach((t) => {t.totalWeight = getTotalWeight(t.contents)})
+    }
+
+    return handleUpdate(originalList, update, add, remove);
 }
