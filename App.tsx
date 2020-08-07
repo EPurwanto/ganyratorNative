@@ -11,15 +11,17 @@ import {StatusBar} from "expo-status-bar";
 import TableContextScreen from "./src/tables/TableContextScreen";
 // @ts-ignore
 import {nanoid} from "nanoid/async/index.native.js";
-import {createTable, createTableContent, Table} from "./src/utils/TableUtils";
+import {Table} from "./src/utils/TableUtils";
 import {handleUpdate} from "./src/utils/Utils";
 import {UtilStyles} from "./src/styles/UtilStyles";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import ActionContextScreen from "./src/actions/ActionContextScreen";
+import {Action} from "./src/utils/ActionUtils";
 
 export default function App() {
     const [id, setId] = useState("");
     const [tables, setTables] = useState([] as Table[]);
+    const [actions, setActions] = useState([] as Action[])
     const [loaded, setLoaded] = useState(false);
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
@@ -27,32 +29,28 @@ export default function App() {
     // Load Session from storage
     useEffect(() => {
         SessionStorage.Load()
-            // .then((loadSesh) => {    // Load delaying debug stuff
-            //     return new Promise<ISession>(resolve => {
-            //         setTimeout(() => resolve(loadSesh), 1000)
-            //     })
-            // })
             .then(loadSesh => {
+                setId(loadSesh.id);
                 setTables(loadSesh.tables);
+                setActions(loadSesh.actions);
                 setLoaded(true);
             })
             .catch((e)=> {
                 console.log(e);
-                Promise.all(
-                    [sampleTables()
-                            .then(ts => setTables(ts)),
-                        nanoid()
-                            .then((id: string) => setId(id))
-                    ]
-                ).then(() => setLoaded(true))
+                nanoid()
+                    .then((id: string) => {
+                        setId(id);
+                        setLoaded(true)
+                    })
             });
-    }, [id]);
+    }, []);
 
     // Save Session every change
     useEffect(() => {
         if (loaded) {
             SessionStorage.Save({
                 id: id,
+                actions: actions,
                 tables: tables,
             }).catch((e) => {
                 console.log("Save Error: " + e);
@@ -72,8 +70,9 @@ export default function App() {
 
     return (
         <AppContext.Provider value={{
+            actions: actions,
             tables: tables,
-            actions: [],
+            updateActions: ((update, add, remove) => setActions(handleUpdate(actions, update, add, remove))),
             updateTables: ((update, add, remove) => setTables(handleUpdate(tables, update, add, remove))),
             id: id,
         }}>
@@ -95,33 +94,4 @@ export default function App() {
             </AppStyles.Provider>
         </AppContext.Provider>
     );
-}
-
-async function sampleTables(): Promise<Table[]> {
-    return [
-        await createTable([], "Test 1", "first test table", [
-            await createTableContent([], "Hello", 10),
-            await createTableContent([], "Hi", 5),
-            await createTableContent([], "Howdy", 2),
-            await createTableContent([], "G'day"),
-        ]),
-        await createTable([], "Test 2", "second test table", [
-            await createTableContent([], "Hello"),
-            await createTableContent([], "Hi"),
-            await createTableContent([], "Howdy"),
-            await createTableContent([], "G'day"),
-        ]),
-        await createTable([], "Test 3", "third test table", [
-            await createTableContent([], "Hello"),
-            await createTableContent([], "Hi"),
-            await createTableContent([], "Howdy"),
-            await createTableContent([], "G'day"),
-        ]),
-        await createTable([], "Test 4", "fourth test table", [
-            await createTableContent([], "Hello"),
-            await createTableContent([], "Hi"),
-            await createTableContent([], "Howdy"),
-            await createTableContent([], "G'day"),
-        ]),
-    ]
 }

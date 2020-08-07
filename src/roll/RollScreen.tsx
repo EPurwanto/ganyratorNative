@@ -67,7 +67,10 @@ export default function () {
                 <TouchButton style={[styles.field.base, styles.util.btnDanger]}
                              label={"Clear Session"}
                              labelStyle={styles.util.txtDanger}
-                             onPress={() => SessionStorage.Clear()}/>
+                             onPress={() => {
+                                 context.updateActions(undefined, undefined, context.actions);
+                                 context.updateTables(undefined, undefined, context.tables);
+                             }}/>
             </View>
         </SafeAreaView>
     )

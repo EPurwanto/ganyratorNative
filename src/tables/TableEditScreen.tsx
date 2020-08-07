@@ -49,6 +49,16 @@ export default function () {
                            }}
                 />
             </Field>
+            <Field label={"Group: "}>
+                <TextInput style={[styles.field.group]}
+                           maxLength={60}
+                           value={table.group}
+                           onChange={(e) => {
+                               table.group = e.nativeEvent.text;
+                               context.updateActions(table);
+                           }}
+                />
+            </Field>
             <View style={styles.util.row}>
                 <Text style={styles.field.label}>
                     Weight

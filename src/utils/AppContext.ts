@@ -4,8 +4,7 @@ import {Table} from "./TableUtils";
 import {Action} from "./ActionUtils";
 
 export interface IContext extends ISession {
-    actions: Action[],
-    // updateActions: (add?: Action, remove?: Action) => void;
+    updateActions: (update?: Action | Action[], add?: Action | Action[], remove?: Action | Action[]) => void;
     updateTables: (update?: Table | Table[], add?: Table | Table[], remove?: Table | Table[]) => void;
 }
 
@@ -13,6 +12,7 @@ const AppContext = React.createContext<IContext>({
     id: "",
     actions: [],
     tables: [],
+    updateActions: () => {},
     updateTables: () => {},
 });
 

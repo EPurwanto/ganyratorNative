@@ -1,9 +1,11 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import {Table} from "./TableUtils";
+import {Action} from "./ActionUtils";
 
 
 export interface ISession {
     id: string;
+    actions: Action[];
     tables: Table[];
 }
 
