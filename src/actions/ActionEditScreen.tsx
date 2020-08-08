@@ -2,16 +2,16 @@ import {RouteProp, useRoute} from "@react-navigation/native";
 import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
-import {ScrollView, Text, TextInput, View} from "react-native";
+import {ScrollView, TextInput, View} from "react-native";
 import {Field} from "../utils/component/Field";
 import {handleUpdate} from "../utils/Utils";
-import {ActionParamsList} from "./ActionContextScreen";
 import {Action} from "../utils/ActionUtils";
-import {Picker} from "@react-native-community/picker";
 import StyledText from "../utils/component/StyledText";
+import CustomPicker from "../utils/component/CustomPicker";
+import {StackParamList} from "../../App";
 
 // type ActionEditNavigationProp = StackNavigationProp<ActionParamsList, "Edit">;
-type ActionEditRouteProp = RouteProp<ActionParamsList, "Edit">;
+type ActionEditRouteProp = RouteProp<StackParamList, "ActionEdit">;
 
 export interface IProps {
     action: Action;
@@ -76,22 +76,29 @@ export default function () {
                                        context.updateActions(action);
                                    }}
                         />
-                        <View style={[styles.field.group, styles.field.groupEnd, styles.util.grow1]}>
-                            <Picker selectedValue={item.table}
-                                    style={[styles.util.picker, styles.util.grow1]}
-                                    itemStyle={[styles.util.pickerItem, styles.util.grow1]}
-                                    onValueChange={(value) => {
-                                        item.table = value as string;
-                                        action.contents = handleUpdate(action.contents, item);
-                                        context.updateActions(action);
-                                    }}>
-                                {
-                                    context.tables.map((t) =>
-                                        <Picker.Item value={t.key} label={t.name} key={t.key}/>
-                                    )
-                                }
-                            </Picker>
-                        </View>
+                        <CustomPicker items={context.tables.map(table => ({value: table.key, label: table.name, key: table.key}))}
+                                      style={[styles.field.group, styles.field.groupEnd, styles.util.grow1]}
+                                      pickerStyle={styles.util.grow1}
+                                      itemStyle={styles.util.grow1}
+                                      prompt={"Select a table"}
+                                      selectedValue={item.table}
+                                      onValueChange={(value) => {
+                                          item.table = value;
+                                          action.contents = handleUpdate(action.contents, item);
+                                          context.updateActions(action);
+                                      }}/>
+                        {/*<View style={}>*/}
+                        {/*    <Picker selectedValue={item.table}*/}
+                        {/*            style={[styles.util.picker, ]}*/}
+                        {/*            itemStyle={[styles.util.pickerItem, styles.util.grow1]}*/}
+                        {/*            onValueChange={}>*/}
+                        {/*        {*/}
+                        {/*            context.tables.map((t) =>*/}
+                        {/*                <Picker.Item value={t.key} label={t.name} key={t.key}/>*/}
+                        {/*            )*/}
+                        {/*        }*/}
+                        {/*    </Picker>*/}
+                        {/*</View>*/}
                     </View>
                 )
             }

@@ -1,18 +1,16 @@
 import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
-import {ScrollView, Text, TextInput, View} from "react-native";
+import {ScrollView, TextInput, View} from "react-native";
 import {Table} from "../utils/TableUtils";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {TablesParamList} from "./TableContextScreen";
-import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
+import {RouteProp, useRoute} from "@react-navigation/native";
 import {Field} from "../utils/component/Field";
 import AppStyles from "../styles/AppStyles";
 import {handleUpdate} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
 import StyledText from "../utils/component/StyledText";
+import {StackParamList} from "../../App";
 
-type TableEditNavigationProp = StackNavigationProp<TablesParamList, "Edit">;
-type TableEditRouteProp = RouteProp<TablesParamList, "Edit">;
+type TableEditRouteProp = RouteProp<StackParamList, "TableEdit">;
 
 export interface IProps {
     table: Table;
@@ -22,7 +20,6 @@ export default function () {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
     const route = useRoute<TableEditRouteProp>();
-    const navigation = useNavigation<TableEditNavigationProp>();
 
     const table = route.params.table;
     // const contents = [...table.contents, ...table.contents, ...table.contents, ...table.contents]

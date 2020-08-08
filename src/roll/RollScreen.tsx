@@ -11,6 +11,7 @@ import {find, getUniqueId} from "../utils/Utils";
 import {Picker} from "@react-native-community/picker";
 import {act} from "react-dom/test-utils";
 import StyledText from "../utils/component/StyledText";
+import CustomPicker from "../utils/component/CustomPicker";
 
 
 export default function () {
@@ -26,14 +27,9 @@ export default function () {
         key: "T_" + t.key,
         contents: [{table: t.key, key: "T_" + t.key}],
     }))
-    console.log(context.actions);
-    console.log(context.tables);
-    console.log(tableActions);
     const actions = [...context.actions, ...tableActions];
 
-
     return <SafeAreaView style={styles.util.container}>
-        <StyledText style={[styles.roll.heading]}>gANYrator</StyledText>
         <View style={styles.roll.resultArea}>
             <FlatList inverted={true}
                       contentContainerStyle={styles.roll.resultList}
@@ -52,21 +48,28 @@ export default function () {
 
         <View style={styles.roll.controlArea}>
             <View style={[styles.field.base, styles.util.row]}>
-                <View style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}>
-                    <Picker selectedValue={selected}
-                            prompt={"TODO Pick a better prompt"}
-                            onValueChange={(itemValue, itemIndex) => setSelected(itemValue as string)}
-                            style={[styles.util.picker, styles.util.grow1]}
-                            itemStyle={[styles.util.pickerItem, styles.util.grow1]}>
-                        {
-                            actions.length > 0 ?
-                                actions.map((a) =>
-                                    <Picker.Item label={a.name} value={a.key} key={a.key}/>
-                                ):
-                                <Picker.Item label={"Nothing"} value={""}/>
-                        }
-                    </Picker>
-                </View>
+                <CustomPicker items={actions.map((a) => ({key: a.key, label: a.name, value: a.key}))}
+                              style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}
+                              pickerStyle={[styles.util.grow1]}
+                              itemStyle={[styles.util.grow1]}
+                              prompt={"Select an action to perform"}
+                              selectedValue={selected}
+                              onValueChange={value => setSelected(value)}/>
+                {/*<View style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}>*/}
+                {/*    <Picker selectedValue={selected}*/}
+                {/*            prompt={"TODO Pick a better prompt"}*/}
+                {/*            onValueChange={(itemValue, itemIndex) => setSelected(itemValue as string)}*/}
+                {/*            style={[styles.util.picker, styles.util.grow1]}*/}
+                {/*            itemStyle={[styles.util.pickerItem, styles.util.grow1]}>*/}
+                {/*        {*/}
+                {/*            actions.length > 0 ?*/}
+                {/*                actions.map((a) =>*/}
+                {/*                    <Picker.Item label={a.name} value={a.key} key={a.key}/>*/}
+                {/*                ):*/}
+                {/*                <Picker.Item label={"Nothing"} value={""}/>*/}
+                {/*        }*/}
+                {/*    </Picker>*/}
+                {/*</View>*/}
                 <TouchButton style={[styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
                              label={"Roll"}
                              labelStyle={styles.util.txtPrimary}

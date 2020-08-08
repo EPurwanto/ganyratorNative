@@ -3,19 +3,25 @@ import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
 import {NavigationContainer} from "@react-navigation/native";
-import RollScreen from "./src/roll/RollScreen";
 import AppStyles, {DefaultStyles} from "./src/styles/AppStyles";
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
-import TableContextScreen from "./src/tables/TableContextScreen";
 // @ts-ignore
 import {nanoid} from "nanoid/async/index.native.js";
 import {handleUpdateTables, Table} from "./src/utils/TableUtils";
 import {handleUpdate} from "./src/utils/Utils";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
-import ActionContextScreen from "./src/actions/ActionContextScreen";
 import {Action} from "./src/utils/ActionUtils";
+import {createStackNavigator} from "@react-navigation/stack";
+import ActionEditScreen, {IProps as ActionEditProps} from "./src/actions/ActionEditScreen";
+import TableEditScreen, {IProps as TableEditProps} from "./src/tables/TableEditScreen";
+import MainPanel, {IProps as MainPanelProps} from "./src/MainPanel";
+
+export type StackParamList = {
+    MainPanel: MainPanelProps;
+    ActionEdit: ActionEditProps;
+    TableEdit: TableEditProps;
+}
 
 export default function App() {
     const [id, setId] = useState("");
@@ -66,8 +72,7 @@ export default function App() {
             </View>
         )
     }
-
-    const Tab = createMaterialTopTabNavigator();
+    const Stack = createStackNavigator<StackParamList>();
 
     return (
         <AppContext.Provider value={{
@@ -81,15 +86,18 @@ export default function App() {
                 <SafeAreaProvider>
                     <NavigationContainer>
                         <StatusBar style="auto" />
-                        <Tab.Navigator initialRouteName={"Roll"}
-                                       style={{backgroundColor: "#000000"}}
-                                       swipeEnabled={true}
-                                       tabBarPosition={"bottom"}
-                                       backBehavior={"initialRoute"}>
-                            <Tab.Screen name={"Tables"} component={TableContextScreen} options={{ title: 'Tables' }}/>
-                            <Tab.Screen name={"Roll"} component={RollScreen} options={{ title: 'Roll' }}/>
-                            <Tab.Screen name={"Actions"} component={ActionContextScreen} options={{ title: 'Actions' }}/>
-                        </Tab.Navigator>
+                        <Stack.Navigator>
+                            <Stack.Screen name={"MainPanel"}
+                                          component={MainPanel}
+                                          options={{
+                                              headerTitle: "gANYrator",
+                                              headerTitleStyle: styles.roll.heading,
+                                          }}/>
+                            <Stack.Screen name={"ActionEdit"}
+                                          component={ActionEditScreen}/>
+                            <Stack.Screen name={"TableEdit"}
+                                          component={TableEditScreen}/>
+                        </Stack.Navigator>
                     </NavigationContainer>
                 </SafeAreaProvider>
             </AppStyles.Provider>

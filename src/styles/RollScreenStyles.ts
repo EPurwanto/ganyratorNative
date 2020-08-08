@@ -69,9 +69,6 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
         fontFamily:"Lato_700Bold",
         textAlign: "center",
         textAlignVertical: "center",
-        borderColor: colours.border,
-        borderBottomWidth: 2,
-        padding: 3
     },
     helpText: {
         flexGrow: 1,

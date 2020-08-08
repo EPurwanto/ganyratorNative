@@ -2,14 +2,15 @@ import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
 import {View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
-import {Table} from "../utils/TableUtils";
+import {createTable, Table} from "../utils/TableUtils";
 import ListEntry from "../utils/component/ListEntry";
-import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {TablesParamList} from "./TableContextScreen";
+import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
 import AppStyles from "../styles/AppStyles";
+import {MainPanelNavProp, MainPanelParamList} from "../MainPanel";
+import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
+import {TouchButton} from "../utils/component/TouchButton";
 
-type TableListNavigationProp = StackNavigationProp<TablesParamList, "List">;
+type TableListNavigationProp = CompositeNavigationProp<MainPanelNavProp, MaterialTopTabNavigationProp<MainPanelParamList, "Tables">>;
 
 export default function () {
     const context = useContext(AppContext);
@@ -23,10 +24,17 @@ export default function () {
                                  <ListEntry title={item.name}
                                             subTitle={item.desc}
                                             key={item.key}
-                                            onPress={() => navigation.navigate("Edit", {table: item})}
+                                            onPress={() => navigation.push("TableEdit", {table: item})}
                                  />
-                             }
-            />
+                             }/>
+            <TouchButton style={[styles.util.btnPrimary]}
+                         label={"Add"}
+                         labelStyle={styles.util.txtPrimary}
+                         onPress={() => {
+                             createTable(context.tables).then((table) => {
+                                 context.updateTables(undefined, table);
+                             });
+                         }}/>
         </View>
     )
 }

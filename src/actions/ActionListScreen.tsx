@@ -1,16 +1,18 @@
 import React, {useContext} from "react";
 import {View} from "react-native";
-import AppStyles from "../styles/AppStyles";
-import {StackNavigationProp} from "@react-navigation/stack";
-import {TablesParamList} from "../tables/TableContextScreen";
-import AppContext from "../utils/AppContext";
-import {useNavigation} from "@react-navigation/native";
 import {FlatList} from "react-native-gesture-handler";
+import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
+import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
+import AppStyles from "../styles/AppStyles";
+import AppContext from "../utils/AppContext";
 import ListEntry from "../utils/component/ListEntry";
-import {Action} from "../utils/ActionUtils";
-import {ActionParamsList} from "./ActionContextScreen";
+import {Action, createAction, createActionContent, performAction} from "../utils/ActionUtils";
+import {MainPanelNavProp, MainPanelParamList} from "../MainPanel";
+import {TouchButton} from "../utils/component/TouchButton";
+import {find, getUniqueId} from "../utils/Utils";
+import {createTable} from "../utils/TableUtils";
 
-type ActionListNavigationProp = StackNavigationProp<ActionParamsList, "List">;
+type ActionListNavigationProp = CompositeNavigationProp<MainPanelNavProp, MaterialTopTabNavigationProp<MainPanelParamList, "Actions">>;
 
 export default function () {
     const context = useContext(AppContext);
@@ -20,14 +22,24 @@ export default function () {
     return (
         <View style={styles.util.container}>
             <FlatList<Action> data={context.actions}
-                             renderItem={({item}) =>
-                                 <ListEntry title={item.name}
-                                            subTitle={item.desc}
-                                            key={item.key}
-                                            onPress={() => navigation.navigate("Edit", {action: item})}
-                                 />
-                             }
+                              renderItem={({item}) =>
+                                  <ListEntry title={item.name}
+                                             subTitle={item.desc}
+                                             key={item.key}
+                                             onPress={() => navigation.push("ActionEdit", {action: item})}
+                                  />
+                              }
             />
+            <TouchButton style={[styles.util.btnPrimary]}
+                         label={"Add"}
+                         labelStyle={styles.util.txtPrimary}
+                         onPress={() => {
+                             console.log("creating action");
+                             createAction(context.actions).then((action) => {
+                                 console.log("Created " + action.key);
+                                 context.updateActions(undefined, action);
+                             });
+                         }}/>
         </View>
     )
 }
