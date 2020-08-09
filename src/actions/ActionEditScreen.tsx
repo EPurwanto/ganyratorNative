@@ -7,9 +7,10 @@ import {Field} from "../utils/component/Field";
 import {handleUpdate} from "../utils/Utils";
 import {Action, createActionContent} from "../utils/ActionUtils";
 import StyledText from "../utils/component/StyledText";
-import CustomPicker from "../utils/component/CustomPicker";
+import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker";
 import {StackParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
+import ActionContentEditor from "./ActionContentEditor";
 
 // type ActionEditNavigationProp = StackNavigationProp<ActionParamsList, "Edit">;
 type ActionEditRouteProp = RouteProp<StackParamList, "ActionEdit">;
@@ -59,27 +60,15 @@ export default function () {
                 </View>
                 {
                     action.contents.map((item) =>
-                        <View key={item.key} style={[styles.util.row, styles.field.base]}>
-                            <TextInput value={item.field}
-                                       style={[styles.field.group, styles.util.grow1, styles.field.groupStart]}
-                                       onChange={(e) => {
-                                           item.field = e.nativeEvent.text;
-                                           action.contents = handleUpdate(action.contents, item);
-                                           context.updateActions(action);
-                                       }}
-                            />
-                            <CustomPicker items={context.tables.map(table => ({value: table.key, label: table.name, key: table.key}))}
-                                          style={[styles.field.group, styles.field.groupEnd, styles.util.grow1]}
-                                          pickerStyle={styles.util.grow1}
-                                          itemStyle={styles.util.grow1}
-                                          prompt={"Select a table"}
-                                          selectedValue={item.table}
-                                          onValueChange={(value) => {
-                                              item.table = value;
-                                              action.contents = handleUpdate(action.contents, item);
-                                              context.updateActions(action);
-                                          }}/>
-                        </View>
+                        <ActionContentEditor field={item.field}
+                                             table={item.table}
+                                             key={item.key}
+                                             onChange={((field, table) => {
+                                                 item.field = field;
+                                                 item.table = table;
+                                                 action.contents = handleUpdate(action.contents, item);
+                                                 context.updateActions(action);
+                                             })}/>
                     )
                 }
             </ScrollView>

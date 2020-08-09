@@ -7,7 +7,7 @@ import {Action, ActionResults, performAction} from "../utils/ActionUtils";
 import RollResults from "./RollResults";
 import {find, getUniqueId} from "../utils/Utils";
 import StyledText from "../utils/component/StyledText";
-import CustomPicker from "../utils/component/CustomPicker";
+import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker";
 
 
 export default function () {
@@ -45,7 +45,7 @@ export default function () {
 
             <View style={styles.roll.controlArea}>
                 <View style={[styles.field.base, styles.util.row]}>
-                    <CustomPicker items={actions.map((a) => ({key: a.key, label: a.name, value: a.key}))}
+                    <CustomPicker items={elementToPickerItem(actions)}
                                   style={[styles.field.group, styles.field.groupStart, styles.util.grow1]}
                                   pickerStyle={[styles.util.grow1]}
                                   itemStyle={[styles.util.grow1]}
@@ -62,6 +62,7 @@ export default function () {
                                          console.log("Couldn't find action " + selected);
                                          return;
                                      }
+                                     console.log("Starting batch roll: ")
 
                                      const outcome = performAction(act.name, act.contents, context.tables, context.actions);
                                      getUniqueId(results).then((id) => {

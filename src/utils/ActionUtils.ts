@@ -1,5 +1,6 @@
 import {Element, find, getUniqueId, Unique} from "./Utils";
 import {rollOn, Table} from "./TableUtils";
+import {PickerItem} from "./component/CustomPicker";
 
 export interface ActionContent extends Unique{
     table?: string;

@@ -2,14 +2,16 @@ import React, {useContext} from "react";
 import AppContext from "../utils/AppContext";
 import {ScrollView, TextInput, View} from "react-native";
 import {createTableContent, Table} from "../utils/TableUtils";
-import {RouteProp, useRoute} from "@react-navigation/native";
+import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import {Field} from "../utils/component/Field";
 import AppStyles from "../styles/AppStyles";
 import {handleUpdate} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
 import StyledText from "../utils/component/StyledText";
 import {StackParamList} from "../MainPanel";
+import {StackNavigationProp} from "@react-navigation/stack";
 
+type TableEditNavigationProp = StackNavigationProp<StackParamList, "TableEdit">
 type TableEditRouteProp = RouteProp<StackParamList, "TableEdit">;
 
 export interface IProps {
@@ -19,6 +21,7 @@ export interface IProps {
 export default function () {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
+    const navigation = useNavigation<TableEditNavigationProp>();
     const route = useRoute<TableEditRouteProp>();
 
     const table = route.params.table;
@@ -60,34 +63,45 @@ export default function () {
                     </StyledText>
                 </View>
                 {
-                    table.contents.map((item) =>
-                        <View key={item.key} style={[styles.util.row, styles.field.base]}>
-                            <TextInput value={item.weight.toString()}
-                                       maxLength={2}
-                                       style={[styles.field.group, styles.field.groupStart, styles.util.txtRight, styles.util.w55]}
-                                       keyboardType={"number-pad"}
-                                       onChange={(e) => {
-                                           if (e.nativeEvent.text) {
-                                               item.weight = parseInt(e.nativeEvent.text);
+                    table.contents.map((item) => {
+                        const buttonStyle = item.action ? styles.util.btnSuccess : styles.util.btnPrimary;
+                        const labelStyle = item.action ? styles.util.txtSuccess : styles.util.txtPrimary;
+                        const buttonLabel = item.action ? "Yes" : "No";
+
+                        return (
+                            <View key={item.key} style={[styles.util.row, styles.field.base]}>
+                                <TextInput value={item.weight.toString()}
+                                           maxLength={2}
+                                           style={[styles.field.group, styles.field.groupStart, styles.util.txtRight, styles.util.w55]}
+                                           keyboardType={"number-pad"}
+                                           onChange={(e) => {
+                                               if (e.nativeEvent.text) {
+                                                   item.weight = parseInt(e.nativeEvent.text);
+                                                   table.contents = handleUpdate(table.contents, item);
+                                                   context.updateTables(table);
+                                               }
+                                           }}
+                                />
+                                <TextInput value={item.element.toString()}
+                                           style={[styles.field.group, styles.util.grow1, styles.field.groupMiddle]}
+                                           onChange={(e) => {
+                                               item.element = e.nativeEvent.text;
                                                table.contents = handleUpdate(table.contents, item);
                                                context.updateTables(table);
-                                           }
-                                       }}
-                            />
-                            <TextInput value={item.element.toString()}
-                                       style={[styles.field.group, styles.util.grow1, styles.field.groupMiddle]}
-                                       onChange={(e) => {
-                                           item.element = e.nativeEvent.text;
-                                           table.contents = handleUpdate(table.contents, item);
-                                           context.updateTables(table);
-                                       }}
-                            />
-                            <TouchButton style={[styles.util.btnSuccess, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
-                                         onPress={()=>{}}
-                                         label={"Yes"}
-                                         labelStyle={styles.util.txtSuccess}/>
-                        </View>
-                    )
+                                           }}
+                                />
+                                <TouchButton style={[buttonStyle, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
+                                             onPress={()=>{
+                                                 navigation.push("TableChainAction", {
+                                                     table: table,
+                                                     item: item,
+                                                 })
+                                             }}
+                                             label={buttonLabel}
+                                             labelStyle={labelStyle}/>
+                            </View>
+                        )
+                    })
                 }
             </ScrollView>
             <TouchButton style={[styles.util.btnPrimary]}

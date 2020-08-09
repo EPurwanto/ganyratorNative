@@ -2,6 +2,8 @@ import React, {FunctionComponent, useContext} from "react";
 import {StyleProp, TextStyle, View, ViewProps} from "react-native";
 import {Picker} from "@react-native-community/picker";
 import AppStyles from "../../styles/AppStyles";
+import {Action} from "../ActionUtils";
+import {Element, Unique} from "../Utils";
 
 export interface PickerItem {
     label: string;
@@ -46,3 +48,17 @@ export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, it
 };
 
 export default CustomPicker;
+
+
+export function elementToPickerItem<T extends Element & Unique>(action: T | T[]): PickerItem[] {
+    let list = action;
+    if (!Array.isArray(list)) {
+        list = [list];
+    }
+
+    return list.map(act => ({
+        label: act.name,
+        value: act.key,
+        key: act.key,
+    }))
+}

@@ -9,6 +9,7 @@ import {TouchButton} from "./utils/component/TouchButton";
 import TableEditScreen, {IProps as TableEditProps} from "./tables/TableEditScreen";
 import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
+import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -28,7 +29,6 @@ function TabPanel(props: TabPanelProps) {
         <Tab.Navigator initialRouteName={"Roll"}
                        style={{backgroundColor: "#000000"}}
                        swipeEnabled={true}
-            // tabBarPosition={"bottom"}
                        backBehavior={"initialRoute"}>
             <Tab.Screen name={"Tables"} component={TableListScreen} options={{ title: 'Tables' }}/>
             <Tab.Screen name={"Roll"} component={RollScreen} options={{ title: 'Roll' }}/>
@@ -41,6 +41,7 @@ export type StackParamList = {
     TabPanel: TabPanelProps;
     ActionEdit: ActionEditProps;
     TableEdit: TableEditProps;
+    TableChainAction: TableChainProps;
 }
 
 export interface StackPanelProps {
@@ -85,6 +86,11 @@ export default function StackPanel(props: StackPanelProps) {
                                                    navigation.pop();
                                                }}/>
                               )
+                          })}/>
+            <Stack.Screen name={"TableChainAction"}
+                          component={TableChainActionEditScreen}
+                          options={({ navigation, route}) => ({
+                              title: `Action: ${route.params.item.element}`,
                           })}/>
         </Stack.Navigator>
     )
