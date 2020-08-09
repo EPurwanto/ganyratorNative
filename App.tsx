@@ -28,8 +28,8 @@ export default function App() {
         SessionStorage.Load()
             .then(loadSesh => {
                 setId(loadSesh.id);
-                setTables(loadSesh.tables);
-                setActions(loadSesh.actions);
+                setTables(loadSesh.tables ?? []);
+                setActions(loadSesh.actions ?? []);
                 setLoaded(true);
             })
             .catch((e)=> {
@@ -37,7 +37,9 @@ export default function App() {
                 nanoid()
                     .then((id: string) => {
                         setId(id);
-                        setLoaded(true)
+                        setTables([]);
+                        setActions([])
+                        setLoaded(true);
                     })
             });
     }, []);

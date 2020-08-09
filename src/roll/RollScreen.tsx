@@ -1,15 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {FlatList, ScrollView, Text, View} from "react-native";
+import React, {useContext, useState} from "react";
+import {FlatList, View} from "react-native";
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
-import SessionStorage from "../utils/SessionStorage";
 import {TouchButton} from "../utils/component/TouchButton";
-import {Action, ActionResults, groupActions, performAction} from "../utils/ActionUtils";
+import {Action, ActionResults, performAction} from "../utils/ActionUtils";
 import RollResults from "./RollResults";
 import {find, getUniqueId} from "../utils/Utils";
-import {Picker} from "@react-native-community/picker";
-import {act} from "react-dom/test-utils";
 import StyledText from "../utils/component/StyledText";
 import CustomPicker from "../utils/component/CustomPicker";
 
@@ -17,7 +13,7 @@ import CustomPicker from "../utils/component/CustomPicker";
 export default function () {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
-    const [selected, setSelected] = useState(context.tables.length > 0 ? context.tables[0].key : "");
+    const [selected, setSelected] = useState("");
     const [results, setResults] = useState([] as ActionResults[])
 
     const tableActions = context.tables.map<Action>((t) => ({
@@ -60,10 +56,18 @@ export default function () {
                                  label={"Roll"}
                                  labelStyle={styles.util.txtPrimary}
                                  onPress={() => {
-                                     const act = find(actions, selected)!;
+                                     const act = find(actions, selected);
+                                     if (!act)
+                                     {
+                                         console.log("Couldn't find action " + selected);
+                                         return;
+                                     }
+
                                      const outcome = performAction(act.name, act.contents, context.tables, context.actions);
                                      getUniqueId(results).then((id) => {
                                          outcome.key = id;
+                                         const summary = Array.from(outcome.values).map(([key, value]) => `${key}->${value}`).join();
+
                                          setResults([outcome, ...results])
                                      })
                                  }}/>

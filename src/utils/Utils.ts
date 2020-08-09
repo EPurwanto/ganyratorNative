@@ -4,7 +4,6 @@ import {nanoid} from "nanoid/async/index.native.js";
 export interface Element {
     name: string;
     desc: string;
-    group: string;
 }
 
 export interface Unique {
@@ -59,9 +58,9 @@ export function handleUpdate<T extends Unique>(originalList: T[], update?: T | T
 
     if (add) {
         if (Array.isArray(add)) {
-            list.unshift(...add);
+            list.push(...add);
         } else {
-            list.unshift(add);
+            list.push(add);
         }
     }
 

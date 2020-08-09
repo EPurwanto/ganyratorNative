@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {AppState, Text, View} from "react-native";
+import {View} from "react-native";
 import AppStyles from "../styles/AppStyles";
 import StyledText from "../utils/component/StyledText";
 

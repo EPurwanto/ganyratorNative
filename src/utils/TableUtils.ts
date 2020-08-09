@@ -25,7 +25,6 @@ export async function createTable(peers: Table[], name?: string, desc?: string, 
     return {
         name: name || "New Table",
         desc: desc || "Empty Table",
-        group: "",
         totalWeight: getTotalWeight(contents || []),
         contents: contents || [],
         key:  await getUniqueId(peers),
@@ -36,7 +35,6 @@ export function getDummyTable(name?: string, desc?: string, contents?: TableCont
     return {
         name: name || "This is a dummy table",
         desc: desc || "You shouldn't be seeing this",
-        group: "",
         totalWeight: getTotalWeight(contents || []),
         contents: contents || [],
         key:  "NOT A REAL KEY",

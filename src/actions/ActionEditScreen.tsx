@@ -5,7 +5,7 @@ import AppStyles from "../styles/AppStyles";
 import {ScrollView, TextInput, View} from "react-native";
 import {Field} from "../utils/component/Field";
 import {handleUpdate} from "../utils/Utils";
-import {Action, createAction, createActionContent} from "../utils/ActionUtils";
+import {Action, createActionContent} from "../utils/ActionUtils";
 import StyledText from "../utils/component/StyledText";
 import CustomPicker from "../utils/component/CustomPicker";
 import {StackParamList} from "../MainPanel";
@@ -45,16 +45,6 @@ export default function () {
                                value={action.desc}
                                onChange={(e) => {
                                    action.desc = e.nativeEvent.text;
-                                   context.updateActions(action);
-                               }}
-                    />
-                </Field>
-                <Field label={"Group: "}>
-                    <TextInput style={[styles.field.group]}
-                               maxLength={60}
-                               value={action.group}
-                               onChange={(e) => {
-                                   action.group = e.nativeEvent.text;
                                    context.updateActions(action);
                                }}
                     />

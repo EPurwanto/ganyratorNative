@@ -19,18 +19,19 @@ class SessionStorage {
 
         const session = JSON.parse(data) as ISession;
 
-        console.log("Loaded: " + session.id);
+        console.log(`Loaded: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
         return session;
     };
 
     async Save(session: ISession) {
         const data = JSON.stringify(session);
         await AsyncStorage.setItem("session", data);
-        console.log("Saved: " + session.id);
+        console.log(`Saved: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
     };
 
     async Clear() {
-        await AsyncStorage.removeItem("session")
+        console.log("All session data cleared");
+        await AsyncStorage.removeItem("session");
     }
 }
 

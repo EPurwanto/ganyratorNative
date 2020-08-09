@@ -34,7 +34,9 @@ export default function () {
                          labelStyle={styles.util.txtPrimary}
                          onPress={() => {
                              createTable(context.tables).then((table) => {
+                                 console.log("Created table " + table.key);
                                  context.updateTables(undefined, table);
+                                 navigation.push("TableEdit", {table: table});
                              });
                          }}/>
         </View>

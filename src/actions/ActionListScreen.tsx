@@ -6,11 +6,9 @@ import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs"
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import ListEntry from "../utils/component/ListEntry";
-import {Action, createAction, createActionContent, performAction} from "../utils/ActionUtils";
+import {Action, createAction} from "../utils/ActionUtils";
 import {TabPanelNavProp, TabPanelParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
-import {find, getUniqueId} from "../utils/Utils";
-import {createTable} from "../utils/TableUtils";
 
 type ActionListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Actions">>;
 
@@ -37,8 +35,9 @@ export default function () {
                          onPress={() => {
                              console.log("creating action");
                              createAction(context.actions).then((action) => {
-                                 console.log("Created " + action.key);
+                                 console.log("Created action " + action.key);
                                  context.updateActions(undefined, action);
+                                 navigation.push("ActionEdit", {action: action});
                              });
                          }}/>
         </View>
