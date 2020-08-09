@@ -2,7 +2,7 @@ import {StyleSheet, TextStyle, ViewStyle} from "react-native";
 import {colours, fontSize} from "./UtilStyles";
 
 export interface IListStyles {
-    section: ViewStyle,
+    base: ViewStyle,
     sectionTitle: TextStyle,
     item: ViewStyle,
     itemTextContainer: ViewStyle,
@@ -14,7 +14,10 @@ export interface IListStyles {
 
 export const ListStyles = StyleSheet.create<IListStyles>({
     // ListView Styles
-    section: {
+    base: {
+        flexGrow: 1,
+        flexShrink: 1,
+        marginBottom: 8,
     },
     sectionTitle: {
         fontSize: fontSize.large,

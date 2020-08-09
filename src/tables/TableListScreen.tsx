@@ -6,11 +6,11 @@ import {createTable, Table} from "../utils/TableUtils";
 import ListEntry from "../utils/component/ListEntry";
 import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
 import AppStyles from "../styles/AppStyles";
-import {MainPanelNavProp, MainPanelParamList} from "../MainPanel";
+import {TabPanelNavProp, TabPanelParamList} from "../MainPanel";
 import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
 import {TouchButton} from "../utils/component/TouchButton";
 
-type TableListNavigationProp = CompositeNavigationProp<MainPanelNavProp, MaterialTopTabNavigationProp<MainPanelParamList, "Tables">>;
+type TableListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Tables">>;
 
 export default function () {
     const context = useContext(AppContext);
@@ -19,14 +19,16 @@ export default function () {
 
     return (
         <View style={styles.util.container}>
-            <FlatList<Table> data={context.tables}
-                             renderItem={({item}) =>
-                                 <ListEntry title={item.name}
-                                            subTitle={item.desc}
-                                            key={item.key}
-                                            onPress={() => navigation.push("TableEdit", {table: item})}
-                                 />
-                             }/>
+            <View style={styles.list.base}>
+                <FlatList<Table> data={context.tables}
+                                 renderItem={({item}) =>
+                                     <ListEntry title={item.name}
+                                                subTitle={item.desc}
+                                                key={item.key}
+                                                onPress={() => navigation.push("TableEdit", {table: item})}
+                                     />
+                                 }/>
+            </View>
             <TouchButton style={[styles.util.btnPrimary]}
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}

@@ -7,12 +7,12 @@ import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import ListEntry from "../utils/component/ListEntry";
 import {Action, createAction, createActionContent, performAction} from "../utils/ActionUtils";
-import {MainPanelNavProp, MainPanelParamList} from "../MainPanel";
+import {TabPanelNavProp, TabPanelParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import {find, getUniqueId} from "../utils/Utils";
 import {createTable} from "../utils/TableUtils";
 
-type ActionListNavigationProp = CompositeNavigationProp<MainPanelNavProp, MaterialTopTabNavigationProp<MainPanelParamList, "Actions">>;
+type ActionListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Actions">>;
 
 export default function () {
     const context = useContext(AppContext);
@@ -21,15 +21,16 @@ export default function () {
 
     return (
         <View style={styles.util.container}>
-            <FlatList<Action> data={context.actions}
-                              renderItem={({item}) =>
-                                  <ListEntry title={item.name}
-                                             subTitle={item.desc}
-                                             key={item.key}
-                                             onPress={() => navigation.push("ActionEdit", {action: item})}
-                                  />
-                              }
-            />
+            <View style={styles.list.base}>
+                <FlatList<Action> data={context.actions}
+                                  renderItem={({item}) =>
+                                      <ListEntry title={item.name}
+                                                 subTitle={item.desc}
+                                                 key={item.key}
+                                                 onPress={() => navigation.push("ActionEdit", {action: item})}
+                                      />
+                                  }/>
+            </View>
             <TouchButton style={[styles.util.btnPrimary]}
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}

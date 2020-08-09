@@ -22,7 +22,7 @@ export interface IRollScreenStyles {
 export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
     // Roll Screen styles
     resultArea: {
-        marginVertical: 8,
+        paddingBottom: 8,
         flexGrow: 1,
         flexShrink: 1,
     },

@@ -12,16 +12,8 @@ import {handleUpdateTables, Table} from "./src/utils/TableUtils";
 import {handleUpdate} from "./src/utils/Utils";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import {Action} from "./src/utils/ActionUtils";
-import {createStackNavigator} from "@react-navigation/stack";
-import ActionEditScreen, {IProps as ActionEditProps} from "./src/actions/ActionEditScreen";
-import TableEditScreen, {IProps as TableEditProps} from "./src/tables/TableEditScreen";
-import MainPanel, {IProps as MainPanelProps} from "./src/MainPanel";
+import StackPanel from "./src/MainPanel";
 
-export type StackParamList = {
-    MainPanel: MainPanelProps;
-    ActionEdit: ActionEditProps;
-    TableEdit: TableEditProps;
-}
 
 export default function App() {
     const [id, setId] = useState("");
@@ -72,7 +64,6 @@ export default function App() {
             </View>
         )
     }
-    const Stack = createStackNavigator<StackParamList>();
 
     return (
         <AppContext.Provider value={{
@@ -86,18 +77,7 @@ export default function App() {
                 <SafeAreaProvider>
                     <NavigationContainer>
                         <StatusBar style="auto" />
-                        <Stack.Navigator>
-                            <Stack.Screen name={"MainPanel"}
-                                          component={MainPanel}
-                                          options={{
-                                              headerTitle: "gANYrator",
-                                              headerTitleStyle: styles.roll.heading,
-                                          }}/>
-                            <Stack.Screen name={"ActionEdit"}
-                                          component={ActionEditScreen}/>
-                            <Stack.Screen name={"TableEdit"}
-                                          component={TableEditScreen}/>
-                        </Stack.Navigator>
+                        <StackPanel/>
                     </NavigationContainer>
                 </SafeAreaProvider>
             </AppStyles.Provider>
