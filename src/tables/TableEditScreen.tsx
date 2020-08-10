@@ -31,25 +31,23 @@ export default function () {
         <View style={styles.util.container}>
             <ScrollView style={styles.list.base}>
                 <Field label={"Table Name: "}>
-                    <TextInput style={[styles.field.group]}
+                    <TextInput style={[styles.util.txt, styles.field.group]}
                                maxLength={60}
                                value={table.name}
                                onChange={(e) => {
                                    table.name = e.nativeEvent.text;
                                    context.updateTables(table);
-                               }}
-                    />
+                               }}/>
                 </Field>
                 <Field label={"Description: "}>
-                    <TextInput style={[styles.field.group]}
+                    <TextInput style={[styles.util.txt, styles.field.group]}
                                maxLength={400}
                                multiline={true}
                                value={table.desc}
                                onChange={(e) => {
                                    table.desc = e.nativeEvent.text;
                                    context.updateTables(table);
-                               }}
-                    />
+                               }}/>
                 </Field>
                 <View style={styles.util.row}>
                     <StyledText style={[styles.field.label]}>
@@ -72,7 +70,7 @@ export default function () {
                             <View key={item.key} style={[styles.util.row, styles.field.base]}>
                                 <TextInput value={item.weight.toString()}
                                            maxLength={2}
-                                           style={[styles.field.group, styles.field.groupStart, styles.util.txtRight, styles.util.w55]}
+                                           style={[styles.util.txt, styles.util.txtRight, styles.field.group, styles.field.groupStart, styles.util.w55]}
                                            keyboardType={"number-pad"}
                                            onChange={(e) => {
                                                if (e.nativeEvent.text) {
@@ -83,7 +81,7 @@ export default function () {
                                            }}
                                 />
                                 <TextInput value={item.element.toString()}
-                                           style={[styles.field.group, styles.util.grow1, styles.field.groupMiddle]}
+                                           style={[styles.util.txt, styles.field.group, styles.util.grow1, styles.field.groupMiddle]}
                                            onChange={(e) => {
                                                item.element = e.nativeEvent.text;
                                                table.contents = handleUpdate(table.contents, item);

@@ -37,7 +37,7 @@ export const ListStyles = StyleSheet.create<IListStyles>({
         fontFamily: "Lato_700Bold",
     },
     itemSubtitle: {
-        fontSize: fontSize.small,
+        fontSize: fontSize.medium,
         marginHorizontal: 10
     },
     itemActionContainer: {

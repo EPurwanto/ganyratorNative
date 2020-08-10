@@ -24,8 +24,8 @@ export interface IUtilStyles {
 }
 
 export const fontSize = {
-    small: 14,
-    medium: 20,
+    small: 12,
+    medium: 16,
     large: 25,
     title: 30,
 };

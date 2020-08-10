@@ -7,7 +7,6 @@ import {Field} from "../utils/component/Field";
 import {handleUpdate} from "../utils/Utils";
 import {Action, createActionContent} from "../utils/ActionUtils";
 import StyledText from "../utils/component/StyledText";
-import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker";
 import {StackParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import ActionContentEditor from "./ActionContentEditor";
@@ -30,7 +29,7 @@ export default function () {
         <View style={styles.util.container}>
             <ScrollView style={styles.list.base}>
                 <Field label={"Action Name: "}>
-                    <TextInput style={[styles.field.group]}
+                    <TextInput style={[styles.util.txt, styles.field.group]}
                                maxLength={60}
                                value={action.name}
                                onChange={(e) => {
@@ -40,7 +39,7 @@ export default function () {
                     />
                 </Field>
                 <Field label={"Description: "}>
-                    <TextInput style={[styles.field.group]}
+                    <TextInput style={[styles.util.txt, styles.field.group]}
                                maxLength={400}
                                multiline={true}
                                value={action.desc}

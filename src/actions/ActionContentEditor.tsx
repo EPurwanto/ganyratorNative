@@ -18,13 +18,12 @@ export default function(props: IProps) {
     return (
         <View key={props.key} style={[styles.util.row, styles.field.base]}>
             <TextInput value={props.field}
-                       style={[styles.field.group, styles.util.grow1, styles.field.groupStart]}
+                       style={[styles.util.txt, styles.field.group, styles.util.grow1, styles.field.groupStart]}
                        onChange={(e) => {
                            props.onChange(e.nativeEvent.text, props.table);
-                       }}
-            />
+                       }}/>
             <CustomPicker items={elementToPickerItem(context.tables)}
-                          style={[styles.field.group, styles.field.groupEnd, styles.util.grow1]}
+                          style={[styles.util.txt, styles.field.group, styles.field.groupEnd, styles.util.grow1]}
                           pickerStyle={styles.util.grow1}
                           itemStyle={styles.util.grow1}
                           prompt={"Select a table"}

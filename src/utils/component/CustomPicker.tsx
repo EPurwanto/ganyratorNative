@@ -2,7 +2,6 @@ import React, {FunctionComponent, useContext} from "react";
 import {StyleProp, TextStyle, View, ViewProps} from "react-native";
 import {Picker} from "@react-native-community/picker";
 import AppStyles from "../../styles/AppStyles";
-import {Action} from "../ActionUtils";
 import {Element, Unique} from "../Utils";
 
 export interface PickerItem {
