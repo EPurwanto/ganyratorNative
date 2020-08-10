@@ -48,7 +48,7 @@ export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
     clearButton: {
         position: "absolute",
         right: 0,
-        bottom: 0,
+        bottom: 8,
     },
     controlArea: {
         // backgroundColor: "#D0D0D0"

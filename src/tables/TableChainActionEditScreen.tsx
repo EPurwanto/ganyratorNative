@@ -53,8 +53,6 @@ export default function(props: IProps) {
     const table = route.params.table;
     const item = route.params.item;
 
-    console.log(props);
-
     // Figure out initial state
     let startMode = "None"
     if (item.action) {
@@ -67,7 +65,6 @@ export default function(props: IProps) {
         }
     }
     const [mode, setMode] = useState(startMode);
-    console.log(mode);
 
     // create components for current state
     let body = <View/>;
@@ -99,9 +96,9 @@ export default function(props: IProps) {
         case "Create":
             const content = (item.action ?? [])  as ActionContent[];
             body = (
-                <View>
+                <View style={styles.list.base}>
+                    <Text>The following Tables will be rolled upon</Text>
                     <ScrollView style={styles.list.base}>
-                        <Text>The following Tables will be rolled upon</Text>
                         {
                             content.map((actionItem) =>
                                 <ActionContentEditor field={actionItem.field}
@@ -131,7 +128,6 @@ export default function(props: IProps) {
             )
     }
 
-    console.log(body);
     return (
         <View style={styles.util.container}>
             <SegmentedControl values={["None", "Select", "Create"]}

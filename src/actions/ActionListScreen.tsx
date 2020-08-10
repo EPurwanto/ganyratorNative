@@ -25,8 +25,7 @@ export default function () {
                                       <ListEntry title={item.name}
                                                  subTitle={item.desc}
                                                  key={item.key}
-                                                 onPress={() => navigation.push("ActionEdit", {action: item})}
-                                      />
+                                                 onPress={() => navigation.push("ActionEdit", {action: item})}/>
                                   }/>
             </View>
             <TouchButton style={[styles.util.btnPrimary]}

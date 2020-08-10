@@ -10,6 +10,8 @@ import TableEditScreen, {IProps as TableEditProps} from "./tables/TableEditScree
 import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
+import {View} from "react-native";
+import {clone, getUniqueId} from "./utils/Utils";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -65,26 +67,56 @@ export default function StackPanel(props: StackPanelProps) {
                           component={ActionEditScreen}
                           options={({ navigation, route}) => ({
                               headerRight: () => (
-                                  <TouchButton style={[styles.util.btnDanger, styles.util.mr15]}
-                                               label={"Delete"}
-                                               labelStyle={styles.util.txtDanger}
-                                               onPress={() => {
-                                                   context.updateActions(undefined, undefined, route.params.action);
-                                                   navigation.pop();
-                                               }}/>
+                                  <View style={[styles.util.row, styles.util.mr15]}>
+                                      <TouchButton style={[styles.util.btnSuccess]}
+                                                   label={"Copy"}
+                                                   labelStyle={styles.util.txtSuccess}
+                                                   onPress={() => {
+                                                       getUniqueId(context.actions).then((id) => {
+                                                           const copy = clone(route.params.action);
+                                                           copy.name = "Copy of " + copy.name;
+                                                           copy.key = id;
+                                                           context.updateActions(undefined, copy);
+                                                           navigation.pop();
+                                                           navigation.push("ActionEdit", {action: copy})
+                                                       })
+                                                   }}/>
+                                      <TouchButton style={[styles.util.btnDanger, styles.util.mr15]}
+                                                   label={"Delete"}
+                                                   labelStyle={styles.util.txtDanger}
+                                                   onPress={() => {
+                                                       context.updateActions(undefined, undefined, route.params.action);
+                                                       navigation.pop();
+                                                   }}/>
+                                  </View>
                               )
                           })}/>
             <Stack.Screen name={"TableEdit"}
                           component={TableEditScreen}
                           options={({ navigation, route}) => ({
                               headerRight: () => (
-                                  <TouchButton style={[styles.util.btnDanger, styles.util.mr15]}
-                                               label={"Delete"}
-                                               labelStyle={styles.util.txtDanger}
-                                               onPress={() => {
-                                                   context.updateTables(undefined, undefined, route.params.table);
-                                                   navigation.pop();
-                                               }}/>
+                                  <View style={[styles.util.row, styles.util.mr15]}>
+                                      <TouchButton style={[styles.util.btnSuccess]}
+                                                   label={"Copy"}
+                                                   labelStyle={styles.util.txtSuccess}
+                                                   onPress={() => {
+                                                       getUniqueId(context.tables).then((id) => {
+                                                           const copy = clone(route.params.table);
+                                                           copy.name = "Copy of " + copy.name;
+                                                           copy.key = id;
+                                                           context.updateTables(undefined, copy);
+                                                           navigation.pop();
+                                                           navigation.push("TableEdit", {table: copy})
+                                                       })
+                                                   }}/>
+                                      <TouchButton style={[styles.util.btnDanger]}
+                                                   label={"Delete"}
+                                                   labelStyle={styles.util.txtDanger}
+                                                   onPress={() => {
+                                                       context.updateTables(undefined, undefined, route.params.table);
+                                                       navigation.pop();
+                                                   }}/>
+                                  </View>
                               )
                           })}/>
             <Stack.Screen name={"TableChainAction"}

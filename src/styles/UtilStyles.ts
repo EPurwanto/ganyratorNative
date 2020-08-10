@@ -4,11 +4,13 @@ export interface IUtilStyles {
     container: ViewStyle,
     row: ViewStyle,
     grow1: ViewStyle,
+    shrink1: ViewStyle,
     p0: ViewStyle,
     pv0: ViewStyle,
     m0: ViewStyle,
     mr15: ViewStyle,
     w55: ViewStyle,
+    wHalf: ViewStyle,
     btn: ViewStyle,
     btnPrimary: ViewStyle,
     btnSuccess: ViewStyle,
@@ -54,6 +56,9 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
     grow1: {
         flexGrow: 1,
     },
+    shrink1: {
+        flexShrink: 1,
+    },
     p0: {
         padding: 0,
     },
@@ -68,6 +73,9 @@ export const UtilStyles = StyleSheet.create<IUtilStyles>({
     },
     w55: {
         width: 55,
+    },
+    wHalf: {
+        width: "50%",
     },
     btn: {
         padding: 8,

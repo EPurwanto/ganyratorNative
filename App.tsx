@@ -33,7 +33,7 @@ export default function App() {
                 setLoaded(true);
             })
             .catch((e)=> {
-                console.log(e);
+                console.log("Load Error:" + e);
                 nanoid()
                     .then((id: string) => {
                         setId(id);
