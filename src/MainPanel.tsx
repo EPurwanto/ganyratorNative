@@ -10,7 +10,7 @@ import TableEditScreen, {IProps as TableEditProps} from "./tables/TableEditScree
 import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
-import {View} from "react-native";
+import {Image, View} from "react-native";
 import {clone, getUniqueId} from "./utils/Utils";
 
 export type TabPanelParamList = {
@@ -62,6 +62,9 @@ export default function StackPanel(props: StackPanelProps) {
                           options={{
                               headerTitle: "gANYrator",
                               headerTitleStyle: styles.roll.heading,
+                              headerLeft: (props) =>
+                                  <Image source={require("./assets/images/gANYrator_Icon.png")} style={{width: 50, height:50}}/>,
+                              headerLeftContainerStyle: {marginLeft: 15}
                           }}/>
             <Stack.Screen name={"ActionEdit"}
                           component={ActionEditScreen}

@@ -45,7 +45,7 @@ export const highlightUnderlay = "#DDDDDD";
 export const UtilStyles = StyleSheet.create<IUtilStyles>({
     container: {
         flex: 1,
-        marginHorizontal: 15,
+        paddingHorizontal: 15,
         backgroundColor: "#FFFFFF",
         fontSize: fontSize.medium,
         fontFamily: "Lato_400Regular",
