@@ -1,4 +1,5 @@
 import {StyleSheet, TextStyle, ViewStyle} from "react-native";
+import {Theme} from "./AppTheme";
 
 export interface IUtilStyles {
     container: ViewStyle,
@@ -25,101 +26,83 @@ export interface IUtilStyles {
     pickerItem: TextStyle,
 }
 
-export const fontSize = {
-    small: 12,
-    medium: 16,
-    large: 25,
-    title: 30,
-};
-
-export const colours = {
-    primary: "#3d82ff",
-    success: "#28d200",
-    danger: "#cb2005",
-    border: "#000000",
-    highlightUnderlay: "#DDDDDD",
-};
-
-export const highlightUnderlay = "#DDDDDD";
-
-export const UtilStyles = StyleSheet.create<IUtilStyles>({
-    container: {
-        flex: 1,
-        paddingHorizontal: 15,
-        backgroundColor: "#FFFFFF",
-        fontSize: fontSize.medium,
-        fontFamily: "Lato_400Regular",
-    },
-    row: {
-        flexDirection: "row"
-    },
-    grow1: {
-        flexGrow: 1,
-    },
-    shrink1: {
-        flexShrink: 1,
-    },
-    p0: {
-        padding: 0,
-    },
-    pv0: {
-        paddingVertical: 0,
-    },
-    m0: {
-        margin: 0,
-    },
-    mr15: {
-        marginRight: 15,
-    },
-    w55: {
-        width: 55,
-    },
-    wHalf: {
-        width: "50%",
-    },
-    btn: {
-        padding: 8,
-        borderRadius: 8,
-    },
-    btnPrimary: {
-        backgroundColor: colours.primary,
-        color: "white",
-    },
-    btnSuccess: {
-        backgroundColor: colours.success,
-    },
-    btnDanger: {
-        backgroundColor: colours.danger,
-        color: "white",
-    },
-    txt: {
-        fontSize: fontSize.medium,
-        fontFamily: "Lato_400Regular",
-    },
-    txtCenter: {
-        textAlign: "center",
-    },
-    txtRight: {
-        textAlign: "right"
-    },
-    txtPrimary: {
-        color: "white",
-        textAlign: "center"
-    },
-    txtSuccess: {
-        color: "white",
-        textAlign: "center"
-    },
-    txtDanger: {
-        color: "white",
-        textAlign: "center"
-    },
-    picker: {
-        height: 21,
-        fontSize: fontSize.small,
-    },
-    pickerItem: {
-        height: 21,
-        fontSize: fontSize.small,
-    },
-});
+export function UtilStyles(theme: Theme) {
+    return StyleSheet.create<IUtilStyles>({
+        container: {
+            flex: 1,
+            paddingHorizontal: 15,
+            fontSize: theme.fontSize.medium,
+            fontFamily: "Lato_400Regular",
+        },
+        row: {
+            flexDirection: "row"
+        },
+        grow1: {
+            flexGrow: 1,
+        },
+        shrink1: {
+            flexShrink: 1,
+        },
+        p0: {
+            padding: 0,
+        },
+        pv0: {
+            paddingVertical: 0,
+        },
+        m0: {
+            margin: 0,
+        },
+        mr15: {
+            marginRight: 15,
+        },
+        w55: {
+            width: 55,
+        },
+        wHalf: {
+            width: "50%",
+        },
+        btn: {
+            padding: 8,
+            borderRadius: 8,
+        },
+        btnPrimary: {
+            backgroundColor: theme.colors.primary,
+        },
+        btnSuccess: {
+            backgroundColor: theme.colors.success,
+        },
+        btnDanger: {
+            backgroundColor: theme.colors.danger,
+        },
+        txt: {
+            fontSize: theme.fontSize.medium,
+            fontFamily: "Lato_400Regular",
+        },
+        txtCenter: {
+            textAlign: "center",
+        },
+        txtRight: {
+            textAlign: "right"
+        },
+        txtPrimary: {
+            color: theme.colors.background,
+            textAlign: "center"
+        },
+        txtSuccess: {
+            color: theme.colors.background,
+            textAlign: "center"
+        },
+        txtDanger: {
+            color: theme.colors.background,
+            textAlign: "center"
+        },
+        picker: {
+            height: 21,
+            fontSize: theme.fontSize.small,
+        },
+        pickerItem: {
+            height: 21,
+            fontSize: theme.fontSize.small,
+        },
+    });
+}

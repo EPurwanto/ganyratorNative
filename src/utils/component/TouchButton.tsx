@@ -1,6 +1,5 @@
 import React, {FunctionComponent, useContext} from "react";
-import {Text, TextStyle, TouchableHighlight, TouchableWithoutFeedbackProps, View} from "react-native";
-import {colours} from "../../styles/UtilStyles";
+import {TextStyle, TouchableHighlight, TouchableWithoutFeedbackProps, View} from "react-native";
 import AppStyles from "../../styles/AppStyles";
 import StyledText from "./StyledText";
 
@@ -12,7 +11,7 @@ interface IProps extends TouchableWithoutFeedbackProps {
 export const TouchButton : FunctionComponent<IProps> = ({children, style, label, labelStyle, ...others}) => {
     const styles = useContext(AppStyles);
     return (
-        <TouchableHighlight underlayColor={colours.highlightUnderlay}
+        <TouchableHighlight underlayColor={styles.underlayColour}
                             style={[styles.util.btn, style]}
                             {...others}>
             <View>

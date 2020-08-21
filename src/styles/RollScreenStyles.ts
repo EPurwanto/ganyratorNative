@@ -1,6 +1,5 @@
 import {StyleSheet, TextStyle, ViewStyle} from "react-native";
-import {IListStyles} from "./ListStyles";
-import {colours, fontSize} from "./UtilStyles";
+import {Theme} from "./AppTheme";
 
 export interface IRollScreenStyles {
     resultArea: ViewStyle,
@@ -19,61 +18,59 @@ export interface IRollScreenStyles {
 }
 
 
-export const RollScreenStyles = StyleSheet.create<IRollScreenStyles>({
-    // Roll Screen styles
-    resultArea: {
-        paddingBottom: 8,
-        flexGrow: 1,
-        flexShrink: 1,
-    },
-    resultList: {
-        flexGrow: 1,
-        // backgroundColor: "#F0F0F0"
-    },
-    resultEntry: {
-        borderTopWidth: 1,
-        borderColor: colours.border,
-        paddingVertical: 5,
-    },
-    resultTitle: {
-        fontSize: fontSize.large,
-        fontFamily: "Lato_700Bold",
-    },
-    resultLabel: {
-        fontSize: fontSize.medium,
-        fontFamily: "Lato_700Bold",
-    },
-    resultValue: {
-    },
-    clearButton: {
-        position: "absolute",
-        right: 0,
-        bottom: 8,
-    },
-    controlArea: {
-        // backgroundColor: "#D0D0D0"
-    },
-    picker: {
-        // flexGrow: 1
-    },
-    pickerBtn: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        // backgroundColor: "#E0E0E0"
-    },
-    rollBtn: {
-    },
-    heading: {
-        fontSize: fontSize.title,
-        fontFamily:"Lato_700Bold",
-        textAlign: "center",
-        textAlignVertical: "center",
-    },
-    helpText: {
-        flexGrow: 1,
-        fontSize: fontSize.large,
-        textAlign: "center",
-        textAlignVertical: "center",
-    }
-});
+export function RollScreenStyles(theme: Theme) {
+    return StyleSheet.create<IRollScreenStyles>({
+        // Roll Screen styles
+        resultArea: {
+            paddingBottom: 8,
+            flexGrow: 1,
+            flexShrink: 1,
+        },
+        resultList: {
+            flexGrow: 1,
+        },
+        resultEntry: {
+            borderTopWidth: 1,
+            borderColor: theme.colors.border,
+            paddingVertical: 5,
+        },
+        resultTitle: {
+            fontSize: theme.fontSize.large,
+            fontFamily: "Lato_700Bold",
+        },
+        resultLabel: {
+            fontSize: theme.fontSize.medium,
+            fontFamily: "Lato_700Bold",
+        },
+        resultValue: {
+        },
+        clearButton: {
+            position: "absolute",
+            right: 0,
+            bottom: 8,
+        },
+        controlArea: {
+        },
+        picker: {
+        },
+        pickerBtn: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        rollBtn: {
+        },
+        heading: {
+            fontSize: theme.fontSize.title,
+            fontFamily:"Lato_700Bold",
+            textAlign: "center",
+            textAlignVertical: "center",
+        },
+        helpText: {
+            flexGrow: 1,
+            fontSize: theme.fontSize.large,
+            textAlign: "center",
+            textAlignVertical: "center",
+        }
+    });
+}

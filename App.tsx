@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
 import {NavigationContainer} from "@react-navigation/native";
-import AppStyles, {DefaultStyles} from "./src/styles/AppStyles";
+import AppStyles, {GetStyles} from "./src/styles/AppStyles";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
 // @ts-ignore
@@ -13,6 +13,7 @@ import {handleUpdate} from "./src/utils/Utils";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
+import AppTheme from "./src/styles/AppTheme";
 
 
 export default function App() {
@@ -57,7 +58,7 @@ export default function App() {
         }
     });
 
-    const styles = DefaultStyles;
+    const styles = GetStyles(AppTheme);
 
     if (!loaded || !fontLoaded) {
         return (
@@ -77,7 +78,7 @@ export default function App() {
         }}>
             <AppStyles.Provider value={styles}>
                 <SafeAreaProvider>
-                    <NavigationContainer>
+                    <NavigationContainer theme={AppTheme}>
                         <StatusBar style="auto" />
                         <StackPanel/>
                     </NavigationContainer>

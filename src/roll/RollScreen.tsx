@@ -67,7 +67,7 @@ export default function () {
                                      const outcome = performAction(act.name, act.contents, context.tables, context.actions);
                                      getUniqueId(results).then((id) => {
                                          outcome.key = id;
-                                         const summary = Array.from(outcome.values).map(([key, value]) => `${key}->${value}`).join();
+                                         // const summary = Array.from(outcome.values).map(([key, value]) => `${key}->${value}`).join();
 
                                          setResults([outcome, ...results])
                                      })
