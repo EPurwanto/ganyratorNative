@@ -16,6 +16,7 @@ export interface IUtilStyles {
     btnPrimary: ViewStyle,
     btnSuccess: ViewStyle,
     btnDanger: ViewStyle,
+    btnIcon: TextStyle,
     txt: TextStyle,
     txtCenter: TextStyle,
     txtRight: TextStyle,
@@ -73,6 +74,10 @@ export function UtilStyles(theme: Theme) {
         },
         btnDanger: {
             backgroundColor: theme.colors.danger,
+        },
+        btnIcon: {
+            fontSize: theme.fontSize.large,
+            fontFamily: "Lato_400Regular",
         },
         txt: {
             fontSize: theme.fontSize.medium,

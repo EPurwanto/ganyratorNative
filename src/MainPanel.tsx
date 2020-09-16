@@ -12,6 +12,7 @@ import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
 import {Image, View} from "react-native";
 import {clone, getUniqueId} from "./utils/Utils";
+import { MaterialIcons } from '@expo/vector-icons';
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -71,9 +72,7 @@ export default function StackPanel(props: StackPanelProps) {
                           options={({ navigation, route}) => ({
                               headerRight: () => (
                                   <View style={[styles.util.row, styles.util.mr15]}>
-                                      <TouchButton style={[styles.util.btnSuccess]}
-                                                   label={"Copy"}
-                                                   labelStyle={styles.util.txtSuccess}
+                                      <TouchButton style={[]}
                                                    onPress={() => {
                                                        getUniqueId(context.actions).then((id) => {
                                                            const copy = clone(route.params.action);
@@ -83,14 +82,16 @@ export default function StackPanel(props: StackPanelProps) {
                                                            navigation.pop();
                                                            navigation.push("ActionEdit", {action: copy})
                                                        })
-                                                   }}/>
-                                      <TouchButton style={[styles.util.btnDanger, styles.util.mr15]}
-                                                   label={"Delete"}
-                                                   labelStyle={styles.util.txtDanger}
+                                                   }}>
+                                          <MaterialIcons name="content-copy" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
+                                      <TouchButton style={[]}
                                                    onPress={() => {
                                                        context.updateActions(undefined, undefined, route.params.action);
                                                        navigation.pop();
-                                                   }}/>
+                                                   }}>
+                                          <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
                                   </View>
                               )
                           })}/>
@@ -99,9 +100,7 @@ export default function StackPanel(props: StackPanelProps) {
                           options={({ navigation, route}) => ({
                               headerRight: () => (
                                   <View style={[styles.util.row, styles.util.mr15]}>
-                                      <TouchButton style={[styles.util.btnSuccess]}
-                                                   label={"Copy"}
-                                                   labelStyle={styles.util.txtSuccess}
+                                      <TouchButton style={[]}
                                                    onPress={() => {
                                                        getUniqueId(context.tables).then((id) => {
                                                            const copy = clone(route.params.table);
@@ -111,14 +110,16 @@ export default function StackPanel(props: StackPanelProps) {
                                                            navigation.pop();
                                                            navigation.push("TableEdit", {table: copy})
                                                        })
-                                                   }}/>
-                                      <TouchButton style={[styles.util.btnDanger]}
-                                                   label={"Delete"}
-                                                   labelStyle={styles.util.txtDanger}
+                                                   }}>
+                                          <MaterialIcons name="content-copy" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
+                                      <TouchButton style={[]}
                                                    onPress={() => {
                                                        context.updateTables(undefined, undefined, route.params.table);
                                                        navigation.pop();
-                                                   }}/>
+                                                   }}>
+                                          <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
                                   </View>
                               )
                           })}/>

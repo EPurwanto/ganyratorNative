@@ -8,6 +8,7 @@ import RollResults from "./RollResults";
 import {find, getUniqueId} from "../utils/Utils";
 import StyledText from "../utils/component/StyledText";
 import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export default function () {
@@ -38,9 +39,9 @@ export default function () {
                               <StyledText style={[styles.roll.helpText]}>Press Roll below to start creating</StyledText>
                           }/>
                 <TouchButton style={[styles.util.btnDanger, styles.roll.clearButton]}
-                             label={"Clear"}
-                             labelStyle={styles.util.txtDanger}
-                             onPress={() => setResults([])}/>
+                             onPress={() => setResults([])}>
+                    <MaterialCommunityIcons name="delete-sweep" style={[styles.util.btnIcon, styles.util.txtDanger]} />
+                </TouchButton>
             </View>
 
             <View style={styles.roll.controlArea}>
@@ -52,9 +53,7 @@ export default function () {
                                   prompt={"Select an action to perform"}
                                   selectedValue={selected}
                                   onValueChange={value => setSelected(value)}/>
-                    <TouchButton style={[styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
-                                 label={"Roll"}
-                                 labelStyle={styles.util.txtPrimary}
+                    <TouchButton style={[styles.util.btnPrimary, styles.field.group, styles.field.groupEnd, styles.field.btn]}
                                  onPress={() => {
                                      const act = find(actions, selected);
                                      if (!act)
@@ -71,7 +70,9 @@ export default function () {
 
                                          setResults([outcome, ...results])
                                      })
-                                 }}/>
+                                 }}>
+                        <MaterialCommunityIcons name="dice-multiple" style={[styles.util.btnIcon, styles.util.txtPrimary]} />
+                    </TouchButton>
                 </View>
 
                 <TouchButton style={[styles.field.base, styles.util.btnDanger]}
