@@ -33,6 +33,7 @@ export default function () {
                                maxLength={60}
                                value={action.name}
                                onChange={(e) => {
+                                   console.log("Name change")
                                    action.name = e.nativeEvent.text;
                                    context.updateActions(action);
                                }}
@@ -44,6 +45,7 @@ export default function () {
                                multiline={true}
                                value={action.desc}
                                onChange={(e) => {
+                                   console.log("Description change")
                                    action.desc = e.nativeEvent.text;
                                    context.updateActions(action);
                                }}
@@ -65,6 +67,7 @@ export default function () {
                                              onChange={((field, table) => {
                                                  item.field = field;
                                                  item.table = table;
+                                                 console.log("Content change")
                                                  action.contents = handleUpdate(action.contents, item);
                                                  context.updateActions(action);
                                              })}/>
@@ -77,6 +80,7 @@ export default function () {
                          onPress={() => {
                              createActionContent(action.contents).then((row) => {
                                  action.contents = handleUpdate(action.contents, undefined, row);
+                                 console.log("Add")
                                  context.updateActions(action);
                              });
                          }}/>

@@ -77,12 +77,22 @@ export default function App() {
             id: id,
             actions: actions,
             tables: tables,
-            updateActions: ((update, add, remove) => setActions(handleUpdate(actions, update, add, remove))),
-            updateTables: ((update, add, remove) => setTables(handleUpdateTables(tables, update, add, remove))),
+            updateActions: ((update, add, remove) => {
+                console.log('Updating actions')
+                setActions(handleUpdate(actions, update, add, remove));
+            }),
+            updateTables: ((update, add, remove) => {
+                console.log('Updating tables')
+                setTables(handleUpdateTables(tables, update, add, remove))
+            }),
             showConfirm: ((props) => {
+                console.log('Showing confirm overlay')
                 setConfirmOverlay(props);
             }),
-            showMenu: (visible: boolean) => setMenuVisible(visible)
+            showMenu: (visible: boolean) => {
+                console.log('Showing main menu')
+                setMenuVisible(visible)
+            }
         }}>
             <AppStyles.Provider value={styles}>
                 <SafeAreaProvider style={{

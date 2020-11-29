@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {View} from "react-native";
+import {Text, View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
 import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
@@ -17,6 +17,14 @@ export default function () {
     const styles = useContext(AppStyles);
     const navigation = useNavigation<ActionListNavigationProp>();
 
+    if (context.tables.length === 0) {
+        return (
+            <View style={styles.util.container}>
+                <Text>Go create some tables first</Text>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.util.container}>
             <View style={styles.list.base}>
@@ -25,7 +33,10 @@ export default function () {
                                       <ListEntry title={item.name}
                                                  subTitle={item.desc}
                                                  key={item.key}
-                                                 onPress={() => navigation.push("ActionEdit", {action: item})}/>
+                                                 onPress={() => {
+                                                     console.log("Editing Action: ", item.name)
+                                                     navigation.push("ActionEdit", {action: item})
+                                                 }}/>
                                   }/>
             </View>
             <TouchButton style={[styles.util.btnPrimary]}

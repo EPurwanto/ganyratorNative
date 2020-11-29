@@ -16,10 +16,7 @@ export default function (props: IProps) {
 
     return (
         <RectButton underlayColor={styles.underlayColour}
-                    onPress={() => {
-                        console.log("On Press ", props.title)
-                        props.onPress && props.onPress(props.title)
-                    }}>
+                    onPress={() => {props.onPress && props.onPress(props.title)}}>
             <View style={styles.list.item}>
                 <View style={styles.list.itemTextContainer}>
                     <StyledText style={[styles.list.itemTitle]}>{props.title}</StyledText>

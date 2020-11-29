@@ -33,7 +33,8 @@ export function UtilStyles(theme: Theme) {
     return StyleSheet.create<IUtilStyles>({
         container: {
             flex: 1,
-            paddingHorizontal: 15,
+            padding: 15,
+            paddingTop: 0,
             fontSize: theme.fontSize.medium,
             fontFamily: "Lato_400Regular",
         },
