@@ -14,13 +14,15 @@ import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
 import AppTheme from "./src/styles/AppTheme";
+import {ConfirmOverlay, IProps as ConfirmProps} from "./src/utils/component/ConfirmOverlay";
 
 
 export default function App() {
     const [id, setId] = useState("");
     const [tables, setTables] = useState([] as Table[]);
-    const [actions, setActions] = useState([] as Action[])
+    const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
+    const [confirmOverlay, setConfirmOverlay] = useState<ConfirmProps | undefined>(undefined);
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
 
@@ -70,14 +72,20 @@ export default function App() {
 
     return (
         <AppContext.Provider value={{
+            id: id,
             actions: actions,
             tables: tables,
             updateActions: ((update, add, remove) => setActions(handleUpdate(actions, update, add, remove))),
             updateTables: ((update, add, remove) => setTables(handleUpdateTables(tables, update, add, remove))),
-            id: id,
+            showConfirm: ((props) => {
+                setConfirmOverlay(props);
+            })
         }}>
             <AppStyles.Provider value={styles}>
                 <SafeAreaProvider>
+                    <ConfirmOverlay visible={confirmOverlay != undefined}
+                                    setVisible={(visible => {!visible && setConfirmOverlay(undefined)})}
+                                    {...confirmOverlay}/>
                     <NavigationContainer theme={AppTheme}>
                         <StatusBar style="auto" />
                         <StackPanel/>

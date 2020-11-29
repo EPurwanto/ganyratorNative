@@ -4,13 +4,16 @@ import {IUtilStyles, UtilStyles} from "./UtilStyles";
 import {IListStyles, ListStyles} from "./ListStyles";
 import {IRollScreenStyles, RollScreenStyles} from "./RollScreenStyles";
 import LightTheme, {Theme} from "./AppTheme";
+import {IMenuStyles, MenuStyles} from "./MenuStyles";
 
 export interface IAppStyles {
     util: IUtilStyles,
     field: IFieldStyles,
     list: IListStyles,
     roll: IRollScreenStyles,
+    menu: IMenuStyles,
     underlayColour: string,
+    underlayOpacity: number,
 }
 
 export function GetStyles(theme: Theme) {
@@ -19,7 +22,9 @@ export function GetStyles(theme: Theme) {
         field: FieldStyles(theme),
         list: ListStyles(theme),
         roll: RollScreenStyles(theme),
-        underlayColour: theme.colors.highlightUnderlay,
+        menu: MenuStyles(theme),
+        underlayColour: theme.colors.underlay,
+        underlayOpacity: theme.colors.underlayOpacity,
     }
 }
 

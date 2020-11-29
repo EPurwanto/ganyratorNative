@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import RollScreen from "./roll/RollScreen";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import TableListScreen from "./tables/TableListScreen";
@@ -10,9 +10,13 @@ import TableEditScreen, {IProps as TableEditProps} from "./tables/TableEditScree
 import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
-import {Image, View} from "react-native";
+import {Image, Modal, Text, TouchableWithoutFeedback, View} from "react-native";
 import {clone, getUniqueId} from "./utils/Utils";
-import { MaterialIcons } from '@expo/vector-icons';
+import {MaterialIcons} from '@expo/vector-icons';
+import {Overlay} from "./utils/component/Overlay";
+import {ConfirmOverlay} from "./utils/component/ConfirmOverlay";
+import ListEntry from "./utils/component/ListEntry";
+import MainMenu from "./menu/MainMenu";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -56,6 +60,8 @@ export default function StackPanel(props: StackPanelProps) {
     const styles = useContext(AppStyles);
     const Stack = createStackNavigator<StackParamList>();
 
+    const [menuVisible, setMenuVisible] = useState(false);
+
     return (
         <Stack.Navigator>
             <Stack.Screen name={"TabPanel"}
@@ -65,7 +71,17 @@ export default function StackPanel(props: StackPanelProps) {
                               headerTitleStyle: styles.roll.heading,
                               headerLeft: (props) =>
                                   <Image source={require("./assets/images/gANYrator_Icon.png")} style={{width: 50, height:50}}/>,
-                              headerLeftContainerStyle: {marginLeft: 15}
+                              headerLeftContainerStyle: {marginLeft: 15},
+                              headerRight: (props) =>
+                                  <View style={[styles.util.row, styles.util.mr15]}>
+                                      <TouchButton style={[]}
+                                                   onPress={() => {
+                                                       setMenuVisible(!menuVisible);
+                                                   }}>
+                                          <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
+                                      <MainMenu visible={menuVisible} onClose={() => setMenuVisible(false)}/>
+                                  </View>
                           }}/>
             <Stack.Screen name={"ActionEdit"}
                           component={ActionEditScreen}

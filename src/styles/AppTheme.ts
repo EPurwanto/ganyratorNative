@@ -9,7 +9,10 @@ export interface Theme {
         primary: string,
         success: string,
         danger: string,
-        highlightUnderlay: string,
+        underlay: string,
+        underlayOpacity: number,
+        overlay: string,
+        overlayOpacity: number,
     },
     fontSize: {
         small: number,
@@ -30,7 +33,10 @@ const LightTheme: Theme = {
         primary: "#3d82ff",
         success: "#28d200",
         danger: "#cb2005",
-        highlightUnderlay: "#DDDDDD",
+        underlay: "#DDDDDD",
+        underlayOpacity: 0.85,
+        overlay: "#343434",
+        overlayOpacity: 0.6,
     },
     fontSize: {
         small: 12,

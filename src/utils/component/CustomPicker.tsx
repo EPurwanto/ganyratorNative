@@ -37,7 +37,6 @@ export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, it
                     prompt={prompt}
                     selectedValue={selectedValue}
                     onValueChange={(val) => onValueChange && onValueChange(val as string)}>
-
                 {
                     useItems.map((i) => <Picker.Item value={i.value} label={i.label} key={i.key}/>)
                 }

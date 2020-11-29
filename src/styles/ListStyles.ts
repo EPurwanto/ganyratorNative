@@ -5,11 +5,10 @@ export interface IListStyles {
     base: ViewStyle,
     sectionTitle: TextStyle,
     item: ViewStyle,
+    itemDivider: ViewStyle,
     itemTextContainer: ViewStyle,
     itemTitle: TextStyle,
     itemSubtitle: TextStyle,
-    itemActionContainer: ViewStyle,
-    itemAction: ViewStyle,
 }
 
 export function ListStyles(theme: Theme) {
@@ -26,9 +25,10 @@ export function ListStyles(theme: Theme) {
         },
         item: {
             paddingVertical: 5,
+        },
+        itemDivider: {
             borderBottomWidth: 1,
             borderBottomColor: theme.colors.border,
-            flexDirection: "row"
         },
         itemTextContainer: {
             flexGrow: 1
@@ -40,15 +40,6 @@ export function ListStyles(theme: Theme) {
         itemSubtitle: {
             fontSize: theme.fontSize.medium,
             marginHorizontal: 10
-        },
-        itemActionContainer: {
-            flexDirection: "row",
-            alignItems: "center",
-        },
-        itemAction: {
-            borderRadius: 3,
-            marginVertical: 3,
-            marginHorizontal: 3,
         },
     });
 }

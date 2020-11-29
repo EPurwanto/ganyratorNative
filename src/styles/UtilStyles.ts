@@ -4,6 +4,7 @@ import {Theme} from "./AppTheme";
 export interface IUtilStyles {
     container: ViewStyle,
     row: ViewStyle,
+    flex1: ViewStyle,
     grow1: ViewStyle,
     shrink1: ViewStyle,
     p0: ViewStyle,
@@ -37,6 +38,9 @@ export function UtilStyles(theme: Theme) {
         },
         row: {
             flexDirection: "row"
+        },
+        flex1: {
+            flex: 1,
         },
         grow1: {
             flexGrow: 1,
