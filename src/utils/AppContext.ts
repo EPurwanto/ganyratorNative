@@ -8,6 +8,7 @@ export interface IContext extends ISession {
     updateActions: (update?: Action | Action[], add?: Action | Action[], remove?: Action | Action[]) => void;
     updateTables: (update?: Table | Table[], add?: Table | Table[], remove?: Table | Table[]) => void;
     showConfirm: (props: ConfirmProps) => void;
+    showMenu: (visible: boolean) => void;
 }
 
 const AppContext = React.createContext<IContext>({
@@ -17,6 +18,7 @@ const AppContext = React.createContext<IContext>({
     updateActions: () => {},
     updateTables: () => {},
     showConfirm: () => {},
+    showMenu: (visible: boolean) => {},
 });
 
 export default AppContext;

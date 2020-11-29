@@ -2,6 +2,7 @@ import {StyleSheet, TextStyle, ViewStyle} from "react-native";
 import {Theme} from "./AppTheme";
 
 export interface IMenuStyles {
+    modal: ViewStyle,
     backdrop: ViewStyle,
     overlay: ViewStyle,
     menu: ViewStyle,
@@ -11,6 +12,13 @@ export interface IMenuStyles {
 
 export function MenuStyles(theme: Theme) {
     return StyleSheet.create<IMenuStyles>({
+        modal: {
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
         backdrop: {
             position: "absolute",
             top: 0,
@@ -36,16 +44,18 @@ export function MenuStyles(theme: Theme) {
             zIndex: 100,
         },
         menu: {
-            flex: 2,
+            position: "absolute",
+            top: 0,
+            right: 0,
             marginTop: 68,
             borderBottomRightRadius: 0,
             borderTopRightRadius: 0,
         },
         menuItem: {
-            padding: 15,
+            padding: 10,
         },
         confirmOverlay: {
-
+            margin: 30,
         },
     })
 }

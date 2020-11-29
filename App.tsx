@@ -15,6 +15,7 @@ import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
 import AppTheme from "./src/styles/AppTheme";
 import {ConfirmOverlay, IProps as ConfirmProps} from "./src/utils/component/ConfirmOverlay";
+import MainMenu from "./src/menu/MainMenu";
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
     const [tables, setTables] = useState([] as Table[]);
     const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
     const [confirmOverlay, setConfirmOverlay] = useState<ConfirmProps | undefined>(undefined);
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
@@ -79,18 +81,26 @@ export default function App() {
             updateTables: ((update, add, remove) => setTables(handleUpdateTables(tables, update, add, remove))),
             showConfirm: ((props) => {
                 setConfirmOverlay(props);
-            })
+            }),
+            showMenu: (visible: boolean) => setMenuVisible(visible)
         }}>
             <AppStyles.Provider value={styles}>
-                <SafeAreaProvider>
-                    <ConfirmOverlay visible={confirmOverlay != undefined}
-                                    setVisible={(visible => {!visible && setConfirmOverlay(undefined)})}
-                                    {...confirmOverlay}/>
+                <SafeAreaProvider style={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                }}>
                     <NavigationContainer theme={AppTheme}>
                         <StatusBar style="auto" />
                         <StackPanel/>
                     </NavigationContainer>
                 </SafeAreaProvider>
+                <ConfirmOverlay visible={confirmOverlay != undefined}
+                                setVisible={(visible => {!visible && setConfirmOverlay(undefined)})}
+                                {...confirmOverlay}/>
+                <MainMenu visible={menuVisible} onClose={() => setMenuVisible(false)}/>
             </AppStyles.Provider>
         </AppContext.Provider>
     );

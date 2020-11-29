@@ -4,6 +4,7 @@ import {Theme} from "./AppTheme";
 export interface IUtilStyles {
     container: ViewStyle,
     row: ViewStyle,
+    centerContent: ViewStyle,
     flex1: ViewStyle,
     grow1: ViewStyle,
     shrink1: ViewStyle,
@@ -38,6 +39,10 @@ export function UtilStyles(theme: Theme) {
         },
         row: {
             flexDirection: "row"
+        },
+        centerContent: {
+            alignContent: "center",
+            justifyContent: "center",
         },
         flex1: {
             flex: 1,

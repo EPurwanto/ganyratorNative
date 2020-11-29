@@ -74,14 +74,6 @@ export default function () {
                         <MaterialCommunityIcons name="dice-multiple" style={[styles.util.btnIcon, styles.util.txtPrimary]} />
                     </TouchButton>
                 </View>
-
-                <TouchButton style={[styles.field.base, styles.util.btnDanger]}
-                             label={"Clear Session"}
-                             labelStyle={styles.util.txtDanger}
-                             onPress={() => {
-                                 context.updateActions(undefined, undefined, context.actions);
-                                 context.updateTables(undefined, undefined, context.tables);
-                             }}/>
             </View>
         </View>
     )

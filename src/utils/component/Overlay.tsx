@@ -11,16 +11,16 @@ export interface IProps {
 export const Overlay : FunctionComponent<IProps> = ({visible, setVisible, style, children, ...others}) => {
     const styles = useContext(AppStyles);
 
+    if (!visible) {
+        return <View/>
+    }
+
     return (
-        <Modal animationType={"fade"}
-               transparent={true}
-               onRequestClose={() => setVisible(false)}
-               visible={visible}
-               statusBarTranslucent={true}>
+        <View style={[styles.menu.modal]}>
             <TouchButton style={styles.menu.backdrop} onPress={() => setVisible(false)}/>
             <View style={style}>
                 {children}
             </View>
-        </Modal>
+        </View>
     )
 }

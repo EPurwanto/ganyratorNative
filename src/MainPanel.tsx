@@ -10,13 +10,9 @@ import TableEditScreen, {IProps as TableEditProps} from "./tables/TableEditScree
 import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
-import {Image, Modal, Text, TouchableWithoutFeedback, View} from "react-native";
+import {Image, View} from "react-native";
 import {clone, getUniqueId} from "./utils/Utils";
 import {MaterialIcons} from '@expo/vector-icons';
-import {Overlay} from "./utils/component/Overlay";
-import {ConfirmOverlay} from "./utils/component/ConfirmOverlay";
-import ListEntry from "./utils/component/ListEntry";
-import MainMenu from "./menu/MainMenu";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -60,8 +56,6 @@ export default function StackPanel(props: StackPanelProps) {
     const styles = useContext(AppStyles);
     const Stack = createStackNavigator<StackParamList>();
 
-    const [menuVisible, setMenuVisible] = useState(false);
-
     return (
         <Stack.Navigator>
             <Stack.Screen name={"TabPanel"}
@@ -75,12 +69,9 @@ export default function StackPanel(props: StackPanelProps) {
                               headerRight: (props) =>
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
-                                                   onPress={() => {
-                                                       setMenuVisible(!menuVisible);
-                                                   }}>
+                                                   onPress={() => context.showMenu(true)}>
                                           <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
-                                      <MainMenu visible={menuVisible} onClose={() => setMenuVisible(false)}/>
                                   </View>
                           }}/>
             <Stack.Screen name={"ActionEdit"}
