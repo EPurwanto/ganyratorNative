@@ -62,6 +62,7 @@ export default function () {
                 </View>
                 {
                     table.contents.map((item) => {
+                        console.log("Writing row:", item);
                         const buttonStyle = item.action ? styles.util.btnSuccess : styles.util.btnPrimary;
                         const labelStyle = item.action ? styles.util.txtSuccess : styles.util.txtPrimary;
                         const buttonLabel = item.action ? "Yes" : "No";

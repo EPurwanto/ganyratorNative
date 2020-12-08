@@ -15,16 +15,20 @@ export interface IUtilStyles {
     w55: ViewStyle,
     wHalf: ViewStyle,
     btn: ViewStyle,
+    btn_disabled: ViewStyle,
     btnPrimary: ViewStyle,
     btnSuccess: ViewStyle,
     btnDanger: ViewStyle,
     btnIcon: TextStyle,
     txt: TextStyle,
+    txtLeft: TextStyle,
     txtCenter: TextStyle,
     txtRight: TextStyle,
     txtPrimary: ViewStyle,
     txtSuccess: ViewStyle,
     txtDanger: ViewStyle,
+    helpText: TextStyle,
+    helpIcon: TextStyle,
     picker: ViewStyle,
     pickerItem: TextStyle,
 }
@@ -76,6 +80,9 @@ export function UtilStyles(theme: Theme) {
             padding: 8,
             borderRadius: 8,
         },
+        btn_disabled: {
+            backgroundColor: theme.colors.disabled,
+        },
         btnPrimary: {
             backgroundColor: theme.colors.primary,
         },
@@ -92,6 +99,9 @@ export function UtilStyles(theme: Theme) {
         txt: {
             fontSize: theme.fontSize.medium,
             fontFamily: "Lato_400Regular",
+        },
+        txtLeft: {
+            textAlign: "left"
         },
         txtCenter: {
             textAlign: "center",
@@ -110,6 +120,16 @@ export function UtilStyles(theme: Theme) {
         txtDanger: {
             color: theme.colors.background,
             textAlign: "center"
+        },
+        helpText: {
+            fontSize: theme.fontSize.large,
+            textAlign: "center",
+            textAlignVertical: "center",
+            alignSelf: "center",
+        },
+        helpIcon: {
+            fontSize: theme.fontSize.title,
+            textAlignVertical: "center",
         },
         picker: {
             height: 21,

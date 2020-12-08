@@ -8,11 +8,19 @@ interface IProps extends TouchableWithoutFeedbackProps {
     labelStyle?: TextStyle | TextStyle[];
 }
 
-export const TouchButton : FunctionComponent<IProps> = ({children, style, label, labelStyle, ...others}) => {
+export const TouchButton : FunctionComponent<IProps> = ({children, style, label, labelStyle, disabled, ...others}) => {
     const styles = useContext(AppStyles);
+
+    const buttonStyle = [styles.util.btn, style];
+
+    if (disabled) {
+        buttonStyle.push(styles.util.btn_disabled)
+    }
+
     return (
         <TouchableHighlight underlayColor={styles.underlayColour}
-                            style={[styles.util.btn, style]}
+                            style={buttonStyle}
+                            disabled={disabled}
                             {...others}>
             <View>
                 {

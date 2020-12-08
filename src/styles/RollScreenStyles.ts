@@ -14,7 +14,6 @@ export interface IRollScreenStyles {
     pickerBtn: ViewStyle,
     rollBtn: ViewStyle,
     heading: TextStyle,
-    helpText: TextStyle,
 }
 
 
@@ -66,11 +65,5 @@ export function RollScreenStyles(theme: Theme) {
             textAlign: "center",
             textAlignVertical: "center",
         },
-        helpText: {
-            flexGrow: 1,
-            fontSize: theme.fontSize.large,
-            textAlign: "center",
-            textAlignVertical: "center",
-        }
     });
 }

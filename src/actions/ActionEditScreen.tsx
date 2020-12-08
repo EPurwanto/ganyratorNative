@@ -60,23 +60,28 @@ export default function () {
                     </StyledText>
                 </View>
                 {
-                    action.contents.map((item) =>
-                        <ActionContentEditor field={item.field}
-                                             table={item.table}
-                                             key={item.key}
-                                             onChange={((field, table) => {
-                                                 item.field = field;
-                                                 item.table = table;
-                                                 console.log("Content change")
-                                                 action.contents = handleUpdate(action.contents, item);
-                                                 context.updateActions(action);
-                                             })}/>
-                    )
+                    context.tables.length > 0
+                        ?
+                        action.contents.map((item) =>
+                            <ActionContentEditor field={item.field}
+                                                 table={item.table}
+                                                 key={item.key}
+                                                 onChange={((field, table) => {
+                                                     item.field = field;
+                                                     item.table = table;
+                                                     console.log("Content change")
+                                                     action.contents = handleUpdate(action.contents, item);
+                                                     context.updateActions(action);
+                                                 })}/>
+                        )
+                        :
+                        <StyledText style={[styles.util.helpText, styles.util.grow1]}>You have no tables</StyledText>
                 }
             </ScrollView>
             <TouchButton style={[styles.util.btnPrimary]}
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}
+                         disabled={context.tables.length === 0}
                          onPress={() => {
                              createActionContent(action.contents).then((row) => {
                                  action.contents = handleUpdate(action.contents, undefined, row);

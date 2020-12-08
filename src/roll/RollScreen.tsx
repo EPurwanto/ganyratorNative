@@ -36,7 +36,13 @@ export default function () {
                               <RollResults label={item.root} values={item.values} key={item.key}/>
                           }
                           ListEmptyComponent={
-                              <StyledText style={[styles.roll.helpText]}>Press Roll below to start creating</StyledText>
+                              context.tables.length === 0 ?
+                                  <View style={[styles.util.row, styles.util.grow1]}>
+                                      <MaterialCommunityIcons name="chevron-left" style={[styles.util.helpIcon]} />
+                                      <StyledText style={[styles.util.helpText, styles.util.txtLeft]}>Get started by creating some data tables</StyledText>
+                                  </View>
+                                  :
+                                  <StyledText style={[styles.util.helpText, styles.util.grow1]}>Press Roll below to start creating</StyledText>
                           }/>
                 <TouchButton style={[styles.util.btnDanger, styles.roll.clearButton]}
                              onPress={() => setResults([])}>
