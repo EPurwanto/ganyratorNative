@@ -1,9 +1,10 @@
-import React, {FunctionComponent, useContext} from "react";
-import {View} from "react-native";
-import {Overlay, IProps as OverlayProps} from "./Overlay";
+import React, {FunctionComponent, useContext, useState} from "react";
+import {StyleProp, View, ViewStyle} from "react-native";
+import {Overlay} from "./Overlay";
 import StyledText from "./StyledText";
 import AppStyles from "../../styles/AppStyles";
 import {TouchButton} from "./TouchButton";
+import AppContext from "../AppContext";
 
 
 export interface IProps {
@@ -13,12 +14,20 @@ export interface IProps {
     action?: () => void,
 }
 
-export const ConfirmOverlay : FunctionComponent<IProps & OverlayProps> = (props) => {
+export const ConfirmOverlay : FunctionComponent<IProps> = (props) => {
     const styles = useContext(AppStyles);
+    const context = useContext(AppContext);
+
+
+    const close = () => {
+        context.showOverlay(undefined);
+    }
 
     return (
-        <Overlay visible={props.visible} setVisible={props.setVisible} style={[styles.util.centerContent, styles.util.grow1]}>
-            <View style={[styles.menu.overlay, styles.menu.confirmOverlay, props.style]}>
+        <Overlay visible={true}
+                 close={close}
+                 style={[styles.util.centerContent, styles.util.grow1]}>
+            <View style={[styles.menu.overlay, styles.menu.confirmOverlay]}>
                 <View style={[styles.util.row, styles.menu.menuItem]}>
                     {
                         props.children ??
@@ -31,13 +40,13 @@ export const ConfirmOverlay : FunctionComponent<IProps & OverlayProps> = (props)
                                  labelStyle={styles.util.txtPrimary}
                                  onPress={() => {
                                      props.action && props.action();
-                                     props.setVisible(false);
+                                     close();
                                  }}/>
                     <View style={styles.util.grow1}/>
                     <TouchButton label={"Cancel"}
                                  style={styles.util.btnDanger}
                                  labelStyle={styles.util.txtDanger}
-                                 onPress={() => props.setVisible(false)}/>
+                                 onPress={close}/>
                 </View>
             </View>
         </Overlay>

@@ -7,7 +7,7 @@ import {IProps as ConfirmProps} from "./component/ConfirmOverlay";
 export interface IContext extends ISession {
     updateActions: (update?: Action | Action[], add?: Action | Action[], remove?: Action | Action[]) => void;
     updateTables: (update?: Table | Table[], add?: Table | Table[], remove?: Table | Table[]) => void;
-    showConfirm: (props: ConfirmProps) => void;
+    showOverlay: (node: Node | undefined) => void;
     showMenu: (visible: boolean) => void;
 }
 
@@ -17,7 +17,7 @@ const AppContext = React.createContext<IContext>({
     tables: [],
     updateActions: () => {},
     updateTables: () => {},
-    showConfirm: () => {},
+    showOverlay: () => {},
     showMenu: (visible: boolean) => {},
 });
 

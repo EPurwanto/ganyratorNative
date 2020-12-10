@@ -47,6 +47,7 @@ export function MenuStyles(theme: Theme) {
             position: "absolute",
             top: 0,
             right: 0,
+            minWidth: 200,
             marginTop: 68,
             borderBottomRightRadius: 0,
             borderTopRightRadius: 0,

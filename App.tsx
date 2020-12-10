@@ -16,6 +16,7 @@ import StackPanel from "./src/MainPanel";
 import AppTheme from "./src/styles/AppTheme";
 import {ConfirmOverlay, IProps as ConfirmProps} from "./src/utils/component/ConfirmOverlay";
 import MainMenu from "./src/menu/MainMenu";
+import {HelpOverlay, IProps as HelpProps} from "./src/utils/component/HelpOverlay";
 
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
     const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
-    const [confirmOverlay, setConfirmOverlay] = useState<ConfirmProps | undefined>(undefined);
+    const [overlay, setOverlay] = useState<Node | undefined>()
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
 
@@ -60,7 +61,7 @@ export default function App() {
                 console.log("Save Error: " + e);
             });
         }
-    });
+    }, [id, actions, tables]);
 
     const styles = GetStyles(AppTheme);
 
@@ -85,9 +86,9 @@ export default function App() {
                 console.log('Updating tables')
                 setTables(handleUpdateTables(tables, update, add, remove))
             }),
-            showConfirm: ((props) => {
+            showOverlay: ((node) => {
                 console.log('Showing confirm overlay')
-                setConfirmOverlay(props);
+                setOverlay(node);
             }),
             showMenu: (visible: boolean) => {
                 console.log('Showing main menu')
@@ -107,9 +108,7 @@ export default function App() {
                         <StackPanel/>
                     </NavigationContainer>
                 </SafeAreaProvider>
-                <ConfirmOverlay visible={confirmOverlay != undefined}
-                                setVisible={(visible => {!visible && setConfirmOverlay(undefined)})}
-                                {...confirmOverlay}/>
+                { overlay }
                 <MainMenu visible={menuVisible} onClose={() => setMenuVisible(false)}/>
             </AppStyles.Provider>
         </AppContext.Provider>

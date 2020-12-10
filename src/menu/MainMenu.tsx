@@ -6,6 +6,7 @@ import ListEntry from "../utils/component/ListEntry";
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
 import {RectButton} from "react-native-gesture-handler";
+import {ConfirmOverlay} from "../utils/component/ConfirmOverlay";
 
 interface IProps {
     visible: boolean,
@@ -32,19 +33,20 @@ export default function(props: IProps) {
                            onPress={() => {
                                console.log("Clear Session")
                                hideMenu();
-                               context.showConfirm({
-                                   message: "Are you sure you want to clear the session? This will delete all actions and tables " +
-                                       "and cannot be undone.",
-                                   confirmMessage: "Clear",
-                                   cancelMessage: "Cancel",
-                                   action: () => {
-                                       context.updateActions(undefined, undefined, context.actions);
-                                       context.updateTables(undefined, undefined, context.tables);
-                                   }
-                               })
+                               context.showOverlay(
+                                   <ConfirmOverlay  message="Are you sure you want to clear the session? This will delete all actions and tables and cannot be undone."
+                                                    confirmMessage="Clear"
+                                                    cancelMessage="Cancel"
+                                                    action={() => {
+                                                        context.updateActions(undefined, undefined, context.actions);
+                                                        context.updateTables(undefined, undefined, context.tables);
+                                                    }}/>)
                            }}
                 />
             </View>
         </Overlay>
     )
+}
+{
+
 }
