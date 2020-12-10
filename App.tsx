@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import SessionStorage from "./src/utils/SessionStorage";
 import AppContext from "./src/utils/AppContext";
-import {NavigationContainer} from "@react-navigation/native";
+import {NavigationContainer, NavigationContainerRef} from "@react-navigation/native";
 import AppStyles, {GetStyles} from "./src/styles/AppStyles";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
@@ -14,9 +14,7 @@ import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
 import AppTheme from "./src/styles/AppTheme";
-import {ConfirmOverlay, IProps as ConfirmProps} from "./src/utils/component/ConfirmOverlay";
 import MainMenu from "./src/menu/MainMenu";
-import {HelpOverlay, IProps as HelpProps} from "./src/utils/component/HelpOverlay";
 
 
 export default function App() {
@@ -25,7 +23,8 @@ export default function App() {
     const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
-    const [overlay, setOverlay] = useState<Node | undefined>()
+    const [overlay, setOverlay] = useState<JSX.Element | undefined>()
+    const navContainer = useRef<NavigationContainerRef>(null!)
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
 
@@ -93,7 +92,8 @@ export default function App() {
             showMenu: (visible: boolean) => {
                 console.log('Showing main menu')
                 setMenuVisible(visible)
-            }
+            },
+            currentRoute: navContainer.current?.getCurrentRoute(),
         }}>
             <AppStyles.Provider value={styles}>
                 <SafeAreaProvider style={{
@@ -103,7 +103,7 @@ export default function App() {
                     left: 0,
                     right: 0,
                 }}>
-                    <NavigationContainer theme={AppTheme}>
+                    <NavigationContainer ref={navContainer} theme={AppTheme}>
                         <StatusBar style="auto" />
                         <StackPanel/>
                     </NavigationContainer>

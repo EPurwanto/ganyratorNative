@@ -99,6 +99,10 @@ export default function StackPanel(props: StackPanelProps) {
                                                    }}>
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
+                                      <TouchButton style={[]}
+                                                   onPress={() => context.showMenu(true)}>
+                                          <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
                                   </View>
                               )
                           })}/>
@@ -127,6 +131,10 @@ export default function StackPanel(props: StackPanelProps) {
                                                    }}>
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
+                                      <TouchButton style={[]}
+                                                   onPress={() => context.showMenu(true)}>
+                                          <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
                                   </View>
                               )
                           })}/>
@@ -134,6 +142,13 @@ export default function StackPanel(props: StackPanelProps) {
                           component={TableChainActionEditScreen}
                           options={({ navigation, route}) => ({
                               title: `Action: ${route.params.item.element}`,
+                              headerRight: (props) =>
+                                  <View style={[styles.util.row, styles.util.mr15]}>
+                                      <TouchButton style={[]}
+                                                   onPress={() => context.showMenu(true)}>
+                                          <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
+                                      </TouchButton>
+                                  </View>
                           })}/>
         </Stack.Navigator>
     )

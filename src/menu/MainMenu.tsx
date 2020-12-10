@@ -1,12 +1,11 @@
 import React, {useContext} from "react";
-import {TouchButton} from "../utils/component/TouchButton";
 import {Overlay} from "../utils/component/Overlay";
-import {Button, Text, TouchableWithoutFeedback, View} from "react-native";
+import {View} from "react-native";
 import ListEntry from "../utils/component/ListEntry";
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
-import {RectButton} from "react-native-gesture-handler";
 import {ConfirmOverlay} from "../utils/component/ConfirmOverlay";
+import {HelpOverlay} from "../help/HelpOverlay";
 
 interface IProps {
     visible: boolean,
@@ -23,10 +22,17 @@ export default function(props: IProps) {
     }
 
     return (
-        <Overlay visible={props.visible} setVisible={props.onClose} style={[styles.menu.overlay, styles.menu.menu]}>
+        <Overlay visible={props.visible} close={props.onClose} style={[styles.menu.overlay, styles.menu.menu]}>
             {/*<View style={styles.util.flex1}>*/}
             <View style={styles.menu.menuItem}>
-                <ListEntry title="Help"/>
+                <ListEntry title="Help"
+                           onPress={() => {
+                               console.log("Clear Session")
+                               hideMenu();
+                               context.showOverlay(
+                                   <HelpOverlay/>
+                               )
+                           }}/>
             </View>
             <View style={styles.menu.menuItem}>
                 <ListEntry title="Clear Session"

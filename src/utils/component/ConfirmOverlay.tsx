@@ -18,7 +18,6 @@ export const ConfirmOverlay : FunctionComponent<IProps> = (props) => {
     const styles = useContext(AppStyles);
     const context = useContext(AppContext);
 
-
     const close = () => {
         context.showOverlay(undefined);
     }

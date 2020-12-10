@@ -5,10 +5,10 @@ import AppStyles from "../../styles/AppStyles";
 
 export interface IProps {
     visible: boolean,
-    setVisible: (visible: boolean) => void;
+    close: () => void;
     style?: StyleProp<ViewStyle>
 }
-export const Overlay : FunctionComponent<IProps> = ({visible, setVisible, style, children, ...others}) => {
+export const Overlay : FunctionComponent<IProps> = ({visible, close, style, children, ...others}) => {
     const styles = useContext(AppStyles);
 
     if (!visible) {
@@ -17,7 +17,7 @@ export const Overlay : FunctionComponent<IProps> = ({visible, setVisible, style,
 
     return (
         <View style={[styles.menu.modal]}>
-            <TouchButton style={styles.menu.backdrop} onPress={() => setVisible(false)}/>
+            <TouchButton style={styles.menu.backdrop} onPress={() => close()}/>
             <View style={style}>
                 {children}
             </View>
