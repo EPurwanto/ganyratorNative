@@ -77,6 +77,7 @@ export default function StackPanel(props: StackPanelProps) {
             <Stack.Screen name={"ActionEdit"}
                           component={ActionEditScreen}
                           options={({ navigation, route}) => ({
+                              title: "Edit Action",
                               headerRight: () => (
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
@@ -109,6 +110,7 @@ export default function StackPanel(props: StackPanelProps) {
             <Stack.Screen name={"TableEdit"}
                           component={TableEditScreen}
                           options={({ navigation, route}) => ({
+                              title: "Edit Table",
                               headerRight: () => (
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
@@ -141,7 +143,7 @@ export default function StackPanel(props: StackPanelProps) {
             <Stack.Screen name={"TableChainAction"}
                           component={TableChainActionEditScreen}
                           options={({ navigation, route}) => ({
-                              title: `Action: ${route.params.item.element}`,
+                              title: `Chain: ${route.params.item.element}`,
                               headerRight: (props) =>
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}

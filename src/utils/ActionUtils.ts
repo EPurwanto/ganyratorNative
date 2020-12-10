@@ -82,6 +82,8 @@ export function performAction(call: string, action: ActionContent[], tables: Tab
                 childAct = row.action;
             }
 
+            // TODO change this to a BFS
+
             if (childAct){
                 performAction(row.element, childAct, tables, actions).values.forEach((val, key) => {
                     results.values.set(key, val);

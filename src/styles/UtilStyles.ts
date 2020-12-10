@@ -31,6 +31,7 @@ export interface IUtilStyles {
     helpIcon: TextStyle,
     picker: ViewStyle,
     pickerItem: TextStyle,
+    para: TextStyle,
 }
 
 export function UtilStyles(theme: Theme) {
@@ -138,6 +139,9 @@ export function UtilStyles(theme: Theme) {
         pickerItem: {
             height: 21,
             fontSize: theme.fontSize.small,
+        },
+        para: {
+            marginVertical: 8,
         },
     });
 }
