@@ -27,7 +27,7 @@ export default function(props: IProps) {
             <View style={styles.menu.menuItem}>
                 <ListEntry title="Help"
                            onPress={() => {
-                               console.log("Clear Session")
+                               console.log("Help")
                                hideMenu();
                                context.showOverlay(
                                    <HelpOverlay/>
@@ -42,11 +42,19 @@ export default function(props: IProps) {
                                context.showOverlay(
                                    <ConfirmOverlay  message="Are you sure you want to clear the session? This will delete all actions and tables and cannot be undone."
                                                     confirmMessage="Clear"
-                                                    cancelMessage="Cancel"
                                                     action={() => {
                                                         context.updateActions(undefined, undefined, context.actions);
                                                         context.updateTables(undefined, undefined, context.tables);
                                                     }}/>)
+                           }}
+                />
+            </View>
+            <View style={styles.menu.menuItem}>
+                <ListEntry title="Export Session"
+                           onPress={() => {
+                               console.log("Export Session")
+                               hideMenu();
+                               context.saveSession();
                            }}
                 />
             </View>

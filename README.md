@@ -1,9 +1,12 @@
 # ganyratorNative
 A ReactNative version of ganyrator
 
-TODO List
+pre-launch TODO List
 
 [X] Help Text  
 [ ] Session Import/Export  
 [ ] Breadth First chain actions  
-[ ] Cycle Detection
+[ ] Cycle Detection  
+[ ] Device Testing  
+[ ] Export file naming
+[ ] convert web version to use same format

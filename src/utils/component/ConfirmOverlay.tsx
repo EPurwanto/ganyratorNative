@@ -34,15 +34,17 @@ export const ConfirmOverlay : FunctionComponent<IProps> = (props) => {
                     }
                 </View>
                 <View style={[styles.util.row, styles.menu.menuItem]}>
-                    <TouchButton label={"Confirm"}
+                    { props.confirmMessage &&
+                    <TouchButton label={props.confirmMessage}
                                  style={styles.util.btnPrimary}
                                  labelStyle={styles.util.txtPrimary}
                                  onPress={() => {
                                      props.action && props.action();
                                      close();
                                  }}/>
+                    }
                     <View style={styles.util.grow1}/>
-                    <TouchButton label={"Cancel"}
+                    <TouchButton label={props.cancelMessage || "Cancel"}
                                  style={styles.util.btnDanger}
                                  labelStyle={styles.util.txtDanger}
                                  onPress={close}/>

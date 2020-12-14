@@ -15,6 +15,7 @@ import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
 import AppTheme from "./src/styles/AppTheme";
 import MainMenu from "./src/menu/MainMenu";
+import {ConfirmOverlay} from "./src/utils/component/ConfirmOverlay";
 
 
 export default function App() {
@@ -94,6 +95,32 @@ export default function App() {
                 setMenuVisible(visible)
             },
             currentRoute: navContainer.current?.getCurrentRoute(),
+            saveSession: () => {
+                SessionStorage.Export({
+                    id: id,
+                    actions: actions,
+                    tables: tables,
+                })
+                    .then(response => {
+                        if (response.success) {
+                            setOverlay(
+                                <ConfirmOverlay message={`Session exported to ${response.filename}.`}
+                                                cancelMessage="close"/>
+                            )
+                        } else if (response.message === "PermissionRequired") {
+                            setOverlay(
+                                <ConfirmOverlay message="Storage Permissions are required to save the exported file. Please go to settings to allow the storage permission."
+                                                cancelMessage="close"/>
+                            )
+                        } else {
+                            setOverlay(
+                                <ConfirmOverlay message="Something went wrong while trying to save the file."
+                                                cancelMessage="close"/>
+                            )
+                            console.log(response.message)
+                        }
+                    })
+            }
         }}>
             <AppStyles.Provider value={styles}>
                 <SafeAreaProvider style={{

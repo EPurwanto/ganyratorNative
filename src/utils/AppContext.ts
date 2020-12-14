@@ -11,6 +11,7 @@ export interface IContext extends ISession {
     showOverlay: (node: JSX.Element | undefined) => void;
     showMenu: (visible: boolean) => void;
     currentRoute?: RouteProp<any, any>;
+    saveSession: () => void;
 }
 
 const AppContext = React.createContext<IContext>({
@@ -22,6 +23,7 @@ const AppContext = React.createContext<IContext>({
     showOverlay: () => {},
     showMenu: (visible: boolean) => {},
     currentRoute: undefined,
+    saveSession: () => {},
 });
 
 export default AppContext;
