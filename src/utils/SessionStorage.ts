@@ -46,6 +46,8 @@ class SessionStorage {
             format: 1,
             ...session,
         }
+        const filename = "ganyratorSession";
+        const uri = FileSystem.documentDirectory + filename + ".json";
 
         return MediaLibrary.getPermissionsAsync()
             .then(response => {
@@ -55,11 +57,11 @@ class SessionStorage {
             })
             .then(response => {
                 if (response.granted)
-                    return FileSystem.writeAsStringAsync(FileSystem.documentDirectory + "test.json", JSON.stringify(toSave))
+                    return FileSystem.writeAsStringAsync(uri, JSON.stringify(toSave))
                 else throw "PermissionRequired"
             })
             .then( () => {
-                return MediaLibrary.createAssetAsync(FileSystem.documentDirectory + "test.json")
+                return MediaLibrary.createAssetAsync(uri)
             })
             .then((asset) => {
                 console.log(`Exported: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);

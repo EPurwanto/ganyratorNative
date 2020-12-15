@@ -2,8 +2,7 @@ import React from 'react'
 import {ISession} from "./SessionStorage";
 import {Table} from "./TableUtils";
 import {Action} from "./ActionUtils";
-import {IProps as ConfirmProps} from "./component/ConfirmOverlay";
-import {NavigationContainer, RouteProp} from "@react-navigation/native";
+import {RouteProp} from "@react-navigation/native";
 
 export interface IContext extends ISession {
     updateActions: (update?: Action | Action[], add?: Action | Action[], remove?: Action | Action[]) => void;
