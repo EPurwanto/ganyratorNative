@@ -15,7 +15,7 @@ export interface Table extends Element, Unique {
 export async function createTableContent(peers: TableContent[], element?: string, weight?: number, action?: string | ActionContent[]): Promise<TableContent> {
     return {
         weight: weight || 1,
-        element: element || "Element",
+        element: element || "Element " + (peers.length + 1),
         action: action,
         key:  await getUniqueId(peers),
     }
@@ -23,7 +23,7 @@ export async function createTableContent(peers: TableContent[], element?: string
 
 export async function createTable(peers: Table[], name?: string, desc?: string, contents?: TableContent[]) : Promise<Table> {
     return {
-        name: name || "New Table",
+        name: name || "New Table " + (peers.length + 1),
         desc: desc || "Empty Table",
         totalWeight: getTotalWeight(contents || []),
         contents: contents || [],

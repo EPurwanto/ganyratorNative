@@ -16,7 +16,7 @@ export interface IAppStyles {
     underlayOpacity: number,
 }
 
-export function GetStyles(theme: Theme) {
+export function getStyles(theme: Theme) {
     return {
         util: UtilStyles(theme),
         field: FieldStyles(theme),
@@ -28,7 +28,7 @@ export function GetStyles(theme: Theme) {
     }
 }
 
-export const DefaultStyles = GetStyles(LightTheme);
+export const DefaultStyles = getStyles(LightTheme);
 
 const AppStyles = React.createContext<IAppStyles>(DefaultStyles);
 

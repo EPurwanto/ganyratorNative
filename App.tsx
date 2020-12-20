@@ -28,6 +28,7 @@ export default function App() {
     const navContainer = useRef<NavigationContainerRef>(null!)
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
+    const styles = getStyles(AppTheme);
 
     // Load Session from storage
     useEffect(() => {
@@ -63,8 +64,9 @@ export default function App() {
         }
     }, [id, actions, tables]);
 
-    const styles = GetStyles(AppTheme);
+    function doCycleCheck(tables: Table[], actions: Action[], ...toCheck: (Table | Action)[]) {
 
+    }
     if (!loaded || !fontLoaded) {
         return (
             <View style={styles.util.container}>

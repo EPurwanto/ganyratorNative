@@ -20,7 +20,7 @@ const AppContext = React.createContext<IContext>({
     updateActions: () => {},
     updateTables: () => {},
     showOverlay: () => {},
-    showMenu: (visible: boolean) => {},
+    showMenu: () => {},
     currentRoute: undefined,
     saveSession: () => {},
 });

@@ -4,9 +4,9 @@ A ReactNative version of ganyrator
 pre-launch TODO List
 
 [X] Help Text  
-[|] Session Import/Export  
+[ ] ~~Session Import/Export~~  
 [ ] Breadth First chain actions  
 [ ] Cycle Detection  
 [ ] Device Testing  
-[X] Export file naming  
+[ ] ~~Export file naming~~  
 [ ] convert web version to use same format

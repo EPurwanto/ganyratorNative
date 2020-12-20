@@ -49,15 +49,24 @@ export default function(props: IProps) {
                            }}
                 />
             </View>
-            <View style={styles.menu.menuItem}>
-                <ListEntry title="Export Session"
-                           onPress={() => {
-                               console.log("Export Session")
-                               hideMenu();
-                               context.saveSession();
-                           }}
-                />
-            </View>
+            {/*<View style={styles.menu.menuItem}>*/}
+            {/*    <ListEntry title="Export Session"*/}
+            {/*               onPress={() => {*/}
+            {/*                   console.log("Export Session")*/}
+            {/*                   hideMenu();*/}
+            {/*                   context.saveSession();*/}
+            {/*               }}*/}
+            {/*    />*/}
+            {/*</View>*/}
+            {/*<View style={styles.menu.menuItem}>*/}
+            {/*    <ListEntry title="Import Session"*/}
+            {/*               onPress={() => {*/}
+            {/*                   console.log("Import Session")*/}
+            {/*                   hideMenu();*/}
+            {/*                   context.saveSession();*/}
+            {/*               }}*/}
+            {/*    />*/}
+            {/*</View>*/}
         </Overlay>
     )
 }

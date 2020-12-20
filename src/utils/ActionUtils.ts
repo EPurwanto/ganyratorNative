@@ -26,7 +26,7 @@ export async function createActionContent(peers: ActionContent[], table?: string
 
 export async function createAction(peers: Action[], name?: string, desc?: string, contents?: ActionContent[]): Promise<Action> {
     return {
-        name: name || "New Action",
+        name: name || "New Action " + (peers.length + 1),
         desc: desc || "Empty action",
         contents: contents || [],
         key:  await getUniqueId(peers),
