@@ -1,7 +1,8 @@
 import {ActionContent} from "./ActionUtils";
 import {Element, getUniqueId, handleUpdate, Unique} from "./Utils";
 
-export interface TableContent extends Unique{
+export interface TableContent extends Unique {
+    parent: string
     weight: number;
     element: string;
     action?: string | ActionContent[];
@@ -12,12 +13,13 @@ export interface Table extends Element, Unique {
     contents: TableContent[];
 }
 
-export async function createTableContent(peers: TableContent[], element?: string, weight?: number, action?: string | ActionContent[]): Promise<TableContent> {
+export async function createTableContent(parent: Table, element?: string, weight?: number, action?: string | ActionContent[]): Promise<TableContent> {
     return {
+        parent: parent.key,
         weight: weight || 1,
-        element: element || "Element " + (peers.length + 1),
+        element: element || "Element " + (parent.contents.length + 1),
         action: action,
-        key:  await getUniqueId(peers),
+        key:  await getUniqueId(parent.contents),
     }
 }
 

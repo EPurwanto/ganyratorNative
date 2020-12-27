@@ -6,6 +6,8 @@ import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
 import {ConfirmOverlay} from "../utils/component/ConfirmOverlay";
 import {HelpOverlay} from "../help/HelpOverlay";
+import {useDispatch} from "react-redux";
+import {loadTables} from "../store/tableSlice"
 
 interface IProps {
     visible: boolean,
@@ -16,6 +18,8 @@ interface IProps {
 export default function(props: IProps) {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
+
+    const dispatch = useDispatch();
 
     function hideMenu() {
         props.onClose();
@@ -44,7 +48,8 @@ export default function(props: IProps) {
                                                     confirmMessage="Clear"
                                                     action={() => {
                                                         context.updateActions(undefined, undefined, context.actions);
-                                                        context.updateTables(undefined, undefined, context.tables);
+                                                        // context.updateTables(undefined, undefined, context.tables);
+                                                        dispatch(loadTables([]))
                                                     }}/>)
                            }}
                 />

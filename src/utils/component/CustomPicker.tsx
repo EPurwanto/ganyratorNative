@@ -23,10 +23,10 @@ export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, it
     const styles = useContext(AppStyles);
 
     let useItems = items;
-    if (useItems.length == 0)
-        useItems = [{label: "Nothing", value: "", key: ""}] as PickerItem[];
-
-    if (!selectedValue && onValueChange && useItems.length > 0) {
+    if (useItems.length == 0) {
+        useItems = [{label: "Nothing", value: "", key: ""}];
+    } else if (!selectedValue && onValueChange) {
+        console.log("Auto Selecting the value " + useItems[0].value)
         onValueChange(useItems[0].value);
     }
 

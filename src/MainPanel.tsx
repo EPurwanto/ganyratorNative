@@ -11,8 +11,10 @@ import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
 import {Image, View} from "react-native";
-import {clone, getUniqueId} from "./utils/Utils";
+import {clone, find, getUniqueId} from "./utils/Utils";
 import {MaterialIcons} from '@expo/vector-icons';
+import {useDispatch} from "react-redux";
+import {cloneTable, deleteTable} from "./store/tableSlice";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -55,6 +57,7 @@ export default function StackPanel(props: StackPanelProps) {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
     const Stack = createStackNavigator<StackParamList>();
+    const dispatch = useDispatch();
 
     return (
         <Stack.Navigator>
@@ -115,20 +118,17 @@ export default function StackPanel(props: StackPanelProps) {
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
                                                    onPress={() => {
-                                                       getUniqueId(context.tables).then((id) => {
-                                                           const copy = clone(route.params.table);
-                                                           copy.name = "Copy of " + copy.name;
-                                                           copy.key = id;
-                                                           context.updateTables(undefined, copy);
-                                                           navigation.pop();
-                                                           navigation.push("TableEdit", {table: copy})
-                                                       })
+                                                       dispatch(cloneTable({
+                                                           tableId: route.params.tableId
+                                                       }))
                                                    }}>
                                           <MaterialIcons name="content-copy" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                       <TouchButton style={[]}
                                                    onPress={() => {
-                                                       context.updateTables(undefined, undefined, route.params.table);
+                                                       dispatch(deleteTable({
+                                                           tableId: route.params.tableId
+                                                       }))
                                                        navigation.pop();
                                                    }}>
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
@@ -143,7 +143,7 @@ export default function StackPanel(props: StackPanelProps) {
             <Stack.Screen name={"TableChainAction"}
                           component={TableChainActionEditScreen}
                           options={({ navigation, route}) => ({
-                              title: `Chain: ${route.params.item.element}`,
+                              title: `Edit Chain Action`,
                               headerRight: (props) =>
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}

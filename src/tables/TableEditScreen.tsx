@@ -1,31 +1,56 @@
-import React, {useContext} from "react";
-import AppContext from "../utils/AppContext";
+import React, {useCallback, useContext} from "react";
 import {ScrollView, TextInput, View} from "react-native";
-import {createTableContent, Table} from "../utils/TableUtils";
-import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
+import {RouteProp, useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import {Field} from "../utils/component/Field";
 import AppStyles from "../styles/AppStyles";
-import {handleUpdate} from "../utils/Utils";
+import {find} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
 import StyledText from "../utils/component/StyledText";
 import {StackParamList} from "../MainPanel";
 import {StackNavigationProp} from "@react-navigation/stack";
+import {useDispatch, useSelector} from "react-redux";
+import {addRow, clearCreatedTable, updateRow, updateTable} from '../store/tableSlice'
+import {RootState} from "../store/store";
 
 type TableEditNavigationProp = StackNavigationProp<StackParamList, "TableEdit">
 type TableEditRouteProp = RouteProp<StackParamList, "TableEdit">;
 
 export interface IProps {
-    table: Table;
+    tableId: string;
 }
 
 export default function () {
-    const context = useContext(AppContext);
     const styles = useContext(AppStyles);
+
+    const tables = useSelector((state: RootState) => state.tables.items);
+    const created = useSelector((state: RootState) => state.tables.createdTable)
+
+    const dispatch = useDispatch();
     const navigation = useNavigation<TableEditNavigationProp>();
     const route = useRoute<TableEditRouteProp>();
 
-    const table = route.params.table;
-    // const contents = [...table.contents, ...table.contents, ...table.contents, ...table.contents]
+    const table = find(tables, route.params.tableId);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (!table) {
+                navigation.pop();
+            }
+        }, [table])
+    );
+
+    useFocusEffect(
+        useCallback(() => {
+            if (created) {
+                dispatch(clearCreatedTable())
+                navigation.replace("TableEdit", {tableId: created.key});
+            }
+        }, [created])
+    );
+
+    if (!table) {
+        return null
+    }
 
     return (
         <View style={styles.util.container}>
@@ -35,8 +60,9 @@ export default function () {
                                maxLength={60}
                                value={table.name}
                                onChange={(e) => {
-                                   table.name = e.nativeEvent.text;
-                                   context.updateTables(table);
+                                   const copy = {...table}
+                                   copy.name = e.nativeEvent.text;
+                                   dispatch(updateTable(copy))
                                }}/>
                 </Field>
                 <Field label={"Description: "}>
@@ -45,8 +71,9 @@ export default function () {
                                multiline={true}
                                value={table.desc}
                                onChange={(e) => {
-                                   table.desc = e.nativeEvent.text;
-                                   context.updateTables(table);
+                                   const copy = {...table}
+                                   copy.desc = e.nativeEvent.text;
+                                   dispatch(updateTable(copy))
                                }}/>
                 </Field>
                 <View style={styles.util.row}>
@@ -62,7 +89,6 @@ export default function () {
                 </View>
                 {
                     table.contents.map((item) => {
-                        console.log("Writing row:", item);
                         const buttonStyle = item.action ? styles.util.btnSuccess : styles.util.btnPrimary;
                         const labelStyle = item.action ? styles.util.txtSuccess : styles.util.txtPrimary;
                         const buttonLabel = item.action ? "Yes" : "No";
@@ -74,26 +100,28 @@ export default function () {
                                            style={[styles.util.txt, styles.util.txtRight, styles.field.group, styles.field.groupStart, styles.util.w55]}
                                            keyboardType={"number-pad"}
                                            onChange={(e) => {
+                                               const copy = {...item};
                                                if (e.nativeEvent.text) {
-                                                   item.weight = parseInt(e.nativeEvent.text);
-                                                   table.contents = handleUpdate(table.contents, item);
-                                                   context.updateTables(table);
+                                                   copy.weight = parseInt(e.nativeEvent.text);
+                                               } else {
+                                                   copy.weight = 0;
                                                }
+                                               dispatch(updateRow(copy))
                                            }}
                                 />
                                 <TextInput value={item.element.toString()}
                                            style={[styles.util.txt, styles.field.group, styles.util.grow1, styles.field.groupMiddle]}
                                            onChange={(e) => {
-                                               item.element = e.nativeEvent.text;
-                                               table.contents = handleUpdate(table.contents, item);
-                                               context.updateTables(table);
+                                               const copy = {...item};
+                                               copy.element = e.nativeEvent.text;
+                                               dispatch(updateRow(copy))
                                            }}
                                 />
                                 <TouchButton style={[buttonStyle, styles.field.group, styles.field.groupEnd, styles.field.btn, styles.util.w55]}
                                              onPress={()=>{
                                                  navigation.push("TableChainAction", {
-                                                     table: table,
-                                                     item: item,
+                                                     tableId: table.key,
+                                                     itemId: item.key,
                                                  })
                                              }}
                                              label={buttonLabel}
@@ -107,10 +135,9 @@ export default function () {
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}
                          onPress={() => {
-                             createTableContent(table.contents).then((row) => {
-                                 table.contents = handleUpdate(table.contents, undefined, row);
-                                 context.updateActions(table);
-                             });
+                             dispatch(addRow({
+                                 tableId: table.key,
+                             }))
                          }}/>
         </View>
     )

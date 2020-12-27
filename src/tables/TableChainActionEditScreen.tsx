@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useCallback, useContext, useState} from "react";
 import {ScrollView, Text, View} from "react-native";
 import SegmentedControl from "@react-native-community/segmented-control";
 import {ActionContent, createActionContent} from "../utils/ActionUtils";
@@ -6,19 +6,24 @@ import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
 import ActionContentEditor from "../actions/ActionContentEditor";
-import {handleUpdate} from "../utils/Utils";
+import {find, handleUpdate} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
-import {Table, TableContent} from "../utils/TableUtils";
-import {RouteProp, useRoute} from "@react-navigation/native";
+import {RouteProp, useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import {StackParamList} from "../MainPanel";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store";
+import StyledText from "../utils/component/StyledText";
+import {addChainAction, updateChainAction, updateRow} from "../store/tableSlice"
+import {StackNavigationProp} from "@react-navigation/stack";
 
+type TableChainNavigationProp = StackNavigationProp<StackParamList, "TableChainAction">
 type TableChainRouteProp = RouteProp<StackParamList, "TableChainAction">;
 
 type Mode = "None" | "Select" | "Create";
 
 export interface IProps {
-    table: Table;
-    item: TableContent;
+    tableId: string;
+    itemId: string;
 }
 
 function modeIndex(mode: string) {
@@ -49,22 +54,43 @@ export default function(props: IProps) {
     const context = useContext(AppContext);
     const styles = useContext(AppStyles);
     const route = useRoute<TableChainRouteProp>();
+    const dispatch = useDispatch();
+    const navigation = useNavigation<TableChainNavigationProp>();
 
-    const table = route.params.table;
-    const item = route.params.item;
+    const tables = useSelector((state: RootState) => state.tables.items);
+
+    const table = find(tables, route.params.tableId);
+    const item = find(table?.contents ?? [], route.params.itemId);
 
     // Figure out initial state
-    let startMode = "None"
-    if (item.action) {
-        switch (typeof item.action) {
-            case "string":
-                startMode = "Select";
-                break;
-            case "object":
-                startMode = "Create";
-        }
+    const [mode, setMode] = useState<Mode>("None");
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log("In the callback")
+            if (item) {
+                let startMode : Mode = "None"
+                switch (typeof item.action) {
+                    case "string":
+                        startMode = "Select";
+                        break;
+                    case "object":
+                        startMode = "Create";
+                        break;
+                    default:
+                        startMode = "None";
+                }
+                // setMode(startMode)
+            } else {
+                navigation.pop();
+            }
+        }, [item])
+    )
+
+    if (!table || !item) {
+        console.log(`Couldn't find table content for id's [${route.params.tableId}]->[${route.params.itemId}].`)
+        return <StyledText>Something went wrong</StyledText>
     }
-    const [mode, setMode] = useState(startMode);
 
     // create components for current state
     let body = <View/>;
@@ -86,9 +112,9 @@ export default function(props: IProps) {
                                   prompt={"Select an action to perform"}
                                   selectedValue={actionKey}
                                   onValueChange={value => {
-                                      item.action = value;
-                                      table.contents = handleUpdate(table.contents, item);
-                                      context.updateTables(table);
+                                      const copy = {...item};
+                                      copy.action = value;
+                                      dispatch(updateRow(copy));
                                   }}/>
                 </View>
             )
@@ -100,16 +126,22 @@ export default function(props: IProps) {
                     <Text>The following Tables will be rolled upon</Text>
                     <ScrollView style={styles.list.base}>
                         {
-                            content.map((actionItem) =>
+                            content.map((actionItem, index) =>
                                 <ActionContentEditor field={actionItem.field}
                                                      table={actionItem.table}
                                                      key={actionItem.key}
                                                      onChange={((actionField, actionTable) => {
-                                                         actionItem.field = actionField;
-                                                         actionItem.table = actionTable;
-                                                         item.action = handleUpdate(content, item);
-                                                         table.contents = handleUpdate(table.contents, item);
-                                                         context.updateTables(table);
+                                                         const copy = {...actionItem};
+                                                         copy.field = actionField;
+                                                         copy.table = actionTable;
+
+                                                         dispatch(updateChainAction({
+                                                             parent: {
+                                                                 tableId: item.parent,
+                                                                 tableContentId: item.key,
+                                                             },
+                                                             actionContent: copy,
+                                                         }))
                                                      })}/>
                             )
                         }
@@ -118,11 +150,10 @@ export default function(props: IProps) {
                                  label={"Add"}
                                  labelStyle={styles.util.txtPrimary}
                                  onPress={() => {
-                                     createActionContent(content).then((row) => {
-                                         item.action = handleUpdate(content, undefined, row);
-                                         table.contents = handleUpdate(table.contents, item);
-                                         context.updateTables(table);
-                                     });
+                                     dispatch(addChainAction({
+                                         tableId: item.parent,
+                                         tableContentId: item.key,
+                                     }))
                                  }}/>
                 </View>
             )
@@ -138,9 +169,9 @@ export default function(props: IProps) {
 
                                   if (mode !== newMode) {
                                       // Clear whenever the selector is moved
-                                      item.action = undefined;
-                                      table.contents = handleUpdate(table.contents, item);
-                                      context.updateTables(table);
+                                      const copy = {...item};
+                                      copy.action = undefined
+                                      dispatch(updateRow(copy))
                                   }
                                   setMode(newMode);
                               }}/>

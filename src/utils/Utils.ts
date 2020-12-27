@@ -91,3 +91,12 @@ export function findIndex(list: Unique[], item: Unique) {
 export function find<T extends Unique>(list: T[], key: string) {
     return list.find((val) => val.key == key)
 }
+
+export function replace<T extends Unique>(list: T[], item: T, inPlace = false) {
+    list = inPlace ? list : [...list]
+    const index = findIndex(list, item);
+    if (index >= 0) {
+        list[index] = item;
+    }
+    return list;
+}
