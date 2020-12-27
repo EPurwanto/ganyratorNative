@@ -16,20 +16,20 @@ export interface ActionResults extends Unique {
     values: Map<string, string>;
 }
 
-export async function createActionContent(peers: ActionContent[], table?: string, field?: string) {
+export function createActionContent(peers: ActionContent[], table?: string, field?: string) {
     return {
         table: table,
         field: field,
-        key: await getUniqueId(peers),
+        key: getUniqueId(peers),
     }
 }
 
-export async function createAction(peers: Action[], name?: string, desc?: string, contents?: ActionContent[]): Promise<Action> {
+export function createAction(peers: Action[], name?: string, desc?: string, contents?: ActionContent[]) {
     return {
         name: name || "New Action " + (peers.length + 1),
         desc: desc || "Empty action",
         contents: contents || [],
-        key:  await getUniqueId(peers),
+        key:  getUniqueId(peers),
     };
 }
 

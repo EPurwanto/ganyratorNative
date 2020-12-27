@@ -18,15 +18,14 @@
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
     "@reduxjs/toolkit": "^1.5.0",
-    "expo": "^38.0.0",
+    "@types/uuid": "^8.3.0",
+    "expo": "^40.0.0",
     "expo-file-system": "~9.0.1",
     "expo-font": "~8.2.1",
     "expo-media-library": "~8.2.1",
     "expo-random": "~8.2.1",
     "expo-splash-screen": "^0.3.1",
     "expo-status-bar": "^1.0.0",
-    "expo-updates": "~0.2.8",
-    "nanoid": "^3.1.12",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-native": "0.62.2",
@@ -41,7 +40,8 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

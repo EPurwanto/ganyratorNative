@@ -13,23 +13,23 @@ export interface Table extends Element, Unique {
     contents: TableContent[];
 }
 
-export async function createTableContent(parent: Table, element?: string, weight?: number, action?: string | ActionContent[]): Promise<TableContent> {
+export function createTableContent(parent: Table, element?: string, weight?: number, action?: string | ActionContent[]) {
     return {
         parent: parent.key,
         weight: weight || 1,
         element: element || "Element " + (parent.contents.length + 1),
         action: action,
-        key:  await getUniqueId(parent.contents),
+        key:  getUniqueId(parent.contents),
     }
 }
 
-export async function createTable(peers: Table[], name?: string, desc?: string, contents?: TableContent[]) : Promise<Table> {
+export function createTable(peers: Table[], name?: string, desc?: string, contents?: TableContent[]) {
     return {
         name: name || "New Table " + (peers.length + 1),
         desc: desc || "Empty Table",
         totalWeight: getTotalWeight(contents || []),
         contents: contents || [],
-        key:  await getUniqueId(peers),
+        key:  getUniqueId(peers),
     };
 }
 

@@ -1,5 +1,4 @@
-// @ts-ignore
-import {nanoid} from "nanoid/async/index.native.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface Element {
     name: string;
@@ -71,11 +70,11 @@ export function clone<T>(obj: T): T {
     return JSON.parse(JSON.stringify(obj));
 }
 
-export async function getUniqueId(peers: Unique[]) {
-    let id = await nanoid();
+export function getUniqueId(peers: Unique[]) {
+    let id = uuidv4();
 
     while (!isUnique(id, peers)) {
-        id = await nanoid();
+        id = uuidv4();
     }
     return id;
 }

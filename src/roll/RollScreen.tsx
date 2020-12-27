@@ -70,12 +70,12 @@ export default function () {
                                      console.log("Starting batch roll: ")
 
                                      const outcome = performAction(act.name, act.contents, context.tables, context.actions);
-                                     getUniqueId(results).then((id) => {
-                                         outcome.key = id;
-                                         // const summary = Array.from(outcome.values).map(([key, value]) => `${key}->${value}`).join();
+                                     const id = getUniqueId(results)
+                                     outcome.key = id;
+                                     // const summary = Array.from(outcome.values).map(([key, value]) => `${key}->${value}`).join();
 
-                                         setResults([outcome, ...results])
-                                     })
+                                     setResults([outcome, ...results])
+
                                  }}>
                         <MaterialCommunityIcons name="dice-multiple" style={[styles.util.btnIcon, styles.util.txtPrimary]} />
                     </TouchButton>

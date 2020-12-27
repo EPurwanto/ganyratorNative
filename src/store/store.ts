@@ -1,5 +1,5 @@
 import {configureStore, Middleware} from "@reduxjs/toolkit";
-import logger from 'redux-logger';
+import {createLogger} from 'redux-logger';
 import tableSlice, {TableState} from "./tableSlice";
 import thunk from "redux-thunk";
 import SessionStorage from "../utils/SessionStorage";
@@ -24,6 +24,10 @@ export const saveOnChange: Middleware<
 
     return val;
 }
+
+const logger = createLogger({
+    collapsed: true
+})
 
 const store =  configureStore({
     reducer: {

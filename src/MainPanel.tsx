@@ -85,14 +85,13 @@ export default function StackPanel(props: StackPanelProps) {
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
                                                    onPress={() => {
-                                                       getUniqueId(context.actions).then((id) => {
-                                                           const copy = clone(route.params.action);
-                                                           copy.name = "Copy of " + copy.name;
-                                                           copy.key = id;
-                                                           context.updateActions(undefined, copy);
-                                                           navigation.pop();
-                                                           navigation.push("ActionEdit", {action: copy})
-                                                       })
+                                                       const id = getUniqueId(context.actions);
+                                                       const copy = clone(route.params.action);
+                                                       copy.name = "Copy of " + copy.name;
+                                                       copy.key = id;
+                                                       context.updateActions(undefined, copy);
+                                                       navigation.pop();
+                                                       navigation.push("ActionEdit", {action: copy})
                                                    }}>
                                           <MaterialIcons name="content-copy" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
