@@ -83,11 +83,10 @@ export default function () {
                          labelStyle={styles.util.txtPrimary}
                          disabled={context.tables.length === 0}
                          onPress={() => {
-                             createActionContent(action.contents).then((row) => {
-                                 action.contents = handleUpdate(action.contents, undefined, row);
-                                 console.log("Add")
-                                 context.updateActions(action);
-                             });
+                             const row = createActionContent(action.contents);
+                             action.contents = handleUpdate(action.contents, undefined, row);
+                             console.log("Add")
+                             context.updateActions(action);
                          }}/>
         </View>
     )

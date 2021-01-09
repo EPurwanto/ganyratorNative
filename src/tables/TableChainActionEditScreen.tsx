@@ -67,7 +67,6 @@ export default function(props: IProps) {
 
     useFocusEffect(
         useCallback(() => {
-            console.log("In the callback")
             if (item) {
                 let startMode : Mode = "None"
                 switch (typeof item.action) {
@@ -80,11 +79,11 @@ export default function(props: IProps) {
                     default:
                         startMode = "None";
                 }
-                // setMode(startMode)
+                setMode(startMode)
             } else {
                 navigation.pop();
             }
-        }, [item])
+        }, [])
     )
 
     if (!table || !item) {

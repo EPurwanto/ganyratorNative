@@ -28,7 +28,6 @@ export default function () {
                                                  subTitle={item.desc}
                                                  key={item.key}
                                                  onPress={() => {
-                                                     console.log("Editing Action: ", item.name)
                                                      navigation.push("ActionEdit", {action: item})
                                                  }}/>
                                   }
@@ -40,12 +39,9 @@ export default function () {
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}
                          onPress={() => {
-                             console.log("creating action");
-                             createAction(context.actions).then((action) => {
-                                 console.log("Created action " + action.key);
-                                 context.updateActions(undefined, action);
-                                 navigation.push("ActionEdit", {action: action});
-                             });
+                             const action = createAction(context.actions);
+                             context.updateActions(undefined, action);
+                             navigation.push("ActionEdit", {action: action});
                          }}/>
         </View>
     )

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useContext} from "react";
+import React, {FunctionComponent, useContext, useEffect, useState} from "react";
 import {StyleProp, TextStyle, View, ViewProps} from "react-native";
 import {Picker} from "@react-native-community/picker";
 import AppStyles from "../../styles/AppStyles";
@@ -22,12 +22,25 @@ interface IProps extends ViewProps {
 export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, itemStyle, prompt, selectedValue, onValueChange, ...others}: IProps) => {
     const styles = useContext(AppStyles);
 
+    const [value, setValue] = useState(selectedValue);
+
     let useItems = items;
     if (useItems.length == 0) {
         useItems = [{label: "Nothing", value: "", key: ""}];
-    } else if (!selectedValue && onValueChange) {
-        console.log("Auto Selecting the value " + useItems[0].value)
-        onValueChange(useItems[0].value);
+    }
+
+    useEffect(() => {
+        if (!selectedValue) {
+            setValue(useItems[0].value);
+        }
+    }, [useItems])
+
+    useEffect(() => {
+        setValue(selectedValue);
+    }, [selectedValue])
+
+    function handleValueChange(val : string) {
+        onValueChange && onValueChange(val)
     }
 
     return (
@@ -35,8 +48,8 @@ export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, it
             <Picker style={[styles.util.picker, pickerStyle]}
                     itemStyle={[styles.util.pickerItem, itemStyle]}
                     prompt={prompt}
-                    selectedValue={selectedValue}
-                    onValueChange={(val) => onValueChange && onValueChange(val as string)}>
+                    selectedValue={value}
+                    onValueChange={(val) => handleValueChange(val as string)}>
                 {
                     useItems.map((i) => <Picker.Item value={i.value} label={i.label} key={i.key}/>)
                 }

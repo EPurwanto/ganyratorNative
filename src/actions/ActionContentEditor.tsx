@@ -4,6 +4,8 @@ import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker
 import AppStyles from "../styles/AppStyles";
 import AppContext from "../utils/AppContext";
 import {find} from "../utils/Utils";
+import {useSelector} from "react-redux";
+import {RootState} from "../store/store";
 
 interface IProps {
     field?: string,
@@ -12,18 +14,18 @@ interface IProps {
 }
 
 export default function(props: IProps) {
-    const context = useContext(AppContext);
     const styles = useContext(AppStyles);
+    const tables = useSelector((state: RootState) => state.tables.items);
 
     return (
         <View style={[styles.util.row, styles.field.base]}>
             <TextInput value={props.field}
-                       placeholder={props.table && find(context.tables, props.table)?.name || "Select a field"}
+                       placeholder={props.table && find(tables, props.table)?.name || "Select a field"}
                        style={[styles.util.txt, styles.field.group, styles.field.groupStart, styles.util.wHalf]}
                        onChange={(e) => {
                            props.onChange(e.nativeEvent.text, props.table);
                        }}/>
-            <CustomPicker items={elementToPickerItem(context.tables)}
+            <CustomPicker items={elementToPickerItem(tables)}
                           style={[styles.util.txt, styles.field.group, styles.field.groupEnd, styles.util.wHalf]}
                           pickerStyle={styles.util.grow1}
                           itemStyle={styles.util.grow1}
