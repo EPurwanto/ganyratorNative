@@ -6,10 +6,6 @@ import {NavigationContainer, NavigationContainerRef} from "@react-navigation/nat
 import AppStyles, {getStyles} from "./src/styles/AppStyles";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
-// @ts-ignore
-import {nanoid} from "nanoid/async/index.native.js";
-import {handleUpdateTables, Table} from "./src/utils/TableUtils";
-import {handleUpdate} from "./src/utils/Utils";
 import {Lato_400Regular, Lato_700Bold, useFonts} from "@expo-google-fonts/lato";
 import {Action} from "./src/utils/ActionUtils";
 import StackPanel from "./src/MainPanel";
@@ -19,10 +15,10 @@ import {ConfirmOverlay} from "./src/utils/component/ConfirmOverlay";
 import {Provider} from "react-redux";
 import store from "./src/store/store";
 import {loadTables} from "./src/store/tableSlice";
+import {loadActions} from "./src/store/actionSlice";
 
 
 export default function App() {
-    const [id, setId] = useState("");
     const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
@@ -38,36 +34,28 @@ export default function App() {
     useEffect(() => {
         SessionStorage.Load()
             .then(loadSesh => {
-                setId(loadSesh.id);
                 // setTables(loadSesh.tables ?? []);
                 store.dispatch(loadTables(loadSesh.tables))
-                setActions(loadSesh.actions ?? []);
+                store.dispatch(loadActions(loadSesh.actions))
                 setLoaded(true);
             })
             .catch((e)=> {
                 console.log("Load Error:" + e);
-                nanoid()
-                    .then((id: string) => {
-                        setId(id);
-                        store.dispatch(loadTables([]))
-                        setActions([])
-                        setLoaded(true);
-                    })
+                setLoaded(true);
             });
     }, []);
 
     // Save Session every change
-    useEffect(() => {
-        if (loaded) {
-            SessionStorage.Save({
-                id: id,
-                actions: actions,
-                tables: tables,
-            }).catch((e) => {
-                console.log("Save Error: " + e);
-            });
-        }
-    }, [id, actions, tables]);
+    // useEffect(() => {
+    //     if (loaded) {
+    //         SessionStorage.Save({
+    //             actions: actions,
+    //             tables: tables,
+    //         }).catch((e) => {
+    //             console.log("Save Error: " + e);
+    //         });
+    //     }
+    // }, [id, actions, tables]);
 
     if (!loaded || !fontLoaded) {
         return (
@@ -80,15 +68,13 @@ export default function App() {
     return (
         <Provider store={store}>
             <AppContext.Provider value={{
-                id: id,
                 actions: actions,
                 tables: tables,
                 updateActions: ((update, add, remove) => {
-                    console.log('Updating actions')
-                    setActions(handleUpdate(actions, update, add, remove));
+                    throw 'DEPRECATED: Updating actions'
                 }),
                 updateTables: ((update, add, remove) => {
-                    console.error('DEPRECATED: Updating tables')
+                    throw 'DEPRECATED: Updating tables'
                     // setTables(handleUpdateTables(stateTables, update, add, remove))
                 }),
                 showOverlay: ((node) => {
@@ -102,7 +88,6 @@ export default function App() {
                 currentRoute: navContainer.current?.getCurrentRoute(),
                 saveSession: () => {
                     SessionStorage.Export({
-                        id: id,
                         actions: actions,
                         tables: tables,
                     })

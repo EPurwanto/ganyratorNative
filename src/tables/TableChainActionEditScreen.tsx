@@ -1,12 +1,12 @@
 import React, {useCallback, useContext, useState} from "react";
 import {ScrollView, Text, View} from "react-native";
 import SegmentedControl from "@react-native-community/segmented-control";
-import {ActionContent, createActionContent} from "../utils/ActionUtils";
+import {ActionContent} from "../utils/ActionUtils";
 import CustomPicker, {elementToPickerItem} from "../utils/component/CustomPicker";
 import AppContext from "../utils/AppContext";
 import AppStyles from "../styles/AppStyles";
 import ActionContentEditor from "../actions/ActionContentEditor";
-import {find, handleUpdate} from "../utils/Utils";
+import {find} from "../utils/Utils";
 import {TouchButton} from "../utils/component/TouchButton";
 import {RouteProp, useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import {StackParamList} from "../MainPanel";
@@ -139,7 +139,7 @@ export default function(props: IProps) {
                                                                  tableId: item.parent,
                                                                  tableContentId: item.key,
                                                              },
-                                                             actionContent: copy,
+                                                             row: copy,
                                                          }))
                                                      })}/>
                             )

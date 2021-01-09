@@ -1,34 +1,48 @@
-import React, {useContext} from "react";
+import React, {useCallback, useContext} from "react";
 import {View} from "react-native";
 import {FlatList} from "react-native-gesture-handler";
-import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
+import {CompositeNavigationProp, useFocusEffect, useNavigation} from "@react-navigation/native";
 import {MaterialTopTabNavigationProp} from "@react-navigation/material-top-tabs";
 import AppStyles from "../styles/AppStyles";
-import AppContext from "../utils/AppContext";
 import ListEntry from "../utils/component/ListEntry";
-import {Action, createAction} from "../utils/ActionUtils";
+import {Action} from "../utils/ActionUtils";
 import {TabPanelNavProp, TabPanelParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import StyledText from "../utils/component/StyledText";
+import {useDispatch, useSelector} from "react-redux";
+import {Store} from "../store/store";
+import {addAction, clearCreatedAction} from "../store/actionSlice";
 
 type ActionListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Actions">>;
 
 export default function () {
-    const context = useContext(AppContext);
+    const dispatch = useDispatch();
     const styles = useContext(AppStyles);
     const navigation = useNavigation<ActionListNavigationProp>();
+
+    const actions = useSelector((state: Store) => state.actions.items);
+    const created = useSelector((state: Store) => state.actions.createdAction);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (created) {
+                navigation.push("ActionEdit", {actionId: created.key});
+                dispatch(clearCreatedAction())
+            }
+        }, [created])
+    )
 
     return (
         <View style={styles.util.container}>
             <View style={styles.list.base}>
-                <FlatList<Action> data={context.actions}
+                <FlatList<Action> data={actions}
                                   contentContainerStyle={styles.util.grow1}
                                   renderItem={({item}) =>
                                       <ListEntry title={item.name}
                                                  subTitle={item.desc}
                                                  key={item.key}
                                                  onPress={() => {
-                                                     navigation.push("ActionEdit", {action: item})
+                                                     navigation.push("ActionEdit", {actionId: item.key})
                                                  }}/>
                                   }
                                   ListEmptyComponent={
@@ -39,9 +53,7 @@ export default function () {
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}
                          onPress={() => {
-                             const action = createAction(context.actions);
-                             context.updateActions(undefined, action);
-                             navigation.push("ActionEdit", {action: action});
+                             dispatch(addAction())
                          }}/>
         </View>
     )

@@ -106,10 +106,10 @@ const slice = createSlice({
                 throw `Cannot add chain action to row with selected action`
             }
         },
-        updateChainAction(state: TableState, reduxAction: PayloadAction<{parent: TableContentIdentifier, actionContent: ActionContent}>) {
+        updateChainAction(state: TableState, reduxAction: PayloadAction<{parent: TableContentIdentifier, row: ActionContent}>) {
             const tableId = reduxAction.payload.parent.tableId;
             const contentId = reduxAction.payload.parent.tableContentId;
-            const actionContent = reduxAction.payload.actionContent;
+            const actionContent = reduxAction.payload.row;
             const tables = state.items;
 
             const table = find(tables, tableId);

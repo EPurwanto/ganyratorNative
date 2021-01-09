@@ -24,10 +24,7 @@ export const CustomPicker : FunctionComponent<IProps> = ({items, pickerStyle, it
 
     const [value, setValue] = useState(selectedValue);
 
-    let useItems = items;
-    if (useItems.length == 0) {
-        useItems = [{label: "Nothing", value: "", key: ""}];
-    }
+    let useItems = [{label: "Nothing", value: "", key: ""}, ...items];
 
     useEffect(() => {
         if (!selectedValue) {

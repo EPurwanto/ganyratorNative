@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import RollScreen from "./roll/RollScreen";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import TableListScreen from "./tables/TableListScreen";
@@ -11,9 +11,9 @@ import AppStyles from "./styles/AppStyles";
 import AppContext from "./utils/AppContext";
 import TableChainActionEditScreen, {IProps as TableChainProps} from "./tables/TableChainActionEditScreen";
 import {Image, View} from "react-native";
-import {clone, find, getUniqueId} from "./utils/Utils";
 import {MaterialIcons} from '@expo/vector-icons';
 import {useDispatch} from "react-redux";
+import {cloneAction, deleteAction} from "./store/actionSlice";
 import {cloneTable, deleteTable} from "./store/tableSlice";
 
 export type TabPanelParamList = {
@@ -85,20 +85,17 @@ export default function StackPanel(props: StackPanelProps) {
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
                                                    onPress={() => {
-                                                       const id = getUniqueId(context.actions);
-                                                       const copy = clone(route.params.action);
-                                                       copy.name = "Copy of " + copy.name;
-                                                       copy.key = id;
-                                                       context.updateActions(undefined, copy);
-                                                       navigation.pop();
-                                                       navigation.push("ActionEdit", {action: copy})
+                                                       dispatch(cloneAction({
+                                                           actionId: route.params.actionId
+                                                       }))
                                                    }}>
                                           <MaterialIcons name="content-copy" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                       <TouchButton style={[]}
                                                    onPress={() => {
-                                                       context.updateActions(undefined, undefined, route.params.action);
-                                                       navigation.pop();
+                                                       dispatch(deleteAction({
+                                                           actionId: route.params.actionId
+                                                       }))
                                                    }}>
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
                                       </TouchButton>

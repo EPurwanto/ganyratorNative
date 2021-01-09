@@ -6,7 +6,6 @@ import * as FileSystem from "expo-file-system";
 
 
 export interface ISession {
-    id: string;
     actions: Action[];
     tables: Table[];
 }
@@ -31,14 +30,14 @@ class SessionStorage {
 
         const session = JSON.parse(data) as ISession;
 
-        console.log(`Loaded: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
+        console.log(`Loaded session containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
         return session;
     };
 
     async Save(session: ISession) {
         const data = JSON.stringify(session);
         await AsyncStorage.setItem("session", data);
-        console.log(`Saved: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
+        console.log(`Saved session containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
     };
 
     async Export(session: ISession) {
@@ -64,7 +63,7 @@ class SessionStorage {
                 return MediaLibrary.createAssetAsync(uri)
             })
             .then((asset) => {
-                console.log(`Exported: ${session.id} containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
+                console.log(`Exported session containing ${session.tables?.length ?? 0} tables and ${session.actions?.length ?? 0} actions`);
                 return {
                     success: true,
                     filename: asset.filename,

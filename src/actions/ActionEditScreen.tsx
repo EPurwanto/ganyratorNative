@@ -1,29 +1,57 @@
-import {RouteProp, useRoute} from "@react-navigation/native";
-import React, {useContext} from "react";
-import AppContext from "../utils/AppContext";
+import {RouteProp, useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import React, {useCallback, useContext} from "react";
 import AppStyles from "../styles/AppStyles";
 import {ScrollView, TextInput, View} from "react-native";
 import {Field} from "../utils/component/Field";
-import {handleUpdate} from "../utils/Utils";
-import {Action, createActionContent} from "../utils/ActionUtils";
+import {find} from "../utils/Utils";
 import StyledText from "../utils/component/StyledText";
 import {StackParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import ActionContentEditor from "./ActionContentEditor";
+import {useDispatch, useSelector} from "react-redux";
+import {Store} from "../store/store";
+import {StackNavigationProp} from "@react-navigation/stack";
+import {addRow, clearCreatedAction, updateAction, updateRow} from "../store/actionSlice";
 
-// type ActionEditNavigationProp = StackNavigationProp<ActionParamsList, "Edit">;
+type ActionEditNavigationProp = StackNavigationProp<StackParamList, "ActionEdit">;
 type ActionEditRouteProp = RouteProp<StackParamList, "ActionEdit">;
 
 export interface IProps {
-    action: Action;
+    actionId: string;
 }
 
 export default function () {
-    const context = useContext(AppContext);
     const styles = useContext(AppStyles);
+    const dispatch = useDispatch();
     const route = useRoute<ActionEditRouteProp>();
+    const navigation = useNavigation<ActionEditNavigationProp>();
 
-    const action = route.params.action;
+    const actions = useSelector((state: Store) => state.actions.items);
+    const tables = useSelector((state: Store) => state.tables.items);
+    const created = useSelector((state: Store) => state.actions.createdAction);
+
+    const action = find(actions, route.params.actionId);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (!action) {
+                navigation.pop();
+            }
+        }, [action])
+    );
+
+    useFocusEffect(
+        useCallback(() => {
+            if (created) {
+                navigation.replace("ActionEdit", {actionId: created.key});
+                dispatch(clearCreatedAction())
+            }
+        }, [created])
+    );
+
+    if (!action) {
+        return null;
+    }
 
     return (
         <View style={styles.util.container}>
@@ -33,9 +61,9 @@ export default function () {
                                maxLength={60}
                                value={action.name}
                                onChange={(e) => {
-                                   console.log("Name change")
-                                   action.name = e.nativeEvent.text;
-                                   context.updateActions(action);
+                                   const copy = {...action};
+                                   copy.name = e.nativeEvent.text;
+                                   dispatch(updateAction(copy));
                                }}
                     />
                 </Field>
@@ -45,9 +73,9 @@ export default function () {
                                multiline={true}
                                value={action.desc}
                                onChange={(e) => {
-                                   console.log("Description change")
-                                   action.desc = e.nativeEvent.text;
-                                   context.updateActions(action);
+                                   const copy = {...action};
+                                   copy.desc = e.nativeEvent.text;
+                                   dispatch(updateAction(copy));
                                }}
                     />
                 </Field>
@@ -60,18 +88,23 @@ export default function () {
                     </StyledText>
                 </View>
                 {
-                    context.tables.length > 0
+                    tables.length > 0
                         ?
                         action.contents.map((item) =>
                             <ActionContentEditor field={item.field}
                                                  table={item.table}
                                                  key={item.key}
                                                  onChange={((field, table) => {
-                                                     item.field = field;
-                                                     item.table = table;
-                                                     console.log("Content change")
-                                                     action.contents = handleUpdate(action.contents, item);
-                                                     context.updateActions(action);
+                                                     const copy = {...item};
+                                                     copy.field = field;
+                                                     copy.table = table;
+
+                                                     dispatch(updateRow({
+                                                         parent: {
+                                                             actionId: action.key,
+                                                         },
+                                                         row: copy,
+                                                     }))
                                                  })}/>
                         )
                         :
@@ -81,12 +114,11 @@ export default function () {
             <TouchButton style={[styles.util.btnPrimary]}
                          label={"Add"}
                          labelStyle={styles.util.txtPrimary}
-                         disabled={context.tables.length === 0}
+                         disabled={tables.length === 0}
                          onPress={() => {
-                             const row = createActionContent(action.contents);
-                             action.contents = handleUpdate(action.contents, undefined, row);
-                             console.log("Add")
-                             context.updateActions(action);
+                             dispatch(addRow({
+                                 actionId: action.key
+                             }))
                          }}/>
         </View>
     )
