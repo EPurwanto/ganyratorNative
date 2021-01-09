@@ -20,14 +20,13 @@ export interface IProps {
 }
 
 export default function () {
+    const dispatch = useDispatch();
     const styles = useContext(AppStyles);
+    const navigation = useNavigation<TableEditNavigationProp>();
+    const route = useRoute<TableEditRouteProp>();
 
     const tables = useSelector((state: RootState) => state.tables.items);
     const created = useSelector((state: RootState) => state.tables.createdTable)
-
-    const dispatch = useDispatch();
-    const navigation = useNavigation<TableEditNavigationProp>();
-    const route = useRoute<TableEditRouteProp>();
 
     const table = find(tables, route.params.tableId);
 

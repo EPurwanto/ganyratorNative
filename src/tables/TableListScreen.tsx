@@ -17,13 +17,12 @@ import {RootState} from "../store/store";
 type TableListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Tables">>;
 
 export default function () {
-    const context = useContext(AppContext);
+    const dispatch = useDispatch();
     const styles = useContext(AppStyles);
     const navigation = useNavigation<TableListNavigationProp>();
 
     const tables = useSelector((state: RootState) => state.tables.items)
     const created = useSelector((state: RootState) => state.tables.createdTable)
-    const dispatch = useDispatch();
 
     useFocusEffect(
         useCallback(() => {
