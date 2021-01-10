@@ -51,12 +51,12 @@ function indexMode(index: number): Mode {
 }
 
 export default function(props: IProps) {
-    const context = useContext(AppContext);
     const styles = useContext(AppStyles);
     const route = useRoute<TableChainRouteProp>();
     const dispatch = useDispatch();
     const navigation = useNavigation<TableChainNavigationProp>();
 
+    const actions = useSelector((state: RootState) => state.actions.items);
     const tables = useSelector((state: RootState) => state.tables.items);
 
     const table = find(tables, route.params.tableId);
@@ -106,7 +106,7 @@ export default function(props: IProps) {
             body = (
                 <View>
                     <Text>The following Action will be performed</Text>
-                    <CustomPicker items={elementToPickerItem(context.actions)}
+                    <CustomPicker items={elementToPickerItem(actions)}
                                   style={[styles.field.group]}
                                   prompt={"Select an action to perform"}
                                   selectedValue={actionKey}

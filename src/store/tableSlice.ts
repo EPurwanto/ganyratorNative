@@ -1,5 +1,5 @@
 import {Action as ReduxAction, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {createTable, createTableContent, Table, TableContent} from "../utils/TableUtils";
+import {createTable, createTableContent, Table, TableContent, updateTotalWeight} from "../utils/TableUtils";
 import {find, findIndex, replace} from "../utils/Utils";
 import {ActionContent, createActionContent} from "../utils/ActionUtils";
 import {ChainActionIdentifier, TableContentIdentifier, TableIdentifier} from "./store";
@@ -65,6 +65,7 @@ const slice = createSlice({
             }
 
             table.contents.push(createTableContent(table));
+            updateTotalWeight(table);
         },
         updateRow(state: TableState, reduxAction: PayloadAction<TableContent>) {
             const contents = reduxAction.payload;
@@ -75,6 +76,7 @@ const slice = createSlice({
             }
 
             replace(table.contents, contents, true)
+            updateTotalWeight(table);
         },
         deleteRow(state: TableState, reduxAction: PayloadAction<TableContentIdentifier>) {
 

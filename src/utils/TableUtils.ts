@@ -43,6 +43,10 @@ export function getDummyTable(name?: string, desc?: string, contents?: TableCont
     }
 }
 
+export function updateTotalWeight(...tables : Table[]) {
+    tables.forEach(t => t.totalWeight = getTotalWeight(t.contents))
+}
+
 function getTotalWeight(contents: TableContent[]) {
     let w = 0;
     contents.forEach(r => {

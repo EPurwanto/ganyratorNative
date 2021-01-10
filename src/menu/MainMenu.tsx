@@ -7,6 +7,7 @@ import AppStyles from "../styles/AppStyles";
 import {ConfirmOverlay} from "../utils/component/ConfirmOverlay";
 import {HelpOverlay} from "../help/HelpOverlay";
 import {useDispatch} from "react-redux";
+import {loadActions} from "../store/actionSlice"
 import {loadTables} from "../store/tableSlice"
 
 interface IProps {
@@ -27,7 +28,6 @@ export default function(props: IProps) {
 
     return (
         <Overlay visible={props.visible} close={props.onClose} style={[styles.menu.overlay, styles.menu.menu]}>
-            {/*<View style={styles.util.flex1}>*/}
             <View style={styles.menu.menuItem}>
                 <ListEntry title="Help"
                            onPress={() => {
@@ -47,9 +47,8 @@ export default function(props: IProps) {
                                    <ConfirmOverlay  message="Are you sure you want to clear the session? This will delete all actions and tables and cannot be undone."
                                                     confirmMessage="Clear"
                                                     action={() => {
-                                                        context.updateActions(undefined, undefined, context.actions);
-                                                        // context.updateTables(undefined, undefined, context.tables);
                                                         dispatch(loadTables([]))
+                                                        dispatch(loadActions([]))
                                                     }}/>)
                            }}
                 />
@@ -58,15 +57,6 @@ export default function(props: IProps) {
             {/*    <ListEntry title="Export Session"*/}
             {/*               onPress={() => {*/}
             {/*                   console.log("Export Session")*/}
-            {/*                   hideMenu();*/}
-            {/*                   context.saveSession();*/}
-            {/*               }}*/}
-            {/*    />*/}
-            {/*</View>*/}
-            {/*<View style={styles.menu.menuItem}>*/}
-            {/*    <ListEntry title="Import Session"*/}
-            {/*               onPress={() => {*/}
-            {/*                   console.log("Import Session")*/}
             {/*                   hideMenu();*/}
             {/*                   context.saveSession();*/}
             {/*               }}*/}

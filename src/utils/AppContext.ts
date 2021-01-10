@@ -14,7 +14,6 @@ export interface IContext extends ISession {
 }
 
 const AppContext = React.createContext<IContext>({
-    id: "",
     actions: [],
     tables: [],
     updateActions: () => {},

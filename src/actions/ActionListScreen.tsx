@@ -10,7 +10,7 @@ import {TabPanelNavProp, TabPanelParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import StyledText from "../utils/component/StyledText";
 import {useDispatch, useSelector} from "react-redux";
-import {Store} from "../store/store";
+import {RootState, Store} from "../store/store";
 import {addAction, clearCreatedAction} from "../store/actionSlice";
 
 type ActionListNavigationProp = CompositeNavigationProp<TabPanelNavProp, MaterialTopTabNavigationProp<TabPanelParamList, "Actions">>;
@@ -20,8 +20,8 @@ export default function () {
     const styles = useContext(AppStyles);
     const navigation = useNavigation<ActionListNavigationProp>();
 
-    const actions = useSelector((state: Store) => state.actions.items);
-    const created = useSelector((state: Store) => state.actions.createdAction);
+    const actions = useSelector((state: RootState) => state.actions.items);
+    const created = useSelector((state: RootState) => state.actions.createdAction);
 
     useFocusEffect(
         useCallback(() => {

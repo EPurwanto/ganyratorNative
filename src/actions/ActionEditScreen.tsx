@@ -9,9 +9,9 @@ import {StackParamList} from "../MainPanel";
 import {TouchButton} from "../utils/component/TouchButton";
 import ActionContentEditor from "./ActionContentEditor";
 import {useDispatch, useSelector} from "react-redux";
-import {Store} from "../store/store";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {addRow, clearCreatedAction, updateAction, updateRow} from "../store/actionSlice";
+import {RootState} from "../store/store";
 
 type ActionEditNavigationProp = StackNavigationProp<StackParamList, "ActionEdit">;
 type ActionEditRouteProp = RouteProp<StackParamList, "ActionEdit">;
@@ -26,9 +26,9 @@ export default function () {
     const route = useRoute<ActionEditRouteProp>();
     const navigation = useNavigation<ActionEditNavigationProp>();
 
-    const actions = useSelector((state: Store) => state.actions.items);
-    const tables = useSelector((state: Store) => state.tables.items);
-    const created = useSelector((state: Store) => state.actions.createdAction);
+    const actions = useSelector((state: RootState) => state.actions.items);
+    const tables = useSelector((state: RootState) => state.tables.items);
+    const created = useSelector((state: RootState) => state.actions.createdAction);
 
     const action = find(actions, route.params.actionId);
 
