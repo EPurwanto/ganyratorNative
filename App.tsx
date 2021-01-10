@@ -18,12 +18,11 @@ import {loadSession} from "./src/store/otherActions";
 
 
 export default function App() {
-    const [actions, setActions] = useState([] as Action[]);
     const [loaded, setLoaded] = useState(false);
-    const [menuVisible, setMenuVisible] = useState(false);
     const [overlay, setOverlay] = useState<JSX.Element | undefined>()
     const navContainer = useRef<NavigationContainerRef>(null!)
 
+    const actions = store.getState().actions.items;
     const tables = store.getState().tables.items;
 
     const [fontLoaded] = useFonts({Lato_400Regular, Lato_700Bold})
@@ -32,8 +31,8 @@ export default function App() {
     // Load Session from storage
     useEffect(() => {
         SessionStorage.Load()
-            .then(loadSesh => {
-                store.dispatch(loadSession(loadSesh))
+            .then(storedSession => {
+                store.dispatch(loadSession(storedSession))
                 setLoaded(true);
             })
             .catch((e)=> {
@@ -65,23 +64,10 @@ export default function App() {
     return (
         <Provider store={store}>
             <AppContext.Provider value={{
-                actions: actions,
-                tables: tables,
-                updateActions: ((update, add, remove) => {
-                    throw 'DEPRECATED: Updating actions'
-                }),
-                updateTables: ((update, add, remove) => {
-                    throw 'DEPRECATED: Updating tables'
-                    // setTables(handleUpdateTables(stateTables, update, add, remove))
-                }),
                 showOverlay: ((node) => {
                     console.log('Showing confirm overlay')
                     setOverlay(node);
                 }),
-                showMenu: (visible: boolean) => {
-                    console.log('Showing main menu')
-                    setMenuVisible(visible)
-                },
                 currentRoute: navContainer.current?.getCurrentRoute(),
                 saveSession: () => {
                     SessionStorage.Export({
@@ -123,7 +109,6 @@ export default function App() {
                         </NavigationContainer>
                     </SafeAreaProvider>
                     { overlay }
-                    <MainMenu visible={menuVisible} onClose={() => setMenuVisible(false)}/>
                 </AppStyles.Provider>
             </AppContext.Provider>
         </Provider>

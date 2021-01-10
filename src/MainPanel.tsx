@@ -15,6 +15,7 @@ import {MaterialIcons} from '@expo/vector-icons';
 import {useDispatch} from "react-redux";
 import {cloneAction, deleteAction} from "./store/actionSlice";
 import {cloneTable, deleteTable} from "./store/tableSlice";
+import MainMenu from "./menu/MainMenu";
 
 export type TabPanelParamList = {
     Tables: undefined;
@@ -72,7 +73,7 @@ export default function StackPanel(props: StackPanelProps) {
                               headerRight: (props) =>
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
-                                                   onPress={() => context.showMenu(true)}>
+                                                   onPress={() => context.showOverlay(<MainMenu/>)}>
                                           <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                   </View>
@@ -100,7 +101,7 @@ export default function StackPanel(props: StackPanelProps) {
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                       <TouchButton style={[]}
-                                                   onPress={() => context.showMenu(true)}>
+                                                   onPress={() => context.showOverlay(<MainMenu/>)}>
                                           <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                   </View>
@@ -130,7 +131,7 @@ export default function StackPanel(props: StackPanelProps) {
                                           <MaterialIcons name="delete" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                       <TouchButton style={[]}
-                                                   onPress={() => context.showMenu(true)}>
+                                                   onPress={() => context.showOverlay(<MainMenu/>)}>
                                           <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                   </View>
@@ -143,7 +144,7 @@ export default function StackPanel(props: StackPanelProps) {
                               headerRight: (props) =>
                                   <View style={[styles.util.row, styles.util.mr15]}>
                                       <TouchButton style={[]}
-                                                   onPress={() => context.showMenu(true)}>
+                                                   onPress={() => context.showOverlay(<MainMenu/>)}>
                                           <MaterialIcons name="menu" style={[styles.util.btnIcon]}/>
                                       </TouchButton>
                                   </View>

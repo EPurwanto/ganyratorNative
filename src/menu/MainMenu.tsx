@@ -10,9 +10,6 @@ import {useDispatch} from "react-redux";
 import {clearSession} from "../store/otherActions";
 
 interface IProps {
-    visible: boolean,
-    onClose: () => void,
-
 }
 
 export default function(props: IProps) {
@@ -22,11 +19,11 @@ export default function(props: IProps) {
     const dispatch = useDispatch();
 
     function hideMenu() {
-        props.onClose();
+        context.showOverlay(undefined);
     }
 
     return (
-        <Overlay visible={props.visible} close={props.onClose} style={[styles.menu.overlay, styles.menu.menu]}>
+        <Overlay visible={true} close={hideMenu} style={[styles.menu.overlay, styles.menu.menu]}>
             <View style={styles.menu.menuItem}>
                 <ListEntry title="Help"
                            onPress={() => {
