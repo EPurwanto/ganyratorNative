@@ -3,6 +3,7 @@ import {createTable, createTableContent, Table, TableContent, updateTotalWeight}
 import {find, findIndex, replace} from "../utils/Utils";
 import {ActionContent, createActionContent} from "../utils/ActionUtils";
 import {ChainActionIdentifier, TableContentIdentifier, TableIdentifier} from "./store";
+import {clearSession, loadSession} from "./otherActions";
 
 export interface TableState {
     items: Table[],
@@ -17,9 +18,6 @@ const slice = createSlice({
     name: "table",
     initialState,
     reducers: {
-        loadTables(state: TableState, reduxAction: PayloadAction<Table[]>) {
-            state.items = reduxAction.payload;
-        },
         addTable(state: TableState, reduxAction: ReduxAction) {
             const created = createTable(state.items)
             state.items.push(created);
@@ -138,8 +136,17 @@ const slice = createSlice({
             state.createdTable = undefined;
         },
     },
+    extraReducers(builder) {
+        builder
+            .addCase(loadSession, (state: TableState, reduxAction) => {
+                state.items = reduxAction.payload.tables;
+            })
+            .addCase(clearSession, (state: TableState, reduxAction) => {
+                return initialState;
+            })
+    }
 })
 
-export const {loadTables, addTable, cloneTable, updateTable, deleteTable, addRow, updateRow, deleteRow, addChainAction, updateChainAction, deleteChainAction, clearCreatedTable} = slice.actions
+export const {addTable, cloneTable, updateTable, deleteTable, addRow, updateRow, deleteRow, addChainAction, updateChainAction, deleteChainAction, clearCreatedTable} = slice.actions
 
 export default slice.reducer;

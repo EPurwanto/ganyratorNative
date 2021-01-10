@@ -7,8 +7,7 @@ import AppStyles from "../styles/AppStyles";
 import {ConfirmOverlay} from "../utils/component/ConfirmOverlay";
 import {HelpOverlay} from "../help/HelpOverlay";
 import {useDispatch} from "react-redux";
-import {loadActions} from "../store/actionSlice"
-import {loadTables} from "../store/tableSlice"
+import {clearSession} from "../store/otherActions";
 
 interface IProps {
     visible: boolean,
@@ -47,8 +46,7 @@ export default function(props: IProps) {
                                    <ConfirmOverlay  message="Are you sure you want to clear the session? This will delete all actions and tables and cannot be undone."
                                                     confirmMessage="Clear"
                                                     action={() => {
-                                                        dispatch(loadTables([]))
-                                                        dispatch(loadActions([]))
+                                                        dispatch(clearSession());
                                                     }}/>)
                            }}
                 />

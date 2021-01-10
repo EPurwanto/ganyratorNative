@@ -14,8 +14,7 @@ import MainMenu from "./src/menu/MainMenu";
 import {ConfirmOverlay} from "./src/utils/component/ConfirmOverlay";
 import {Provider} from "react-redux";
 import store from "./src/store/store";
-import {loadTables} from "./src/store/tableSlice";
-import {loadActions} from "./src/store/actionSlice";
+import {loadSession} from "./src/store/otherActions";
 
 
 export default function App() {
@@ -34,9 +33,7 @@ export default function App() {
     useEffect(() => {
         SessionStorage.Load()
             .then(loadSesh => {
-                // setTables(loadSesh.tables ?? []);
-                store.dispatch(loadTables(loadSesh.tables))
-                store.dispatch(loadActions(loadSesh.actions))
+                store.dispatch(loadSession(loadSesh))
                 setLoaded(true);
             })
             .catch((e)=> {

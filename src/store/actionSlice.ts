@@ -2,6 +2,7 @@ import {Action as ReduxAction, createSlice, PayloadAction} from "@reduxjs/toolki
 import {Action, ActionContent, createAction, createActionContent} from "../utils/ActionUtils";
 import {ActionIdentifier} from "./store";
 import {find, findIndex, replace} from "../utils/Utils";
+import {clearSession, loadSession} from "./otherActions";
 
 export interface ActionState {
     items: Action[],
@@ -16,9 +17,6 @@ const slice = createSlice({
     name: "action",
     initialState,
     reducers: {
-        loadActions(state: ActionState, reduxAction: PayloadAction<Action[]>) {
-            state.items = reduxAction.payload;
-        },
         addAction(state: ActionState, reduxAction: ReduxAction) {
             const action = createAction(state.items);
             state.items.push(action);
@@ -83,9 +81,18 @@ const slice = createSlice({
         clearCreatedAction(state: ActionState, reduxAction: ReduxAction) {
             state.createdAction = undefined;
         }
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(loadSession, (state: ActionState, reduxAction) => {
+                state.items = reduxAction.payload.actions;
+            })
+            .addCase(clearSession, (state: ActionState, reduxAction) => {
+                return initialState;
+            })
     }
 });
 
-export const {loadActions, addAction, cloneAction, updateAction, deleteAction, addRow, updateRow, deleteRow, clearCreatedAction} = slice.actions;
+export const {addAction, cloneAction, updateAction, deleteAction, addRow, updateRow, deleteRow, clearCreatedAction} = slice.actions;
 
 export default slice.reducer;
